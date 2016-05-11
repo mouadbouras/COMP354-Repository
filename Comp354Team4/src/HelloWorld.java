@@ -5,5 +5,8 @@ public class HelloWorld {
 		
 		
 		System.out.println("Hello World2!");
+		
+		//Mouad : I added this to test if commits form Mac will work on PC
+		System.out.println("Hello World3!");
 	}
 }
