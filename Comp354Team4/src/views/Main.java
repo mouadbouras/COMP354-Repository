@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
 import models.User;
-import services.UserService;
+import services.DataService;
 
 import javax.swing.JTable;
 import javax.swing.JList;
@@ -39,7 +39,6 @@ public class Main {
 		initialize();
 	}
 
-
 	private void initialize() {
 		frmCompProject = new JFrame();
 		frmCompProject.setTitle("COMP354 Project");
@@ -58,14 +57,19 @@ public class Main {
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{			
-				UserService userService = new UserService();			
+				DataService userService = new DataService();	
 				
 				try 
 				{
 					int userId = Integer.parseInt(txtUserName.getText());
 					User user = userService.GetUser(userId);
-					
-					txtUserName.setText("Welcome: " + user.getFirstName() + " " + user.getLastName());
+					State.getStateInstance().setUser(user);					
+				
+					frmCompProject.getContentPane().removeAll();					
+					frmCompProject.getContentPane().add(new MainView());
+					frmCompProject.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+					frmCompProject.setVisible(true);					
+					frmCompProject.repaint();
 					
 				}
 				catch (Exception e)

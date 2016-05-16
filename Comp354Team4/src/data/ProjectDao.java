@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import models.*;
+import services.ConverterService;
 
 public class ProjectDao {
 
@@ -21,7 +22,31 @@ public class ProjectDao {
 											+ "startDate DateTime, endDate DateTime, managerId INTEGER, FOREIGN KEY(managerId) REFERENCES User(id));";
 	
 	private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	private static DateFormat sqlDf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+	
+	public String[] GetProjectColumns()
+	{
+		String[] columns = {
+				"Project Id", 
+				"Project Name", 
+				"Start Date", 
+				"End Date", 
+				"Manager Id"
+				};
+		
+		return columns;		
+	}
+	
+	public String[] returnDataRow(Project project)
+	{		
+		String[] temp = new String[]{
+				Integer.toString(project.getId()),
+				project.getProjectName(), 
+				ConverterService.DateToString(project.getStartDate()),
+				ConverterService.DateToString(project.getEndDate()), 
+				Integer.toString(project.getManagerId())
+				};		
+		return temp;		
+	}
 	
 	//get a list of project ids managed by user id
 	//returns null if there's no projects found
@@ -78,8 +103,8 @@ public class ProjectDao {
 		      stmt = c.createStatement();
 		      
 		      String sql = ProjectDao.InsertProjects.replace("@projectName", project.getProjectName()).
-								    		  replace("@startDate", df.format(project.getStartDate())). //format date to string 
-								    		  replace("@endDate", df.format(project.getEndDate())). //format date to string 
+								    		  replace("@startDate", ConverterService.DateToString(project.getStartDate())). //format date to string 
+								    		  replace("@endDate", ConverterService.DateToString(project.getEndDate())). //format date to string 
 								    		  replace("@managerId", Integer.toString(project.getManagerId()));
 		      stmt.executeUpdate(sql);		      
 		      stmt.close();
@@ -102,8 +127,8 @@ public class ProjectDao {
 		{
 			temp.setId(rs.getInt("id"));
 			temp.setProjectName(rs.getString("projectName"));
-			temp.setStartDate(df.parse(rs.getString("startDate")));
-			temp.setEndDate(df.parse(rs.getString("endDate")));
+			temp.setStartDate(ConverterService.StringToDate(rs.getString("startDate")));
+			temp.setEndDate(ConverterService.StringToDate(rs.getString("endDate")));
 			
 			temp.setManagerId(rs.getInt("managerId"));	
 		}
