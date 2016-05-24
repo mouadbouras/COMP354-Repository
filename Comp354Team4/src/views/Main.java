@@ -173,8 +173,21 @@ public class Main {
 					System.out.println("password : " + password);
 
 					if(userService.GetUser(username,password) == null){
-						//System.out.println("invalid username/password");
-						throw new Exception("invalid username/password");
+						//  FOLLOWING LINE MUST BE UNCOMENTED BEFORE DEMO!!
+						//throw new Exception("invalid username/password");
+						
+						//**** CODE FOR DEV ENVIRONMENT ONLY. BYPASSES LOGIN.*****
+						User user = userService.GetUser("mouad","password");
+						State.getStateInstance().setUser(user);					
+						
+						frmCompProject.getContentPane().removeAll();					
+						frmCompProject.getContentPane().add(new MainView());
+						frmCompProject.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+						frmCompProject.setVisible(true);					
+						frmCompProject.repaint();
+						
+						//******************************************************** 
+						
 					}
 					else
 					{
