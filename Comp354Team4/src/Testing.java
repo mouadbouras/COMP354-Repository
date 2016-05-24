@@ -112,7 +112,7 @@ public void projectCreation1() throws ParseException{
 	
 }
 
-/*@Test
+@Test
 public void projectCreation2() throws ParseException{
 	
 	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -128,7 +128,7 @@ public void projectCreation2() throws ParseException{
 	ProjectDao projectDao = new ProjectDao();
 	projectDao.InsertProject(project);
 	assertNotNull(project);
-	//assertNull(project);
-}*/
+	assertNull(project);
+}
 
 }
