@@ -30,7 +30,8 @@ public class ProjectDao {
 				"Project Name", 
 				"Start Date", 
 				"End Date", 
-				"Manager Id"
+				"Manager Id",
+				" "
 				};
 		
 		return columns;		
@@ -43,7 +44,8 @@ public class ProjectDao {
 				project.getProjectName(), 
 				ConverterService.DateToString(project.getStartDate()),
 				ConverterService.DateToString(project.getEndDate()), 
-				Integer.toString(project.getManagerId())
+				Integer.toString(project.getManagerId()),
+				"View Activities"
 				};		
 		return temp;		
 	}

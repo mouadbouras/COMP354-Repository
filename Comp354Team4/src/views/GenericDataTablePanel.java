@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import data.ProjectDao;
 import models.Project;
@@ -54,12 +55,25 @@ public class GenericDataTablePanel extends JPanel {
 	
 	private JTable JTableProject()
 	{
-		JTable table = null;
+		//JTable table = null;
 		//when clicking on refresh, create a new table
 		User temp = State.getStateInstance().getUser();
 		DataService ds = new DataService();
 		table = new JTable(ds.GetProjectTableData(temp.getId()), ds.GetProjectTableColumns());
-		table.setBackground(Color.WHITE);		
+		table.setBackground(Color.WHITE);
+		table.removeColumn(table.getColumnModel().getColumn(0));
+		
+		table.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		        int row = table.rowAtPoint(evt.getPoint());
+		        int col = table.columnAtPoint(evt.getPoint());
+		        if (row >= 0 && col == 4) {
+		        	System.out.println(table.getModel().getValueAt(row, 0));
+		        }
+		    }
+		});
+		
+		
 		return table;		
 	}
 
