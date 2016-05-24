@@ -18,7 +18,7 @@ public class ActivityDao {
 			+ "projectId = @projectId";
 	private static String InsertActivities = "INSERT INTO Activity(activityName, startDate, endDate, projectId) VALUES ('@activityName', '@startDate', '@endDate', '@projectId');";
 	public static String CreateTable = "CREATE TABLE Activity (id INTEGER PRIMARY KEY, activityName varchar(50),	"
-			+ "startDate DateTime, endDate DateTime, projectId INTEGER, FOREIGN KEY(projectId) REFERENCES Project(id));";
+			+ "activityDescription varchar(50), startDate DateTime, endDate DateTime, projectId INTEGER, FOREIGN KEY(projectId) REFERENCES Project(id));";
 	
 	//map resultset from sqlite to Activity
 	public static Activity mapResultSetToActivity(ResultSet rs)
