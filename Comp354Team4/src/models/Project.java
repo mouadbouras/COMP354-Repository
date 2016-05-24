@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 public class Project {
 	private int id;
@@ -9,7 +10,7 @@ public class Project {
 	private Date endDate;
 	private int managerId;
 	private int activityCount;
-	private Activity[] activities = new Activity[10];
+	private List<Activity> activities;
 	
 	public int getId() {
 		return id;
@@ -52,21 +53,19 @@ public class Project {
 	}	
 	
 	public boolean addActivity(int id, String name, Date start, Date end, int projId){
-		if(activityCount < activities.length-1){
-			activities[activityCount] = new Activity(id, name, start, end, projId);
-			return true; //addition was a success
-		}
-		else return false; //addition was a failure;
+		activities.add(new Activity(id, name, start, end, projId));
+		return true; //addition was a success
 	}
 	
 	public boolean deleteActivity(int index){
-		if(index < 0 || index > activities.length-1){
+		/*if(index < 0 || index > activities.size()-1){
 			return false; //deletion was a failure
 		}
 		else{
 			activities[index] = null;
 			return true; //deletion was a success
-		}
+		}*/
+		return false;
 	}
 	
 }

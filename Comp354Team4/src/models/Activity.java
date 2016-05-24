@@ -59,14 +59,14 @@ public class Activity {
 		this.projectId = projectId;
 	}
 
-	public static String createTable = 	"CREATE TABLE Project"
+	public static String createTable = 	"CREATE TABLE Activity"
 										+ "("
 										+ "id INTEGER PRIMARY KEY,"
-										+ "projectName varchar(50),"
+										+ "activityName varchar(50),"
 										+ "startDate DateTime,"
 										+ "endDate DateTime,"
-										+ "managerId INTEGER,"
-										+ "FOREIGN KEY(managerId) REFERENCES User(id)"			
+										+ "projectId INTEGER,"
+										+ "FOREIGN KEY(projectId) REFERENCES Project(id)"			
 										+ ")";
 
 }

@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
+import data.ActivityDao;
+import data.SqliteSetup;
 import models.User;
 import services.DataService;
 
