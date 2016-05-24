@@ -61,6 +61,7 @@ public class GenericDataTablePanel extends JPanel {
 		DataService ds = new DataService();
 		table = new JTable(ds.GetProjectTableData(temp.getId()), ds.GetProjectTableColumns());
 		table.setBackground(Color.WHITE);
+		table.setGridColor(Color.GRAY);
 		table.removeColumn(table.getColumnModel().getColumn(0));
 		
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -68,7 +69,10 @@ public class GenericDataTablePanel extends JPanel {
 		        int row = table.rowAtPoint(evt.getPoint());
 		        int col = table.columnAtPoint(evt.getPoint());
 		        if (row >= 0 && col == 4) {
-		        	System.out.println(table.getModel().getValueAt(row, 0));
+		        	System.out.println("Activities will open for project with id:" + table.getModel().getValueAt(row, 0));
+		        }
+		        if (row >= 0 && col == 5) {
+		        	System.out.println("Delete project with id:" + table.getModel().getValueAt(row, 0));
 		        }
 		    }
 		});
