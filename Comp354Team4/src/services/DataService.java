@@ -38,4 +38,20 @@ public class DataService
 		
 		return tempData;
 	}
+	
+	public String[] GetActivityTableColumns(){
+		return this.activityDao.GetActivityColumns();
+	}
+	
+	public String[][] GetActivityTableData(int projectId){
+		String tempData[][] = null;
+		List<Activity> activities = this.activityDao.GetActivitiesGivenProjectId(projectId);
+		
+		for(int i = 0; i<activities.size(); ++i){
+			String [] tempRow = this.activityDao.returnDataRow(activities.get(i));
+			tempData[i] = tempRow;
+		}
+		
+		return tempData;
+	}
 }

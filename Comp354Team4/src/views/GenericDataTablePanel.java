@@ -76,5 +76,15 @@ public class GenericDataTablePanel extends JPanel {
 		
 		return table;		
 	}
+	
+	private JTable JTableActivity(){
+		JTable table = null;
+		
+		Project temp = State.getStateInstance().getProject();
+		DataService ds = new DataService();
+		table = new JTable(ds.GetActivityTableData(temp.getId()), ds.GetActivityTableColumns());
+		table.setBackground(Color.WHITE);
+		return table;
+	}
 
 }

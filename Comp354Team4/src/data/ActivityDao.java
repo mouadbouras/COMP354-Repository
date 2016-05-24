@@ -10,6 +10,7 @@ import java.util.List;
 
 import models.Activity;
 import models.Project;
+import services.ConverterService;
 
 public class ActivityDao {
 
@@ -93,6 +94,18 @@ public class ActivityDao {
 	    System.out.println("Operation done successfully");		
 		
 		return activities;			
+	}
+	
+	public String[] returnDataRow(Activity activity)
+	{		
+		String[] temp = new String[]{
+				Integer.toString(activity.getId()),
+				activity.getActivityName(), 
+				ConverterService.DateToString(activity.getStartDate()),
+				ConverterService.DateToString(activity.getEndDate()), 
+				Integer.toString(activity.getProjectId())
+				};		
+		return temp;		
 	}
 	
 }
