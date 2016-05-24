@@ -10,6 +10,15 @@ public class Activity {
 	private Date endDate;
 	private int projectId;
 	
+	public Activity(){
+		
+	}
+	
+	public Activity(int id, String name, Date start, Date end, int projId){
+		this.id = id;	activityName = name;	startDate = start;	endDate = end;
+		projectId = projId;
+	}
+	
 	public int getId() {
 		return id;
 	}
