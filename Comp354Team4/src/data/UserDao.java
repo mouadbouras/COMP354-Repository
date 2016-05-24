@@ -11,8 +11,9 @@ public class UserDao
 {
 	
 	private static String SelectUserGivenUserId = "SELECT * FROM User WHERE id = @userId;";
-	private static String InsertUsers = "INSERT INTO User (firstName, lastName, role) VALUES ('@firstName', '@lastName', @role);";
-	private static String CreateTable = "CREATE TABLE User(id INTEGER PRIMARY KEY, firstName CHAR(50), lastName CHAR(50), role INTEGER);";
+	private static String SelectUserGivenUsernamePassword = "SELECT * FROM User WHERE username = '@username' and password = '@password';";
+	private static String InsertUsers = "INSERT INTO User (firstName, lastName, role, username, password) VALUES ('@firstName', '@lastName', @role, '@username', '@password');";
+	private static String CreateTable = "CREATE TABLE User(id INTEGER PRIMARY KEY, firstName CHAR(50), lastName CHAR(50), role INTEGER, username CHAR(255), password CHAR(255));";
 		
 	//get user given the userid primary key
 	public User GetUserGivenUserId(int userId)
@@ -82,7 +83,49 @@ public class UserDao
 	    return;
 	}
 
-    //map resultset from sqlite to User entity
+	//get user given the userid primary key
+	public User GetUserGivenUsernamePassword(String username, String password)
+	{
+		User temp = null;
+		
+	    Connection c = null;
+	    Statement stmt = null;
+	    try 
+	    {
+			Class.forName(SqliteSetup.sqliteClass);
+			c = DriverManager.getConnection(SqliteSetup.connection);
+			System.out.println("Opened database successfully");	
+			stmt = c.createStatement();
+		    
+			String sql = UserDao.SelectUserGivenUsernamePassword.replace("@username", username ).replace("@password", password); //prepare sql
+		    System.out.println(sql);
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			if ( rs.next() ) 
+			{
+				temp = mapResultSetToUser(rs);
+			}
+		    
+			rs.close();
+			stmt.close();
+			c.close();	       
+		    System.out.println("Operation done successfully");		
+
+			return temp;
+	    } 
+	    
+	    catch ( Exception e ) 
+	    {
+	    	//System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    	return null;
+	    }
+	    
+		
+		
+	}
+	
+	
+    //map result set from sqlite to User entity
 	public static User mapResultSetToUser(ResultSet rs)
 	{
 		User temp = new User();
@@ -92,6 +135,9 @@ public class UserDao
 			temp.setFirstName(rs.getString("firstName"));
 			temp.setLastName(rs.getString("lastName"));
 			temp.setRole(rs.getInt("role"));	
+			temp.setUsername(rs.getString("username"));	
+			temp.setPassword(rs.getString("password"));	
+
 		}
 		catch (Exception e)
 		{			

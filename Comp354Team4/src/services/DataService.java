@@ -17,6 +17,12 @@ public class DataService
 		return this.userDao.GetUserGivenUserId(userId);	
 	}
 	
+	//get the user role, given the user id
+	public User GetUser(String username, String password)
+	{
+		return this.userDao.GetUserGivenUsernamePassword(username,password);	
+	}
+	
 	public String[] GetProjectTableColumns()
 	{
 		return this.projectDao.GetProjectColumns();		
