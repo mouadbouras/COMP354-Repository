@@ -127,8 +127,27 @@ public void projectCreation2() throws ParseException{
 	
 	ProjectDao projectDao = new ProjectDao();
 	projectDao.InsertProject(project);
-	assertNotNull(project);
 	assertNull(project);
 }
+
+/*@Test
+public void projectCreation3() throws ParseException{
+	
+	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	
+	Project project = new Project();
+	System.out.println("Testing Creation of a Project with all its information");
+	project.setProjectName("test3");
+	project.setStartDate(df.parse("2017-02-29"));
+	project.setEndDate(df.parse("2018-02-29"));					
+	User temp = State.getStateInstance().getUser();
+	project.setManagerId(1);
+	
+	ProjectDao projectDao = new ProjectDao();
+	projectDao.InsertProject(project);
+	assertNotNull(project);
+	
+}*/
+
 
 }
