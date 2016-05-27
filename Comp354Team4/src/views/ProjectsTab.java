@@ -6,10 +6,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import data.ProjectDao;
+import models.ProjectDao;
 import models.Project;
 import models.User;
-import services.DataService;
+import controllers.DataService;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,13 +18,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-public class GenericDataTablePanel extends JPanel {
+public class ProjectsTab extends JPanel {
 	private JTable table;
 
 	/**
 	 * Create the panel.
 	 */
-	public GenericDataTablePanel() {
+	public ProjectsTab() {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel create = new CreateProjectPanel();

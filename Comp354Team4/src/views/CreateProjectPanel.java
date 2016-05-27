@@ -9,10 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import data.ProjectDao;
+import models.ProjectDao;
 import models.Project;
 import models.User;
-import services.DataService;
+import controllers.DataService;
 
 import java.awt.Insets;
 import java.awt.event.ActionListener;
