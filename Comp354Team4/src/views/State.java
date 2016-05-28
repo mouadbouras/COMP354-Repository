@@ -7,7 +7,16 @@ public class State {
 	public User user;
 	public Project project;
 	public Activity activity;
+	public ProjectsView projectsView;
 	
+	public ProjectsView getProjectsView() {
+		return projectsView;
+	}
+
+	public void setProjectsView(ProjectsView projectsView) {
+		this.projectsView = projectsView;
+	}
+
 	public User getUser() {
 		return user;
 	}

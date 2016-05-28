@@ -23,7 +23,7 @@ public class ProjectsController
 		
 		ProjectsView view = new ProjectsView () ;
 		//frmCompProject.setLayout(new BorderLayout(0, 0));
-
+		State.getStateInstance().setProjectsView(view);
 
 		
 		frmCompProject.getContentPane().add(view);

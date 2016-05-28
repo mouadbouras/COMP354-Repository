@@ -68,9 +68,17 @@ public class ProjectsTab extends JPanel {
 		    public void mouseClicked(java.awt.event.MouseEvent evt) {
 		        int row = table.rowAtPoint(evt.getPoint());
 		        int col = table.columnAtPoint(evt.getPoint());
+		        
+		        //column 4 is click to look at activities of a project
 		        if (row >= 0 && col == 4) {
 		        	System.out.println("Activities will open for project with id:" + table.getModel().getValueAt(row, 0));
+		        	
+		        	//get data for activities;
+		        	
+		        	State.getStateInstance().getProjectsView().tabbedPane.setSelectedIndex(1); //switches tabbed panes to the activity tab pane
+		        	
 		        }
+		        //column 5 is delete project
 		        if (row >= 0 && col == 5) {
 		        	System.out.println("Delete project with id:" + table.getModel().getValueAt(row, 0));
 		        }
