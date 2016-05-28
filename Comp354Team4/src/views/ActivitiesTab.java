@@ -20,6 +20,7 @@ import javax.swing.JButton;
 
 public class ActivitiesTab extends JPanel {
 	private JTable table;
+	private JScrollPane databaseTablePane;
 
 	/**
 	 * Create the panel.
@@ -42,19 +43,25 @@ public class ActivitiesTab extends JPanel {
 			}
 		});
 		search.add(btnNewButton);
+		
+		databaseTablePane = new JScrollPane();
+		add(databaseTablePane, BorderLayout.CENTER);
+		
 	}
 	
-	private JTable JTableProject()
+	public void UpdateActivityTable()
+	{		
+		table = JTableActivities();
+		databaseTablePane.setViewportView(table);
+	}
+	
+	private JTable JTableActivities()
 	{
-
-		
-		return table;		
-	}
-	
-	private JTable JTableActivity(){
-		JTable table = null;
-		
+		Project temp = State.getStateInstance().getProject();
+		DataService ds = new DataService();
+		table = new JTable(ds.GetActivityTableData(temp.getId()), ds.GetActivityTableColumns());
+		table.setBackground(Color.WHITE);
+		table.setGridColor(Color.GRAY);		
 		return table;
 	}
-
 }

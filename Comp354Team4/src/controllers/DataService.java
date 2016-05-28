@@ -52,7 +52,7 @@ public class DataService
 	public String[][] GetActivityTableData(int projectId){
 		String tempData[][] = null;
 		List<Activity> activities = this.activityDao.GetActivitiesGivenProjectId(projectId);
-		
+		tempData = new String[activities.size()][];
 		for(int i = 0; i<activities.size(); ++i){
 			String [] tempRow = this.activityDao.returnDataRow(activities.get(i));
 			tempData[i] = tempRow;

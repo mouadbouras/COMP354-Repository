@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,9 @@ import controllers.ConverterService;
 
 public class ActivityDao {
 
-	private static DateFormat dateFormat = null;
-	private static String SelectActivitiesGivenProjectId = "Select * from Project where"
-			+ "projectId = @projectId";
+	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	
+	private static String SelectActivitiesGivenProjectId = "Select * from Activity where projectId = @projectId";
 	private static String InsertActivities = "INSERT INTO Activity(activityName, startDate, endDate, projectId) VALUES ('@activityName', '@startDate', '@endDate', '@projectId');";
 	public static String CreateTable = "CREATE TABLE Activity (id INTEGER PRIMARY KEY, activityName varchar(50),	"
 			+ "activityDescription varchar(50), startDate DateTime, endDate DateTime, projectId INTEGER, FOREIGN KEY(projectId) REFERENCES Project(id));";
@@ -28,8 +29,7 @@ public class ActivityDao {
 		try 
 		{
 			temp.setId(rs.getInt("id"));
-			temp.setActivityName(rs.getString("projectName"));
-			
+			temp.setActivityName(rs.getString("activityName"));			
 			temp.setStartDate(dateFormat.parse(rs.getString("startDate"))); //parse date string to date
 			temp.setEndDate(dateFormat.parse(rs.getString("endDate")));	
 			

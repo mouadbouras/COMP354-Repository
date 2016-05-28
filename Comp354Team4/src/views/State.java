@@ -8,6 +8,8 @@ public class State {
 	public Project project;
 	public Activity activity;
 	public ProjectsView projectsView;
+	public ProjectsTab projectTab;
+	public ActivitiesTab activityTab;
 	
 	public ProjectsView getProjectsView() {
 		return projectsView;
@@ -52,6 +54,22 @@ public class State {
 			State.state = new State();
 		
 		return State.state;		
+	}
+
+	public ProjectsTab getProjectTab() {
+		return projectTab;
+	}
+
+	public void setProjectTab(ProjectsTab projectTab) {
+		this.projectTab = projectTab;
+	}
+
+	public ActivitiesTab getActivityTab() {
+		return activityTab;
+	}
+
+	public void setActivityTab(ActivitiesTab activityTab) {
+		this.activityTab = activityTab;
 	}
 
 }

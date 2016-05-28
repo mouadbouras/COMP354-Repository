@@ -74,7 +74,13 @@ public class ProjectsTab extends JPanel {
 		        	System.out.println("Activities will open for project with id:" + table.getModel().getValueAt(row, 0));
 		        	
 		        	//get data for activities;
+		        	int projectId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
+		        	Project temp = new Project();
+		        	temp.setId(projectId);		        	
+		        	State.getStateInstance().setProject(temp);
 		        	
+		        	ActivitiesTab tab = State.getStateInstance().activityTab;
+		        	tab.UpdateActivityTable();
 		        	State.getStateInstance().getProjectsView().tabbedPane.setSelectedIndex(1); //switches tabbed panes to the activity tab pane
 		        	
 		        }
@@ -88,15 +94,4 @@ public class ProjectsTab extends JPanel {
 		
 		return table;		
 	}
-	
-	private JTable JTableActivity(){
-		JTable table = null;
-		
-		Project temp = State.getStateInstance().getProject();
-		DataService ds = new DataService();
-		table = new JTable(ds.GetActivityTableData(temp.getId()), ds.GetActivityTableColumns());
-		table.setBackground(Color.WHITE);
-		return table;
-	}
-
 }

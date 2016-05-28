@@ -32,11 +32,13 @@ public class ProjectsView extends JPanel {
 		
 		
 	    ImageIcon icon1 = null;	
-         Tab1 = new ProjectsTab();
+	    State.getStateInstance().setProjectTab(new ProjectsTab());
+        Tab1 = State.getStateInstance().getProjectTab();
         tabbedPane.addTab("Projects", icon1, Tab1, null);
 		
 	    ImageIcon icon2 = null;	
-         Tab2 = new ActivitiesTab();
+	    State.getStateInstance().setActivityTab(new ActivitiesTab());
+        Tab2 = State.getStateInstance().getActivityTab();
         tabbedPane.addTab("Activies", icon2, Tab2, null);
 
         
