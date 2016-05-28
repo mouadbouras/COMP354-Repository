@@ -7,6 +7,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import models.ProjectDao;
+import models.ActivityDao;
 import models.Project;
 import models.User;
 import controllers.DataService;
@@ -33,19 +34,20 @@ public class ActivitiesTab extends JPanel {
 		search.setBackground(Color.ORANGE);
 		add(search, BorderLayout.NORTH);
 		
+		databaseTablePane = new JScrollPane();
+		add(databaseTablePane, BorderLayout.CENTER);
 		
 		JButton btnNewButton = new JButton("Refresh");
 		btnNewButton.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{						
-
+				table = JTableActivities();
+				databaseTablePane.setViewportView(table);
 			}
 		});
 		search.add(btnNewButton);
-		
-		databaseTablePane = new JScrollPane();
-		add(databaseTablePane, BorderLayout.CENTER);
+
 		
 	}
 	
@@ -62,6 +64,19 @@ public class ActivitiesTab extends JPanel {
 		table = new JTable(ds.GetActivityTableData(temp.getId()), ds.GetActivityTableColumns());
 		table.setBackground(Color.WHITE);
 		table.setGridColor(Color.GRAY);		
+		table.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		        int row = table.rowAtPoint(evt.getPoint());
+		        int col = table.columnAtPoint(evt.getPoint());
+		        //column 5 is delete project
+		        if (row >= 0 && col == 5) {
+		        	System.out.println("Delete activity with id:" + table.getModel().getValueAt(row, 0));
+		        	int activityId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
+		        	new ActivityDao().DeleteActivity(activityId);
+		        }
+		    }
+		});
+		
 		return table;
 	}
 }
