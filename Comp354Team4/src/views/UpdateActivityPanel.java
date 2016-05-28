@@ -23,7 +23,7 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class CreateActivityPanel extends JPanel {
+public class UpdateActivityPanel extends JPanel {
 	private JTextField endDateField;
 	private JTextField startDateField;
 	private JTextField projectField;
@@ -32,7 +32,7 @@ public class CreateActivityPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CreateActivityPanel() {
+	public UpdateActivityPanel() {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();

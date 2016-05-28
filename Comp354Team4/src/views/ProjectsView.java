@@ -39,7 +39,7 @@ public class ProjectsView extends JPanel {
 	    ImageIcon icon2 = null;	
 	    State.getStateInstance().setActivityTab(new ActivitiesTab());
         Tab2 = State.getStateInstance().getActivityTab();
-        tabbedPane.addTab("Activies", icon2, Tab2, null);
+        tabbedPane.addTab("Activities", icon2, Tab2, null);
 
         
 //		add(CreateProjectPanel);
@@ -50,14 +50,4 @@ public class ProjectsView extends JPanel {
 //		tabbedPane.setBackground(Color.WHITE);
 //		splitPane.setRightComponent(tabbedPane);
 	}
-	
-    protected JComponent makeTextPanel(String text) {
-        JPanel panel = new JPanel(false);
-        JLabel filler = new JLabel(text);
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        panel.setLayout(new GridLayout(1, 1));
-        panel.add(filler);
-        return panel;
-    }	
-
 }

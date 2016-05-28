@@ -23,7 +23,7 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class CreateActivityPanel extends JPanel {
+public class UpdateProjectPanel extends JPanel {
 	private JTextField endDateField;
 	private JTextField startDateField;
 	private JTextField projectField;
@@ -32,7 +32,7 @@ public class CreateActivityPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CreateActivityPanel() {
+	public UpdateProjectPanel() {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
@@ -163,7 +163,49 @@ public class CreateActivityPanel extends JPanel {
 		
 		endDateField = new JTextField();
 		panel_9.add(endDateField, BorderLayout.CENTER);
-		endDateField.setColumns(10);	
+		endDateField.setColumns(10);
+		
+		//what happens when create button clicked
+		JButton btnCreate = new JButton("Create");
+		btnCreate.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{						
+				try 
+				{
+					Project project = new Project();
+					project.setProjectName(projectField.getText());
+					project.setStartDate(df.parse(startDateField.getText()));
+					project.setEndDate(df.parse(endDateField.getText()));					
+					User temp = State.getStateInstance().getUser();
+					project.setManagerId(temp.getId());
+					
+					ProjectDao projectDao = new ProjectDao();
+					projectDao.InsertProject(project);
+					
+					projectField.setText("success!");
+				}
+				
+				catch (Exception e)
+				{
+					projectField.setText("error!");
+				}		
+				finally
+				{
+					startDateField.setText("");
+					endDateField.setText("");					
+				}
+			}
+		});		
+
+		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
+		gbc_btnCreate.gridx = 0;
+		gbc_btnCreate.gridy = 6;
+		panel_2.add(btnCreate, gbc_btnCreate);
+		
+		projectField.setText("");
+		startDateField.setText("yyyy-mm-dd");
+		endDateField.setText("yyyy-mm-dd");
 	}
 
 

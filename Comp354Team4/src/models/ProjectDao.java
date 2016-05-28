@@ -15,11 +15,13 @@ import controllers.ConverterService;
 
 public class ProjectDao {
 
-	private static String SelectProjectsGivenManagerId = "SELECT * FROM Project WHERE managerId = @userId";
+	private static String SelectProjectsGivenManagerId = "SELECT * FROM Project WHERE managerId = @userId AND isRemoved = 0";
 	private static String InsertProjects = "INSERT INTO Project(projectName, startDate, endDate, managerId) VALUES ('@projectName', '@startDate', '@endDate', '@managerId');";
 	
 	public static String CreateTable = 	"CREATE TABLE Project (id INTEGER PRIMARY KEY, projectName varchar(50),	"
 											+ "startDate DateTime, endDate DateTime, managerId INTEGER, FOREIGN KEY(managerId) REFERENCES User(id));";
+	
+	public static String DeleteProjectGivenProjectId = "UPDATE Project SET isRemoved = '1' WHERE id = @id";
 	
 	private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -120,6 +122,30 @@ public class ProjectDao {
 	    	System.exit(0);
 	    }	
 	    return;
+	}
+	
+	public void DeleteProject(int id)
+	{
+	    Connection c = null;
+	    Statement stmt = null;
+	    try 
+	    {
+		      Class.forName(SqliteSetup.sqliteClass);
+		      c = DriverManager.getConnection(SqliteSetup.connection);
+			  System.out.println("Opened database successfully");	
+		      stmt = c.createStatement();		      
+		      String sql = ProjectDao.DeleteProjectGivenProjectId.replace("@id", Integer.toString(id));
+		      stmt.executeUpdate(sql);		      
+		      stmt.close();
+		      c.close();
+			  System.out.println("Sql Executed Successfully");	
+	    } 
+	    catch ( Exception e ) 
+	    {
+	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    	System.exit(0);
+	    }	
+	    return;		
 	}
 	
 	//map resultset from sqlite to User entity

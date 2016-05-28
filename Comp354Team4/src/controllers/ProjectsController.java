@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -22,11 +24,10 @@ public class ProjectsController
 	public ProjectsController(JFrame frmCompProject) {
 		
 		ProjectsView view = new ProjectsView () ;
-		//frmCompProject.setLayout(new BorderLayout(0, 0));
+		view.setLayout(new GridLayout(1,2));
 		State.getStateInstance().setProjectsView(view);
-
 		
-		frmCompProject.getContentPane().add(view);
+		frmCompProject.getContentPane().add(view, BorderLayout.CENTER);
 		frmCompProject.setVisible(true);					
 		frmCompProject.repaint();
 	}

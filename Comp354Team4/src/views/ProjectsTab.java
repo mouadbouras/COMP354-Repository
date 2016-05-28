@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JSplitPane;
 
 public class ProjectsTab extends JPanel {
 	private JTable table;
@@ -27,13 +28,15 @@ public class ProjectsTab extends JPanel {
 	public ProjectsTab() {
 		setLayout(new BorderLayout(0, 0));
 		
-		JPanel create = new CreateProjectPanel();
-		create.setBackground(Color.GREEN);
-		add(create, BorderLayout.SOUTH);
-		
 		JPanel search = new JPanel();
 		search.setBackground(Color.ORANGE);
 		add(search, BorderLayout.NORTH);
+		
+		JSplitPane splitPane = new JSplitPane();
+		add(splitPane, BorderLayout.SOUTH);
+		splitPane.setLeftComponent(new CreateProjectPanel());
+		splitPane.setRightComponent(new UpdateProjectPanel());
+		splitPane.setResizeWeight(.5d);
 		
 		JScrollPane databasetable = new JScrollPane();
 		add(databasetable, BorderLayout.CENTER);
@@ -87,6 +90,8 @@ public class ProjectsTab extends JPanel {
 		        //column 5 is delete project
 		        if (row >= 0 && col == 5) {
 		        	System.out.println("Delete project with id:" + table.getModel().getValueAt(row, 0));
+		        	int projectId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
+		        	new ProjectDao().DeleteProject(projectId);
 		        }
 		    }
 		});
