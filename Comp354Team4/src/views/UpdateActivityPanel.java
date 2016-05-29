@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import models.ProjectDao;
+import models.Activity;
+import models.ActivityDao;
 import models.Project;
 import models.User;
 import controllers.DataService;
@@ -163,7 +165,51 @@ public class UpdateActivityPanel extends JPanel {
 		
 		endDateField = new JTextField();
 		panel_9.add(endDateField, BorderLayout.CENTER);
-		endDateField.setColumns(10);	
+		endDateField.setColumns(10);
+		
+		//what happens when update button clicked
+		JButton btnCreate = new JButton("Update");
+		btnCreate.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{						
+				try 
+				{
+					Activity activity = new Activity();
+					activity.setActivityName(projectField.getText());
+					activity.setStartDate(df.parse(startDateField.getText()));
+					activity.setEndDate(df.parse(endDateField.getText()));					
+					User temp = State.getStateInstance().getUser();
+					activity.setProjectId(temp.getId());
+
+					ActivityDao activityDao = new ActivityDao();
+					activityDao.InsertActivity(activity);
+
+					projectField.setText("success!");
+				}
+
+				catch (Exception e)
+				{
+					projectField.setText("error!");
+				}		
+				finally
+				{
+					startDateField.setText("");
+					endDateField.setText("");					
+				}
+			}
+		});		
+
+		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
+		gbc_btnCreate.gridx = 0;
+		gbc_btnCreate.gridy = 6;
+		panel_2.add(btnCreate, gbc_btnCreate);
+
+		projectField.setText("");
+		startDateField.setText("yyyy-mm-dd");
+		endDateField.setText("yyyy-mm-dd");
+		
+			
 	}
 
 
