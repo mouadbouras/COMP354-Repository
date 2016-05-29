@@ -15,6 +15,11 @@ import views.State;
 
 public class Tests {
 	
+@Test
+public void databaseConnection(){
+	
+}
+	
 @Test	
 //testing if user exists in DB
 public void login(){
