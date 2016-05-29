@@ -9,9 +9,9 @@ import ProjectTests.*;
 import GeneralApplicationTests.*;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestCreateActivity.class, TestDeleteActivity.class, TestUpdateActivity.class, 
+@SuiteClasses({ TestCreateActivity.class, TestDeleteActivity.class, TestUpdateActivity.class,
 	TestCreateProject.class, TestDeleteProject.class, TestUpdateProject.class,
-	TestLogin.class})
+	TestLogin.class, TestDatabaseConnection.class})
 public class AllTests {
 
 }
