@@ -99,6 +99,35 @@ public class ActivityDao {
 		return activities;			
 	}
 	
+	//insert project into database
+		public void InsertActivity(Activity activity)
+		{		
+		    Connection c = null;
+		    Statement stmt = null;
+		    try 
+		    {
+			      Class.forName(SqliteSetup.sqliteClass);
+			      c = DriverManager.getConnection(SqliteSetup.connection);
+				  System.out.println("Opened database successfully");	
+			      stmt = c.createStatement();
+			      
+			      String sql = ActivityDao.InsertActivities.replace("@activityName", activity.getActivityName()).
+									    		  replace("@startDate", ConverterService.DateToString(activity.getStartDate())). //format date to string 
+									    		  replace("@endDate", ConverterService.DateToString(activity.getEndDate())). //format date to string 
+									    		  replace("@projectId", Integer.toString(activity.getProjectId()));
+			      stmt.executeUpdate(sql);		      
+			      stmt.close();
+			      c.close();
+				  System.out.println("Sql Executed Successfully");	
+		    } 
+		    catch ( Exception e ) 
+		    {
+		    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    	System.exit(0);
+		    }	
+		    return;
+		}
+	
 	public void DeleteActivity(int activityId)
 	{		
 	    Connection c = null;

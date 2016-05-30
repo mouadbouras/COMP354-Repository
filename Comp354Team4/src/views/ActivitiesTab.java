@@ -3,6 +3,7 @@ package views;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,6 +34,12 @@ public class ActivitiesTab extends JPanel {
 		JPanel search = new JPanel();
 		search.setBackground(Color.ORANGE);
 		add(search, BorderLayout.NORTH);
+		
+		JSplitPane splitPane = new JSplitPane();
+		add(splitPane, BorderLayout.SOUTH);
+		splitPane.setLeftComponent(new CreateActivityPanel());
+		splitPane.setRightComponent(new UpdateActivityPanel());
+		splitPane.setResizeWeight(.5d);
 		
 		databaseTablePane = new JScrollPane();
 		add(databaseTablePane, BorderLayout.CENTER);
