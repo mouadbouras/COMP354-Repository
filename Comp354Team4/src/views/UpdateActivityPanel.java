@@ -14,27 +14,56 @@ import models.Activity;
 import models.ActivityDao;
 import models.Project;
 import models.User;
+import controllers.ConverterService;
 import controllers.DataService;
 
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class UpdateActivityPanel extends JPanel {
+	
+	private ActivitiesTab parentPanel;
+	
+	private int activityID = 0 ;   
 	private JTextField endDateField;
 	private JTextField startDateField;
-	private JTextField projectField;
+	private JTextField activityField;
 	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	private JTextField descriptionField;
+	
+	
+	public void setDescriptionField(String description){	
+		descriptionField.setText(description);
+	}
+	public void setEndDateField(String endDate){	
+		endDateField.setText(endDate);
+	}
+	public void setStartDateField(String startDate){	
+		startDateField.setText(startDate);
+	}
+	public void setProjectField(String projectFieldStr){	
+		activityField.setText(projectFieldStr);
+	}
+	
+	public void setActiveProject(int activityID)
+	{
+		this.activityID = activityID;
+	}
+	
 	
 	/**
 	 * Create the panel.
 	 */
-	public UpdateActivityPanel() {
+	public UpdateActivityPanel(ActivitiesTab parentPanel) {
+		this.parentPanel = parentPanel;
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
@@ -82,7 +111,7 @@ public class UpdateActivityPanel extends JPanel {
 		gbl_panel_3.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		panel_3.setLayout(gbl_panel_3);
 		
-		JLabel label_1 = new JLabel("Project Name");
+		JLabel label_1 = new JLabel("Activity Name");
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
 		gbc_label_1.insets = new Insets(0, 0, 0, 5);
 		gbc_label_1.gridx = 1;
@@ -97,9 +126,9 @@ public class UpdateActivityPanel extends JPanel {
 		panel_3.add(panel_4, gbc_panel_4);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		projectField = new JTextField();
-		projectField.setColumns(10);
-		panel_4.add(projectField, BorderLayout.CENTER);
+		activityField = new JTextField();
+		activityField.setColumns(10);
+		panel_4.add(activityField, BorderLayout.CENTER);
 		
 		JPanel panel_10 = new JPanel();
 		GridBagConstraints gbc_panel_10 = new GridBagConstraints();
@@ -114,6 +143,41 @@ public class UpdateActivityPanel extends JPanel {
 		gbl_panel_10.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_panel_10.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		panel_10.setLayout(gbl_panel_10);
+		
+		JPanel panel_7 = new JPanel();
+		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
+		gbc_panel_7.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_7.fill = GridBagConstraints.BOTH;
+		gbc_panel_7.gridx = 0;
+		gbc_panel_7.gridy = 5;
+		panel_2.add(panel_7, gbc_panel_7);
+		GridBagLayout gbl_panel_7 = new GridBagLayout();
+		gbl_panel_7.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gbl_panel_7.rowHeights = new int[]{0, 0};
+		gbl_panel_7.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_7.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		panel_7.setLayout(gbl_panel_7);
+		
+		JLabel lblDescription = new JLabel("Description");
+		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
+		gbc_lblDescription.insets = new Insets(0, 0, 0, 5);
+		gbc_lblDescription.gridx = 1;
+		gbc_lblDescription.gridy = 0;
+		panel_7.add(lblDescription, gbc_lblDescription);
+		
+		JPanel panel_12 = new JPanel();
+		GridBagConstraints gbc_panel_12 = new GridBagConstraints();
+		gbc_panel_12.fill = GridBagConstraints.BOTH;
+		gbc_panel_12.gridx = 3;
+		gbc_panel_12.gridy = 0;
+		panel_7.add(panel_12, gbc_panel_12);
+		panel_12.setLayout(new BorderLayout(0, 0));
+		
+		descriptionField = new JTextField();
+		descriptionField.setText("");
+		descriptionField.setColumns(10);
+		panel_12.add(descriptionField, BorderLayout.CENTER);
+
 		
 		JLabel lblStartDate = new JLabel("Start Date");
 		GridBagConstraints gbc_lblStartDate = new GridBagConstraints();
@@ -168,44 +232,74 @@ public class UpdateActivityPanel extends JPanel {
 		endDateField.setColumns(10);
 		
 		//what happens when update button clicked
-		JButton btnCreate = new JButton("Update");
-		btnCreate.addActionListener(new ActionListener() 
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{						
 				try 
 				{
-					Activity activity = new Activity();
-					activity.setActivityName(projectField.getText());
-					activity.setStartDate(df.parse(startDateField.getText()));
-					activity.setEndDate(df.parse(endDateField.getText()));					
-					User temp = State.getStateInstance().getUser();
-					activity.setProjectId(temp.getId());
+					if(activityID == 0)
+					{
+						JOptionPane.showMessageDialog(null, "You must select an Activity to update!");
+					}
+					else
+					{
+//						System.out.println(activeProjectID );
+//			        	Project projectToUpdate = new Project();
+//			        	projectToUpdate.setId(activeProjectID);	
+//			        	projectToUpdate.setProjectName(projectField.getText());
+//			        	projectToUpdate.setStartDate(ConverterService.StringToDate(startDateField.getText()));
+//			        	projectToUpdate.setEndDate(ConverterService.StringToDate(endDateField.getText()));
+			        	
+						Activity activityToUpdate = new Activity();
+						activityToUpdate.setActivityName(activityField.getText());
+						activityToUpdate.setActivityDescription(descriptionField.getText());
+						activityToUpdate.setStartDate(df.parse(startDateField.getText()));
+						activityToUpdate.setEndDate(df.parse(endDateField.getText()));					
+						activityToUpdate.setProjectId(State.getStateInstance().getProject().getId());
+						activityToUpdate.setId(activityID);
+	
+						ActivityDao activityDao = new ActivityDao();
+						activityDao.UpdateActivity(activityToUpdate);
+						
+						JOptionPane.showMessageDialog(null, "The Activity was updated succesfully! ");
 
-					ActivityDao activityDao = new ActivityDao();
-					activityDao.InsertActivity(activity);
+						activityField.setText(activityToUpdate.getActivityName());
+						descriptionField.setText(activityToUpdate.getActivityDescription());
+						startDateField.setText(ConverterService.DateToString(activityToUpdate.getStartDate()));
+						endDateField.setText(ConverterService.DateToString(activityToUpdate.getEndDate()));
+						activityID = activityToUpdate.getId();
+	
+						
+					}
 
-					projectField.setText("success!");
 				}
 
 				catch (Exception e)
 				{
-					projectField.setText("error!");
-				}		
+					JOptionPane.showMessageDialog(null, "An error occured while updating this activity! Try again.");
+					activityField.setText("");
+					descriptionField.setText("");
+					startDateField.setText("");
+					endDateField.setText("");
+					activityID = 0;	
+					}		
 				finally
 				{
-					startDateField.setText("");
-					endDateField.setText("");					
+					parentPanel.refreshTable();				
 				}
 			}
 		});		
+		
 
 		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
 		gbc_btnCreate.gridx = 0;
 		gbc_btnCreate.gridy = 6;
-		panel_2.add(btnCreate, gbc_btnCreate);
+		panel_2.add(btnUpdate, gbc_btnCreate);
 
-		projectField.setText("");
+		activityField.setText("");
+		descriptionField.setText("");
 		startDateField.setText("yyyy-mm-dd");
 		endDateField.setText("yyyy-mm-dd");
 		

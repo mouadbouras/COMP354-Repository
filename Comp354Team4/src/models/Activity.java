@@ -6,6 +6,7 @@ public class Activity {
 	
 	private int id;
 	private String activityName;
+	private String activityDescription;
 	private Date startDate;
 	private Date endDate;
 	private int projectId;
@@ -14,8 +15,8 @@ public class Activity {
 		
 	}
 	
-	public Activity(int id, String name, Date start, Date end, int projId){
-		this.id = id;	activityName = name;	startDate = start;	endDate = end;
+	public Activity(int id, String name,String description, Date start, Date end, int projId){
+		this.id = id;	activityName = name;activityDescription = description	;startDate = start;	endDate = end;
 		projectId = projId;
 	}
 	
@@ -35,6 +36,14 @@ public class Activity {
 		this.activityName = activityName;
 	}
 
+	public String getActivityDescription() {
+		return activityDescription;
+	}
+
+	public void setActivityDescription(String activityDescripition) {
+		this.activityDescription = activityDescripition;
+	}
+	
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -63,6 +72,7 @@ public class Activity {
 										+ "("
 										+ "id INTEGER PRIMARY KEY,"
 										+ "activityName varchar(50),"
+										+ "activityDescription varchar(255),"
 										+ "startDate DateTime,"
 										+ "endDate DateTime,"
 										+ "projectId INTEGER,"

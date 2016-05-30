@@ -31,9 +31,9 @@ public class ProjectsTab extends JPanel {
 	public ProjectsTab() {
 		setLayout(new BorderLayout(0, 0));
 		
-		JPanel search = new JPanel();
-		search.setBackground(Color.ORANGE);
-		add(search, BorderLayout.NORTH);
+//		JPanel search = new JPanel();
+//		search.setBackground(Color.ORANGE);
+//		add(search, BorderLayout.NORTH);
 		
 		JSplitPane splitPane = new JSplitPane();
 		add(splitPane, BorderLayout.SOUTH);
@@ -54,17 +54,17 @@ public class ProjectsTab extends JPanel {
 		table = this.JTableProject();
 		databasetable.setViewportView(table);
 		
-		JButton refreshButton = new JButton("Refresh");
-		refreshButton.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent arg0) 
-			{						
-				//table = JTableProject();
-				//databasetable.setViewportView(table);
-				 refreshTable();
-			}
-		});
-		search.add(refreshButton);
+//		JButton refreshButton = new JButton("Refresh");
+//		refreshButton.addActionListener(new ActionListener() 
+//		{
+//			public void actionPerformed(ActionEvent arg0) 
+//			{						
+//				//table = JTableProject();
+//				//databasetable.setViewportView(table);
+//				 refreshTable();
+//			}
+//		});
+//		search.add(refreshButton);
 	}
 	
 	private JTable JTableProject()
@@ -94,7 +94,7 @@ public class ProjectsTab extends JPanel {
 		        	State.getStateInstance().setProject(temp);
 		        	
 		        	ActivitiesTab tab = State.getStateInstance().activityTab;
-		        	tab.UpdateActivityTable();
+		        	tab.refreshTable();
 		        	State.getStateInstance().getProjectsView().tabbedPane.setSelectedIndex(1); //switches tabbed panes to the activity tab pane
 		        	
 		        }
@@ -102,19 +102,10 @@ public class ProjectsTab extends JPanel {
 		        if (row >= 0 && col == 5) {
 		        	System.out.println("Update project with id:" + table.getModel().getValueAt(row, 0));
 		        	
-		        	
-		        	//System.out.println("Project Name:" + table.getModel().getValueAt(row, 1));
-		        	//System.out.println("Start Date:" + table.getModel().getValueAt(row, 2));
-		        	//System.out.println("End Date:" + table.getModel().getValueAt(row, 3));
-
 		        	updatePanel.setActiveProject(Integer.parseInt(table.getModel().getValueAt(row, 0).toString()));
 		        	updatePanel.setStartDateField(table.getModel().getValueAt(row, 2).toString());
 		        	updatePanel.setEndDateField(table.getModel().getValueAt(row, 3).toString());
 		        	updatePanel.setProjectField(table.getModel().getValueAt(row, 1).toString());
-
-
-		        	//int projectId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
-		        	//new ProjectDao().DeleteProject(projectId);
 		        	
 		        }
 		        

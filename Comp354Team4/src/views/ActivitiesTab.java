@@ -23,6 +23,8 @@ import javax.swing.JButton;
 public class ActivitiesTab extends JPanel {
 	private JTable table;
 	private JScrollPane databaseTablePane;
+	private CreateActivityPanel createActivity;
+	private UpdateActivityPanel updateActivity;
 
 	/**
 	 * Create the panel.
@@ -31,34 +33,39 @@ public class ActivitiesTab extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 
 		
-		JPanel search = new JPanel();
-		search.setBackground(Color.ORANGE);
-		add(search, BorderLayout.NORTH);
-		
+//		JPanel search = new JPanel();
+//		search.setBackground(Color.ORANGE);
+//		add(search, BorderLayout.NORTH);
+//		
 		JSplitPane splitPane = new JSplitPane();
 		add(splitPane, BorderLayout.SOUTH);
-		splitPane.setLeftComponent(new CreateActivityPanel());
-		splitPane.setRightComponent(new UpdateActivityPanel());
+		
+		createActivity = new CreateActivityPanel(this);
+		updateActivity = new UpdateActivityPanel(this);
+		
+		splitPane.setLeftComponent(createActivity);
+		splitPane.setRightComponent(updateActivity);
+		
 		splitPane.setResizeWeight(.5d);
 		
 		databaseTablePane = new JScrollPane();
 		add(databaseTablePane, BorderLayout.CENTER);
 		
-		JButton btnNewButton = new JButton("Refresh");
-		btnNewButton.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent arg0) 
-			{						
-				table = JTableActivities();
-				databaseTablePane.setViewportView(table);
-			}
-		});
-		search.add(btnNewButton);
+//		JButton btnNewButton = new JButton("Refresh");
+//		btnNewButton.addActionListener(new ActionListener() 
+//		{
+//			public void actionPerformed(ActionEvent arg0) 
+//			{						
+//				table = JTableActivities();
+//				databaseTablePane.setViewportView(table);
+//			}
+//		});
+//		search.add(btnNewButton);
 
 		
 	}
 	
-	public void UpdateActivityTable()
+	public void refreshTable()
 	{		
 		table = JTableActivities();
 		databaseTablePane.setViewportView(table);
@@ -75,11 +82,28 @@ public class ActivitiesTab extends JPanel {
 		    public void mouseClicked(java.awt.event.MouseEvent evt) {
 		        int row = table.rowAtPoint(evt.getPoint());
 		        int col = table.columnAtPoint(evt.getPoint());
-		        //column 5 is delete project
-		        if (row >= 0 && col == 5) {
+		        
+		        //column 6 is update project
+		        if (row >= 0 && col == 6) {
+		        	System.out.println("Update activity with id:" + table.getModel().getValueAt(row, 0));
+		        	
+		        	updateActivity.setActiveProject(Integer.parseInt(table.getModel().getValueAt(row, 0).toString()));
+		        	updateActivity.setProjectField(table.getModel().getValueAt(row, 1).toString());
+		        	
+		        	String description = (table.getModel().getValueAt(row, 2) == null) ? "" : table.getModel().getValueAt(row, 2).toString() ;
+		        	updateActivity.setDescriptionField(description);
+		        	updateActivity.setStartDateField(table.getModel().getValueAt(row, 3).toString());
+		        	updateActivity.setEndDateField(table.getModel().getValueAt(row, 4).toString());
+		        	
+		        	
+		        }
+		        
+		        //column 7 is delete project
+		        if (row >= 0 && col == 7) {
 		        	System.out.println("Delete activity with id:" + table.getModel().getValueAt(row, 0));
 		        	int activityId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
 		        	new ActivityDao().DeleteActivity(activityId);
+		        	refreshTable();
 		        }
 		    }
 		});

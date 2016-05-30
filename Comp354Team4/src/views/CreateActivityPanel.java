@@ -20,21 +20,29 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class CreateActivityPanel extends JPanel {
+	
+	private ActivitiesTab parentPanel;
 	private JTextField endDateField;
 	private JTextField startDateField;
-	private JTextField projectField;
+	private JTextField activityField;
+	//private int projectID;
 	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	private JTextField descriptionField;
 	
 	/**
 	 * Create the panel.
 	 */
-	public CreateActivityPanel() {
+	public CreateActivityPanel(ActivitiesTab parentPanel) {
+		this.parentPanel = parentPanel;
+
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
@@ -97,9 +105,43 @@ public class CreateActivityPanel extends JPanel {
 		panel_3.add(panel_4, gbc_panel_4);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		projectField = new JTextField();
-		projectField.setColumns(10);
-		panel_4.add(projectField, BorderLayout.CENTER);
+		activityField = new JTextField();
+		activityField.setColumns(10);
+		panel_4.add(activityField, BorderLayout.CENTER);
+		
+		JPanel panel_7 = new JPanel();
+		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
+		gbc_panel_7.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_7.fill = GridBagConstraints.BOTH;
+		gbc_panel_7.gridx = 0;
+		gbc_panel_7.gridy = 5;
+		panel_2.add(panel_7, gbc_panel_7);
+		GridBagLayout gbl_panel_7 = new GridBagLayout();
+		gbl_panel_7.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gbl_panel_7.rowHeights = new int[]{0, 0};
+		gbl_panel_7.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_7.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		panel_7.setLayout(gbl_panel_7);
+		
+		JLabel lblDescription = new JLabel("Description");
+		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
+		gbc_lblDescription.insets = new Insets(0, 0, 0, 5);
+		gbc_lblDescription.gridx = 1;
+		gbc_lblDescription.gridy = 0;
+		panel_7.add(lblDescription, gbc_lblDescription);
+		
+		JPanel panel_12 = new JPanel();
+		GridBagConstraints gbc_panel_12 = new GridBagConstraints();
+		gbc_panel_12.fill = GridBagConstraints.BOTH;
+		gbc_panel_12.gridx = 3;
+		gbc_panel_12.gridy = 0;
+		panel_7.add(panel_12, gbc_panel_12);
+		panel_12.setLayout(new BorderLayout(0, 0));
+		
+		descriptionField = new JTextField();
+		descriptionField.setText("");
+		descriptionField.setColumns(10);
+		panel_12.add(descriptionField, BorderLayout.CENTER);
 		
 		JPanel panel_10 = new JPanel();
 		GridBagConstraints gbc_panel_10 = new GridBagConstraints();
@@ -175,37 +217,50 @@ public class CreateActivityPanel extends JPanel {
 					{						
 						try 
 						{
+							Project activeProject = State.getStateInstance().getProject();
 							Activity activity = new Activity();
-							activity.setActivityName(projectField.getText());
+							activity.setActivityName(activityField.getText());
+							activity.setActivityDescription(descriptionField.getText());
 							activity.setStartDate(df.parse(startDateField.getText()));
-							activity.setEndDate(df.parse(endDateField.getText()));					
-							User temp = State.getStateInstance().getUser();
-							activity.setProjectId(temp.getId());
+							activity.setEndDate(df.parse(endDateField.getText()));	
+							activity.setProjectId(activeProject.getId());
+
 							
 							ActivityDao activityDao = new ActivityDao();
+							System.out.println("insert activity into project : " + activeProject.getId());
 							activityDao.InsertActivity(activity);
 							
-							projectField.setText("success!");
+							JOptionPane.showMessageDialog(null, "The Activity was created succesfully! ");
 						}
 						
 						catch (Exception e)
 						{
-							projectField.setText("error!");
+							JOptionPane.showMessageDialog(null, "An error occured while creating this activity! Try again.");
+							activityField.setText("");
+							descriptionField.setText("");
+							startDateField.setText("");
+							endDateField.setText("");	
 						}		
 						finally
 						{
+							parentPanel.refreshTable();
+							activityField.setText("");
+							descriptionField.setText("");
 							startDateField.setText("");
-							endDateField.setText("");					
+							endDateField.setText("");				
 						}
 					}
 				});		
+				
+
 
 				GridBagConstraints gbc_btnCreate = new GridBagConstraints();
 				gbc_btnCreate.gridx = 0;
 				gbc_btnCreate.gridy = 6;
 				panel_2.add(btnCreate, gbc_btnCreate);
 				
-				projectField.setText("");
+				activityField.setText("");
+				descriptionField.setText("");
 				startDateField.setText("yyyy-mm-dd");
 				endDateField.setText("yyyy-mm-dd");
 			}
