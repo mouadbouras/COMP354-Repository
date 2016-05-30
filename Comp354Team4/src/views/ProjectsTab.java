@@ -21,6 +21,9 @@ import javax.swing.JSplitPane;
 
 public class ProjectsTab extends JPanel {
 	private JTable table;
+	private CreateProjectPanel createPanel ; 
+	private UpdateProjectPanel updatePanel ;
+	private JScrollPane databasetable;
 
 	/**
 	 * Create the panel.
@@ -34,26 +37,34 @@ public class ProjectsTab extends JPanel {
 		
 		JSplitPane splitPane = new JSplitPane();
 		add(splitPane, BorderLayout.SOUTH);
-		splitPane.setLeftComponent(new CreateProjectPanel());
-		splitPane.setRightComponent(new UpdateProjectPanel());
+		
+		createPanel = new CreateProjectPanel(this);
+		updatePanel = new UpdateProjectPanel(this);
+		//updatePanel.setStartDateField("1991-10-28");
+	
+		splitPane.setLeftComponent(createPanel);
+		splitPane.setRightComponent(updatePanel);
+		
 		splitPane.setResizeWeight(.5d);
 		
-		JScrollPane databasetable = new JScrollPane();
+		databasetable = new JScrollPane();
 		add(databasetable, BorderLayout.CENTER);
 		
+		//table = this.JTableProject(createPanel,updatePanel);
 		table = this.JTableProject();
 		databasetable.setViewportView(table);
 		
-		JButton btnNewButton = new JButton("Refresh");
-		btnNewButton.addActionListener(new ActionListener() 
+		JButton refreshButton = new JButton("Refresh");
+		refreshButton.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{						
-				table = JTableProject();
-				databasetable.setViewportView(table);
+				//table = JTableProject();
+				//databasetable.setViewportView(table);
+				 refreshTable();
 			}
 		});
-		search.add(btnNewButton);
+		search.add(refreshButton);
 	}
 	
 	private JTable JTableProject()
@@ -87,8 +98,28 @@ public class ProjectsTab extends JPanel {
 		        	State.getStateInstance().getProjectsView().tabbedPane.setSelectedIndex(1); //switches tabbed panes to the activity tab pane
 		        	
 		        }
-		        //column 5 is delete project
+		        //column 5 is update project
 		        if (row >= 0 && col == 5) {
+		        	System.out.println("Update project with id:" + table.getModel().getValueAt(row, 0));
+		        	
+		        	
+		        	//System.out.println("Project Name:" + table.getModel().getValueAt(row, 1));
+		        	//System.out.println("Start Date:" + table.getModel().getValueAt(row, 2));
+		        	//System.out.println("End Date:" + table.getModel().getValueAt(row, 3));
+
+		        	updatePanel.setActiveProject(Integer.parseInt(table.getModel().getValueAt(row, 0).toString()));
+		        	updatePanel.setStartDateField(table.getModel().getValueAt(row, 2).toString());
+		        	updatePanel.setEndDateField(table.getModel().getValueAt(row, 3).toString());
+		        	updatePanel.setProjectField(table.getModel().getValueAt(row, 1).toString());
+
+
+		        	//int projectId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
+		        	//new ProjectDao().DeleteProject(projectId);
+		        	
+		        }
+		        
+		        //column 6 is delete project
+		        if (row >= 0 && col == 6) {
 		        	System.out.println("Delete project with id:" + table.getModel().getValueAt(row, 0));
 		        	int projectId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
 		        	new ProjectDao().DeleteProject(projectId);
@@ -98,5 +129,10 @@ public class ProjectsTab extends JPanel {
 		
 		
 		return table;		
+	}
+	
+	public void refreshTable(){
+		table = JTableProject();
+		databasetable.setViewportView(table);
 	}
 }

@@ -1,5 +1,5 @@
 package views;
-
+import javax.swing.*;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import javax.swing.BoxLayout;
@@ -9,9 +9,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import java.util.Date;
+
+
 import models.ProjectDao;
 import models.Project;
 import models.User;
+import controllers.ConverterService;
 import controllers.DataService;
 
 import java.awt.Insets;
@@ -24,15 +28,36 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class UpdateProjectPanel extends JPanel {
+	
+	private ProjectsTab parentPanel;
+	
+	private int activeProjectID = 0 ;   
 	private JTextField endDateField;
 	private JTextField startDateField;
 	private JTextField projectField;
 	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	
+	public void setEndDateField(String endDate){	
+		endDateField.setText(endDate);
+	}
+	public void setStartDateField(String startDate){	
+		startDateField.setText(startDate);
+	}
+	public void setProjectField(String projectFieldStr){	
+		projectField.setText(projectFieldStr);
+	}
+	
+	public void setActiveProject(int project)
+	{
+		activeProjectID = project;
+	}
+	
+	
 	/**
 	 * Create the panel.
 	 */
-	public UpdateProjectPanel() {
+	public UpdateProjectPanel(ProjectsTab parentPanel) {
+		this.parentPanel = parentPanel;
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
@@ -166,34 +191,53 @@ public class UpdateProjectPanel extends JPanel {
 		endDateField.setColumns(10);
 		
 		//what happens when create button clicked
-		JButton btnCreate = new JButton("Create");
-		btnCreate.addActionListener(new ActionListener() 
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{						
 				try 
 				{
-					Project project = new Project();
-					project.setProjectName(projectField.getText());
-					project.setStartDate(df.parse(startDateField.getText()));
-					project.setEndDate(df.parse(endDateField.getText()));					
-					User temp = State.getStateInstance().getUser();
-					project.setManagerId(temp.getId());
-					
-					ProjectDao projectDao = new ProjectDao();
-					projectDao.InsertProject(project);
-					
-					projectField.setText("success!");
+					if(activeProjectID == 0)
+					{
+						JOptionPane.showMessageDialog(null, "You must select a Project to update!");
+					}
+					else
+					{
+						System.out.println(activeProjectID );
+			        	Project projectToUpdate = new Project();
+			        	projectToUpdate.setId(activeProjectID);	
+			        	projectToUpdate.setProjectName(projectField.getText());
+			        	projectToUpdate.setStartDate(ConverterService.StringToDate(startDateField.getText()));
+			        	projectToUpdate.setEndDate(ConverterService.StringToDate(endDateField.getText()));
+			        	
+						ProjectDao projectDao = new ProjectDao();
+						projectDao.UpdateProject(projectToUpdate);
+						
+						JOptionPane.showMessageDialog(null, "The Project was updated succesfully! ");
+
+						projectField.setText(projectToUpdate.getProjectName());
+						startDateField.setText(ConverterService.DateToString(projectToUpdate.getStartDate()));
+						endDateField.setText(ConverterService.DateToString(projectToUpdate.getEndDate()));
+						activeProjectID = projectToUpdate.getId();
+					}
+					//parentPanel.refreshTable();
 				}
 				
 				catch (Exception e)
 				{
-					projectField.setText("error!");
+					JOptionPane.showMessageDialog(null, "An error occured while updating this project! Try again.");
+					projectField.setText("");
+					startDateField.setText("");
+					endDateField.setText("");
+					activeProjectID = 0;
+					//projectField.setText("error!");
 				}		
 				finally
 				{
-					startDateField.setText("");
-					endDateField.setText("");					
+					parentPanel.refreshTable();
+					//startDateField.setText("");
+					//endDateField.setText("");					
 				}
 			}
 		});		
@@ -201,7 +245,7 @@ public class UpdateProjectPanel extends JPanel {
 		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
 		gbc_btnCreate.gridx = 0;
 		gbc_btnCreate.gridy = 6;
-		panel_2.add(btnCreate, gbc_btnCreate);
+		panel_2.add(btnUpdate, gbc_btnCreate);
 		
 		projectField.setText("");
 		startDateField.setText("yyyy-mm-dd");

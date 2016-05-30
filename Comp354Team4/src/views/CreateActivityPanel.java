@@ -80,7 +80,7 @@ public class CreateActivityPanel extends JPanel {
 		gbl_panel_3.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		panel_3.setLayout(gbl_panel_3);
 		
-		JLabel label_1 = new JLabel("Project Name");
+		JLabel label_1 = new JLabel("Activity Name");
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
 		gbc_label_1.insets = new Insets(0, 0, 0, 5);
 		gbc_label_1.gridx = 1;

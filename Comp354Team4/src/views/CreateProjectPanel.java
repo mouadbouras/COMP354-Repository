@@ -18,12 +18,16 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class CreateProjectPanel extends JPanel {
+	
+	private ProjectsTab parentPanel;
 	private JTextField endDateField;
 	private JTextField startDateField;
 	private JTextField projectField;
@@ -32,7 +36,9 @@ public class CreateProjectPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CreateProjectPanel() {
+	public CreateProjectPanel(ProjectsTab parentPanel) {
+		this.parentPanel = parentPanel;
+
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
@@ -183,15 +189,20 @@ public class CreateProjectPanel extends JPanel {
 					ProjectDao projectDao = new ProjectDao();
 					projectDao.InsertProject(project);
 					
-					projectField.setText("success!");
+					JOptionPane.showMessageDialog(null, "The Project was created succesfully! ");
 				}
 				
 				catch (Exception e)
 				{
-					projectField.setText("error!");
+					JOptionPane.showMessageDialog(null, "An error occured while creating this project! Try again.");
+					projectField.setText("");
+					startDateField.setText("");
+					endDateField.setText("");
 				}		
 				finally
 				{
+					parentPanel.refreshTable();
+					projectField.setText("");
 					startDateField.setText("");
 					endDateField.setText("");					
 				}
