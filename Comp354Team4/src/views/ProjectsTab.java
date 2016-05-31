@@ -114,6 +114,7 @@ public class ProjectsTab extends JPanel {
 		        	System.out.println("Delete project with id:" + table.getModel().getValueAt(row, 0));
 		        	int projectId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
 		        	new ProjectDao().DeleteProject(projectId);
+		        	refreshTable();
 		        }
 		    }
 		});
