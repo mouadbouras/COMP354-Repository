@@ -5,16 +5,19 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import models.ActivityDao;
+import models.ProjectDao;
 
 public class TestDeleteActivity {
 
 	@Test
-	//testing deletion of an Activity
+	//testing deletion of an Activity by using "activity id"
 	public void deleteActivity(){
-		int activityId = 1;
-		System.out.println("Testing Deletion of an activity");
-		String d1 = ActivityDao.DeleteActivityGivenActivityId.replace("@id", Integer.toString(activityId));
-		assertNull(activityId);
+		
+		ActivityDao activity = new ActivityDao();
+		System.out.println("Testing Deletion of an Activty");
+		//Activity is deleted in the database...
+		activity.DeleteActivity(15);
+		assertNotNull(activity);//activity should be null if deleted	
 		
 	}
 }

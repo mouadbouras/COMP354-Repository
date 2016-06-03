@@ -18,7 +18,7 @@ public class TestCreateActivity {
 		
 		Activity temp = new Activity();	
 		System.out.println("Testing Creation of a VALID Activity");
-		temp.setId(100);
+		temp.setId(20);
 		temp.setActivityName("UserTest");		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		temp.setStartDate(df.parse("2016-05-29"));
