@@ -1,6 +1,7 @@
 package views;
 
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -8,7 +9,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import models.ProjectDao;
+import models.Activity;
 import models.ActivityDao;
+import models.ActivityDependencyDao;
 import models.Project;
 import models.User;
 import controllers.DataService;
@@ -17,6 +20,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+
 
 import javax.swing.JButton;
 
@@ -73,9 +80,9 @@ public class ActivitiesTab extends JPanel {
 	
 	private JTable JTableActivities()
 	{
-		Project temp = State.getStateInstance().getProject();
+		Project currentProject = State.getStateInstance().getProject();
 		DataService ds = new DataService();
-		table = new JTable(ds.GetActivityTableData(temp.getId()), ds.GetActivityTableColumns());
+		table = new JTable(ds.GetActivityTableData(currentProject.getId()), ds.GetActivityTableColumns());
 		table.setBackground(Color.WHITE);
 		table.setGridColor(Color.GRAY);		
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -103,6 +110,43 @@ public class ActivitiesTab extends JPanel {
 		        	System.out.println("Delete activity with id:" + table.getModel().getValueAt(row, 0));
 		        	int activityId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
 		        	new ActivityDao().DeleteActivity(activityId);
+		        	refreshTable();
+		        }
+		        
+		        //column 9 is add dependency
+		        if (row >= 0 && col == 9) {
+		        	String [][] tmptable = ds.GetActivityTableData(currentProject.getId());
+		        	String[] activitySelection = new String[tmptable.length];
+		        	Map<String,Integer> activitySelectionIds = new HashMap<String,Integer>(); 
+		        	
+		        	activitySelection[0] = "Select Activity";
+		        	activitySelectionIds.put("Select Activity",0);
+		        	int index = 1;
+		        	for (int i = 0 ; i< tmptable.length ; i++)
+		        	{
+		        		if (i != row)
+		        		{
+		        			activitySelection[index] = tmptable[i][1];
+		        			activitySelectionIds.put(tmptable[i][1], Integer.parseInt(tmptable[i][0]));
+		        			//activitySelectionIds[index] = Integer.parseInt(table[i][0]);
+		        			index++;
+		        		}
+		        	}
+		        	String s = (String)JOptionPane.showInputDialog(
+		        	                    null,
+		        	                    "Select the dependency you'd like to add",
+		        	                    "Dependency Box",
+		        	                    JOptionPane.PLAIN_MESSAGE,
+		        	                    null,
+		        	                    activitySelection,
+		        	                    "Select Activity");	
+		        	
+		        	if( activitySelectionIds.get(s) != 0)
+		        	{
+			        	int currentActivityId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
+			        	//System.out.println("selected : " + activitySelectionIds.get(s));
+			        	(new ActivityDependencyDao()).InsertDependency(currentActivityId,activitySelectionIds.get(s));
+		        	} 	
 		        	refreshTable();
 		        }
 		    }

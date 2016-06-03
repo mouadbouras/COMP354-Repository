@@ -12,6 +12,7 @@ import java.util.List;
 import models.Activity;
 import models.Project;
 import controllers.ConverterService;
+import models.ActivityDependencyDao;
 
 public class ActivityDao {
 
@@ -57,7 +58,7 @@ public class ActivityDao {
 				"Start Date", 
 				"End Date", 
 				"Project Id",
-				"",""
+				"","","Depends On",""
 				};
 		
 		return columns;		
@@ -192,6 +193,7 @@ public class ActivityDao {
 	
 	public String[] returnDataRow(Activity activity)
 	{		
+		String dependency = (new ActivityDependencyDao()).GetDependencyIdString(activity.getId());
 		String[] temp = new String[]{
 				Integer.toString(activity.getId()),
 				activity.getActivityName(), 
@@ -199,7 +201,8 @@ public class ActivityDao {
 				ConverterService.DateToString(activity.getStartDate()),
 				ConverterService.DateToString(activity.getEndDate()), 
 				Integer.toString(activity.getProjectId()),
-				"Edit","Delete"
+				"Edit","Delete",dependency,"Add Dependency"
+				
 				};		
 		return temp;		
 	}
