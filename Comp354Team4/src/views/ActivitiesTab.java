@@ -128,10 +128,6 @@ public class ActivitiesTab extends JPanel {
 		        		{
 		        			activitySelection[index] = tmptable[i][1];
 		        			activitySelectionIds.put(tmptable[i][1], Integer.parseInt(tmptable[i][0]));
-<<<<<<< Updated upstream
-=======
-		        			//activitySelectionIds[index] = Integer.parseInt(table[i][0]);
->>>>>>> Stashed changes
 		        			index++;
 		        		}
 		        	}
@@ -147,7 +143,6 @@ public class ActivitiesTab extends JPanel {
 		        	if( activitySelectionIds.get(s) != 0)
 		        	{
 			        	int currentActivityId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
-<<<<<<< Updated upstream
 			        	boolean dependencyExists = (new ActivityDependencyDao()).CheckDependencyExists(currentActivityId,activitySelectionIds.get(s)) ;
 			        	if(!dependencyExists)
 			        	{
@@ -158,11 +153,7 @@ public class ActivitiesTab extends JPanel {
 							JOptionPane.showMessageDialog(null, "The selected Dependency Already Exists! ");
 			        	}
 		        	} 
-=======
-			        	//System.out.println("selected : " + activitySelectionIds.get(s));
-			        	(new ActivityDependencyDao()).InsertDependency(currentActivityId,activitySelectionIds.get(s));
-		        	} 	
->>>>>>> Stashed changes
+
 		        	refreshTable();
 		        }
 		    }
