@@ -40,8 +40,8 @@ public class TestLogin {
 		public void incorrectPasswordLogin() {
 			
 			DataService userService = new DataService();	
-			String username = "";
-			String password = "password";
+			String username = "mouad";
+			String password = "";
 			User user = userService.GetUser(username,password);
 			State.getStateInstance().setUser(user);	
 			System.out.println("Testing Login: Wrong Password with corect UserName  ");

@@ -11,7 +11,7 @@ public class TestDeleteActivity {
 	@Test
 	//testing deletion of an Activity
 	public void deleteActivity(){
-		int activityId = 100;
+		int activityId = 1;
 		System.out.println("Testing Deletion of an activity");
 		String d1 = ActivityDao.DeleteActivityGivenActivityId.replace("@id", Integer.toString(activityId));
 		assertNull(activityId);
