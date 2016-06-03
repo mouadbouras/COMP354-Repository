@@ -128,7 +128,6 @@ public class ActivitiesTab extends JPanel {
 		        		{
 		        			activitySelection[index] = tmptable[i][1];
 		        			activitySelectionIds.put(tmptable[i][1], Integer.parseInt(tmptable[i][0]));
-		        			//activitySelectionIds[index] = Integer.parseInt(table[i][0]);
 		        			index++;
 		        		}
 		        	}
@@ -144,9 +143,16 @@ public class ActivitiesTab extends JPanel {
 		        	if( activitySelectionIds.get(s) != 0)
 		        	{
 			        	int currentActivityId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
-			        	//System.out.println("selected : " + activitySelectionIds.get(s));
-			        	(new ActivityDependencyDao()).InsertDependency(currentActivityId,activitySelectionIds.get(s));
-		        	} 	
+			        	boolean dependencyExists = (new ActivityDependencyDao()).CheckDependencyExists(currentActivityId,activitySelectionIds.get(s)) ;
+			        	if(!dependencyExists)
+			        	{
+			        		(new ActivityDependencyDao()).InsertDependency(currentActivityId,activitySelectionIds.get(s));
+			        		System.out.println("does it exist? : " + (new ActivityDependencyDao()).CheckDependencyExists(currentActivityId,activitySelectionIds.get(s)));
+			        	}
+			        	else{
+							JOptionPane.showMessageDialog(null, "The selected Dependency Already Exists! ");
+			        	}
+		        	} 
 		        	refreshTable();
 		        }
 		    }

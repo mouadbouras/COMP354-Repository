@@ -15,7 +15,9 @@ public class ActivityDependencyDao
 	private static String SelectActivityDependency = "SELECT * FROM ActivityDependency WHERE activityId = '@activityId';";
 	private static String InsertActivityDependency = "INSERT INTO ActivityDependency (activityId, dependeeActivityId) VALUES ('@activityId', '@dependeeActivityId');";
 	private static String CreateTable = "CREATE TABLE ActivityDependency(id INTEGER PRIMARY KEY, activityId INTEGER, dependeeActivityId INTEGER, FOREIGN KEY(activityId) REFERENCES Activity(id), FOREIGN KEY(dependeeActivityId) REFERENCES Activity(id));";
-		
+	private static String SelectSingleActivityDependency = "SELECT count(id) as myCount  FROM ActivityDependency WHERE activityId = '@activityId' and dependeeActivityId = '@dependeeActivityId' ;";
+
+	
 	//get the list of activities on which the given activity depends
 	public int[] GetDependencyIds(int activityId)
 	{
@@ -101,47 +103,47 @@ public class ActivityDependencyDao
 		
 		return str;
 	}
-	//get user given the userid primary key
-//	public User GetUserGivenUsernamePassword(String username, String password)
-//	{
-//		User temp = null;
-//		
-//	    Connection c = null;
-//	    Statement stmt = null;
-//	    try 
-//	    {
-//			Class.forName(SqliteSetup.sqliteClass);
-//			c = DriverManager.getConnection(SqliteSetup.connection);
-//			System.out.println("Opened database successfully");	
-//			stmt = c.createStatement();
-//		    
-//			String sql = UserDao.SelectUserGivenUsernamePassword.replace("@username", username ).replace("@password", password); //prepare sql
-//		    System.out.println(sql);
-//			
-//			ResultSet rs = stmt.executeQuery(sql);
-//			if ( rs.next() ) 
-//			{
-//				temp = mapResultSetToUser(rs);
-//			}
-//		    
-//			rs.close();
-//			stmt.close();
-//			c.close();	       
-//		    System.out.println("Operation done successfully");		
-//
-//			return temp;
-//	    } 
-//	    
-//	    catch ( Exception e ) 
-//	    {
-//	    	//System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-//	    	return null;
-//	    }
-//	    
-//		
-//		
-//	}
-//	
+
+	public boolean CheckDependencyExists(int activityId, int dependeeActivityId )
+	{
+		int count = 0 ;
+		
+	    Connection c = null;
+	    Statement stmt = null;
+	    try 
+	    {
+			Class.forName(SqliteSetup.sqliteClass);
+			c = DriverManager.getConnection(SqliteSetup.connection);
+			System.out.println("Opened database successfully: CheckDependencyExists");	
+			stmt = c.createStatement();
+		    
+			String sql = ActivityDependencyDao.SelectSingleActivityDependency.replace("@activityId", Integer.toString(activityId))
+																			 .replace("@dependeeActivityId",Integer.toString(dependeeActivityId));
+		    
+			ResultSet rs = stmt.executeQuery(sql);
+			if ( rs.next() ) 
+			{
+				count =	rs.getInt("myCount");
+			}
+		    
+			rs.close();
+			stmt.close();
+			c.close();	       
+			return (count != 0);
+	    } 
+	    
+	    catch ( Exception e ) 
+	    {
+	    	System.out.println("CheckDependencyExists");
+	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    	System.exit(0);
+	    }
+	    
+	    System.out.println("Operation done successfully: CheckDependencyExists");		
+		
+		return (count != 0);	
+		
+	}
 	
     //map result set from sqlite to User entity
 	public static int[] mapResultSetToActivity(ResultSet rs)
