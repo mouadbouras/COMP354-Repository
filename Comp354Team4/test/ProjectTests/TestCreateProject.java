@@ -24,13 +24,14 @@ public class TestCreateProject {
 		Project project = null;
 
 		try {
-			project = new Project("test1", "2017-02-29", "2018-02-29", 1);
+			project = new Project("testCreate", "2017-02-29", "2018-02-29", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed to create project");
 		}
 
 		assertTrue(projectDao.InsertProject(project));
+		projectDao.DeleteProject(project.getId()); 
 	}
 
 	@Test

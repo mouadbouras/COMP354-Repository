@@ -103,7 +103,7 @@ public class ProjectDao {
 		return true;
 	}
 
-	public void DeleteProject(int id) {
+	public boolean DeleteProject(int id) {
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -118,12 +118,12 @@ public class ProjectDao {
 			System.out.println("Sql Executed Successfully");
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			System.exit(0);
+			return false;
 		}
-		return;
+		return true;
 	}
 
-	public void UpdateProject(Project project) {
+	public boolean UpdateProject(Project project) {
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -156,9 +156,9 @@ public class ProjectDao {
 			// replace("@managerId", Integer.toString(project.getManagerId()));
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			System.exit(0);
+			return false;
 		}
-		return;
+		return true;
 	}
 
 	// map resultset from sqlite to User entity
