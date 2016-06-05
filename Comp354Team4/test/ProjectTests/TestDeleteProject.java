@@ -14,7 +14,7 @@ import models.ProjectDao;
 public class TestDeleteProject {
 
 	@Test 
-	public void deletePro() throws ParseException{
+	public void deleteProject() throws ParseException{
 		
 		/*DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		

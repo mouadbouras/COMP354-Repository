@@ -89,8 +89,7 @@ public class ProjectsTab extends JPanel {
 		        	
 		        	//get data for activities;
 		        	int projectId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
-		        	Project temp = new Project();
-		        	temp.setId(projectId);		        	
+		        	Project temp = new Project(projectId);        	
 		        	State.getStateInstance().setProject(temp);
 		        	
 		        	ActivitiesTab tab = State.getStateInstance().activityTab;

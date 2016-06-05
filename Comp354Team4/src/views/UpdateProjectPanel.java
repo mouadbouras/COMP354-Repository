@@ -205,11 +205,8 @@ public class UpdateProjectPanel extends JPanel {
 					else
 					{
 						System.out.println(activeProjectID );
-			        	Project projectToUpdate = new Project();
-			        	projectToUpdate.setId(activeProjectID);	
-			        	projectToUpdate.setProjectName(projectField.getText());
-			        	projectToUpdate.setStartDate(ConverterService.StringToDate(startDateField.getText()));
-			        	projectToUpdate.setEndDate(ConverterService.StringToDate(endDateField.getText()));
+			        	Project projectToUpdate = new Project(activeProjectID, projectField.getText(),
+			        			startDateField.getText(), endDateField.getText(), State.getStateInstance().getUser().getId());
 			        	
 						ProjectDao projectDao = new ProjectDao();
 						projectDao.UpdateProject(projectToUpdate);

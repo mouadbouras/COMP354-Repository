@@ -179,25 +179,21 @@ public class CreateProjectPanel extends JPanel {
 			{						
 				try 
 				{
-					Project project = new Project();
-					project.setProjectName(projectField.getText());
-					project.setStartDate(df.parse(startDateField.getText()));
-					project.setEndDate(df.parse(endDateField.getText()));					
-					User temp = State.getStateInstance().getUser();
-					project.setManagerId(temp.getId());
+					Project project = new Project(projectField.getText(), startDateField.getText(), 
+							endDateField.getText(), State.getStateInstance().getUser().getId());					
 					
 					ProjectDao projectDao = new ProjectDao();
-					projectDao.InsertProject(project);
 					
-					JOptionPane.showMessageDialog(null, "The Project was created succesfully! ");
+					if (projectDao.InsertProject(project)) {					
+						JOptionPane.showMessageDialog(null, "The project was created succesfully!");
+					} else {
+						JOptionPane.showMessageDialog(null, "An error occured while creating this project! Try again.");
+					}
 				}
 				
 				catch (Exception e)
 				{
 					JOptionPane.showMessageDialog(null, "An error occured while creating this project! Try again.");
-					projectField.setText("");
-					startDateField.setText("");
-					endDateField.setText("");
 				}		
 				finally
 				{

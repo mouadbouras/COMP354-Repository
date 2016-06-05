@@ -1,7 +1,10 @@
 package models;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+
+import controllers.ConverterService;
 
 public class Project {
 	private int id;
@@ -11,6 +14,31 @@ public class Project {
 	private int managerId;
 	private int activityCount;
 	private List<Activity> activities;
+	
+	public Project(int projId) {
+		id = projId;
+	}
+	
+	public Project(String name, String start, String end, int manaId) throws ParseException, IllegalArgumentException {
+		if (name != null && !name.isEmpty()) {
+			projectName = name;
+			startDate = ConverterService.StringToDate(start);
+			endDate = ConverterService.StringToDate(end);
+			managerId = manaId;
+		}
+		else throw new IllegalArgumentException();
+	}
+	
+	public Project(int projId, String name, String start, String end, int manaId) throws ParseException, IllegalArgumentException {
+		if (name != null && !name.isEmpty()) {
+			id = projId;
+			projectName = name;
+			startDate = ConverterService.StringToDate(start);
+			endDate = ConverterService.StringToDate(end);
+			managerId = manaId;
+		}
+		else throw new IllegalArgumentException();
+	}
 	
 	public int getId() {
 		return id;
@@ -24,24 +52,26 @@ public class Project {
 		return projectName;
 	}
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
+	public void setProjectName(String name) throws IllegalArgumentException{
+		if (name != null && !name.isEmpty()) {
+			this.projectName = name;
+		} else throw new IllegalArgumentException();
 	}
 
 	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartDate(String start) throws ParseException {
+		startDate = ConverterService.StringToDate(start);
 	}
 
 	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEndDate(String end) throws ParseException {
+		endDate = ConverterService.StringToDate(end);
 	}
 
 	public int getManagerId() {

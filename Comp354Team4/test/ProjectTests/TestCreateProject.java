@@ -15,79 +15,62 @@ import views.State;
 
 public class TestCreateProject {
 
+	private ProjectDao projectDao = new ProjectDao();
+
 	@Test
-	//testing if manager is able to create a VALID project
-	public void createValidProject() throws ParseException{
-		
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		
-		Project project = new Project();
+	// testing if manager is able to create a VALID project
+	public void createValidProject() throws ParseException {
 		System.out.println("Testing Creation of a Project with all its information");
-		project.setProjectName("test1");
-		project.setStartDate(df.parse("2017-02-29"));
-		project.setEndDate(df.parse("2018-02-29"));					
-		project.setManagerId(1);
-		
-		ProjectDao projectDao = new ProjectDao();
-		projectDao.InsertProject(project);
-		assertNotNull(project);		
-	}
-	
-	@Test
-	//testing if manager is able to create an INVALID project with null project name
-	//if you set project name to "null" nullPtrException is thrown.
-	//If you leave projectName empty, the object is still created (this should fail)
-	public void createInvalidProjectName() throws ParseException{
-		
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		
-		Project project = new Project();
-		System.out.println("Testing Creation of an INVALID Project with a NULL/empty PROJECT NAME");
-		project.setProjectName("");
-		project.setStartDate(df.parse("2017-02-29"));
-		project.setEndDate(df.parse("2018-02-29"));					
-		project.setManagerId(1);
-		
-		ProjectDao projectDao = new ProjectDao();
-		projectDao.InsertProject(project);
-		assertNotNull(project);
-		
-	}
-	@Test
-	//testing if manager is able to create an INVALID project with null Start Date
-		public void createInvalidProjectStartD() throws ParseException{
-			
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			
-			Project project = new Project();
-			System.out.println("Testing Creation of an INVALID Project with a null PROJECT Sdate");
-			project.setProjectName("UserTest");
-			project.setStartDate(df.parse(null));
-			project.setEndDate(df.parse("2018-02-29"));					
-			project.setManagerId(1);
-			
-			ProjectDao projectDao = new ProjectDao();
-			projectDao.InsertProject(project);
-			assertNotNull(project);
-			
+		Project project = null;
+
+		try {
+			project = new Project("test1", "2017-02-29", "2018-02-29", 1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Failed to create project");
 		}
+
+		assertTrue(projectDao.InsertProject(project));
+	}
+
 	@Test
-		//testing if manager is able to create an INVALID project with null End Date
-				public void createInvalidProjectEndD() throws ParseException{
-					
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					
-					Project project = new Project();
-					System.out.println("Testing Creation of an INVALID Project with a null PROJECT Edate");
-					project.setProjectName("UserTest");
-					project.setStartDate(df.parse("2018-02-29"));
-					project.setEndDate(df.parse(null));					
-					project.setManagerId(1);
-					
-					ProjectDao projectDao = new ProjectDao();
-					projectDao.InsertProject(project);
-					assertNotNull(project);
-					
-				}
+	// testing if manager is able to create an INVALID project with null project
+	// name
+	public void createInvalidProjectName() {
+		System.out.println("Testing Creation of an INVALID Project with a NULL/empty PROJECT NAME");
+		try {
+			Project project = new Project("", "2017-02-29", "2018-02-29", 1);
+			fail("Expected IllegalArgumentException while creating project");
+		} catch (Exception e) {
+			assert (e instanceof IllegalArgumentException);
+		}
+	}
+
+	@Test
+	// testing if manager is able to create an INVALID project with null Start
+	// Date
+	public void createInvalidProjectStartD() {
+		System.out.println("Testing Creation of an INVALID Project with a null PROJECT Sdate");
+		try {
+			Project project = new Project("test2", null, "2018-02-29", 1);
+			fail("Expected ParseException while creating project");
+		} catch (Exception e) {
+			assert (e instanceof ParseException);
+		}
+	}
+
+	@Test
+	// testing if manager is able to create an INVALID project with null End
+	// Date
+	public void createInvalidProjectEndD() throws ParseException {
+		System.out.println("Testing Creation of an INVALID Project with a null PROJECT Edate");
+		try {
+			Project project = new Project("test3", "2017-02-29", null, 1);
+			fail("Expected ParseException while creating project");
+		} catch (Exception e) {
+			assert (e instanceof ParseException);
+		}
+
+	}
 
 }
