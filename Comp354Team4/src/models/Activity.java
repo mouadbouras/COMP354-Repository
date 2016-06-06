@@ -1,6 +1,9 @@
 package models;
 
+import java.text.ParseException;
 import java.util.Date;
+
+import controllers.ConverterService;
 
 public class Activity {
 	
@@ -11,13 +14,37 @@ public class Activity {
 	private Date endDate;
 	private int projectId;
 	
-	public Activity(){
-		
+	public Activity(String name, String description, String start, String end, int projId) throws ParseException, IllegalArgumentException{
+		if (name != null && !name.isEmpty()) {	
+			activityName = name;
+			activityDescription = description;
+			startDate = ConverterService.StringToDate(start);	
+			endDate = ConverterService.StringToDate(end);
+			projectId = projId;
+		} else throw new IllegalArgumentException();
 	}
 	
-	public Activity(int id, String name,String description, Date start, Date end, int projId){
-		this.id = id;	activityName = name;activityDescription = description	;startDate = start;	endDate = end;
-		projectId = projId;
+	
+	public Activity(int id, String name, String description, String start, String end, int projId) throws ParseException, IllegalArgumentException{
+		if (name != null && !name.isEmpty()) {
+			this.id = id;	
+			activityName = name;
+			activityDescription = description;
+			startDate = ConverterService.StringToDate(start);	
+			endDate = ConverterService.StringToDate(end);
+			projectId = projId;
+		} else throw new IllegalArgumentException();
+	}
+	
+	public Activity(int id, String name, String start, String end, int projId) throws ParseException, IllegalArgumentException{
+		if (name != null && !name.isEmpty()) {
+			this.id = id;	
+			activityName = name;
+			activityDescription = "";
+			startDate = ConverterService.StringToDate(start);	
+			endDate = ConverterService.StringToDate(end);
+			projectId = projId;
+		} else throw new IllegalArgumentException();
 	}
 	
 	public int getId() {

@@ -218,13 +218,8 @@ public class CreateActivityPanel extends JPanel {
 						try 
 						{
 							Project activeProject = State.getStateInstance().getProject();
-							Activity activity = new Activity();
-							activity.setActivityName(activityField.getText());
-							activity.setActivityDescription(descriptionField.getText());
-							activity.setStartDate(df.parse(startDateField.getText()));
-							activity.setEndDate(df.parse(endDateField.getText()));	
-							activity.setProjectId(activeProject.getId());
-
+							Activity activity = new Activity(activityField.getText(), descriptionField.getText(), 
+									startDateField.getText(), endDateField.getText(), activeProject.getId());
 							
 							ActivityDao activityDao = new ActivityDao();
 							System.out.println("insert activity into project : " + activeProject.getId());
@@ -235,11 +230,7 @@ public class CreateActivityPanel extends JPanel {
 						
 						catch (Exception e)
 						{
-							JOptionPane.showMessageDialog(null, "An error occured while creating this activity! Try again.");
-							activityField.setText("");
-							descriptionField.setText("");
-							startDateField.setText("");
-							endDateField.setText("");	
+							JOptionPane.showMessageDialog(null, "An error occured while creating this activity! Try again.");	
 						}		
 						finally
 						{

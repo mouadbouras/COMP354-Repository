@@ -30,16 +30,11 @@ public class ActivityDao {
 	//map resultset from sqlite to Activity
 	public static Activity mapResultSetToActivity(ResultSet rs)
 	{
-		Activity temp = new Activity();	
+		Activity temp = null;
 		try 
 		{
-			temp.setId(rs.getInt("id"));
-			temp.setActivityName(rs.getString("activityName"));	
-			temp.setActivityDescription(rs.getString("activityDescription"));			
-			temp.setStartDate(dateFormat.parse(rs.getString("startDate"))); //parse date string to date
-			temp.setEndDate(dateFormat.parse(rs.getString("endDate")));	
-			
-			temp.setProjectId(rs.getInt("projectId"));	
+			temp = new Activity(rs.getInt("id"), rs.getString("activityName"), rs.getString("activityDescription"),
+					rs.getString("startDate"), rs.getString("endDate"), rs.getInt("projectId"));				
 		}
 		catch (Exception e)
 		{			
@@ -105,7 +100,7 @@ public class ActivityDao {
 	}
 	
 	//insert project into database
-		public void InsertActivity(Activity activity)
+		public boolean InsertActivity(Activity activity)
 		{		
 		    Connection c = null;
 		    Statement stmt = null;
@@ -130,9 +125,9 @@ public class ActivityDao {
 		    catch ( Exception e ) 
 		    {
 		    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-		    	System.exit(0);
+		    	return false;
 		    }	
-		    return;
+		    return true;
 		}
 	
 	public void DeleteActivity(int activityId)

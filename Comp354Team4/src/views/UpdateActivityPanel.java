@@ -252,14 +252,10 @@ public class UpdateActivityPanel extends JPanel {
 //			        	projectToUpdate.setStartDate(ConverterService.StringToDate(startDateField.getText()));
 //			        	projectToUpdate.setEndDate(ConverterService.StringToDate(endDateField.getText()));
 			        	
-						Activity activityToUpdate = new Activity();
-						activityToUpdate.setActivityName(activityField.getText());
-						activityToUpdate.setActivityDescription(descriptionField.getText());
-						activityToUpdate.setStartDate(df.parse(startDateField.getText()));
-						activityToUpdate.setEndDate(df.parse(endDateField.getText()));					
-						activityToUpdate.setProjectId(State.getStateInstance().getProject().getId());
-						activityToUpdate.setId(activityID);
-	
+						Activity activityToUpdate = new Activity(activityID, activityField.getText(), descriptionField.getText(), 
+								startDateField.getText(), endDateField.getText(), 
+								State.getStateInstance().getProject().getId());
+						
 						ActivityDao activityDao = new ActivityDao();
 						activityDao.UpdateActivity(activityToUpdate);
 						
@@ -270,8 +266,7 @@ public class UpdateActivityPanel extends JPanel {
 						startDateField.setText(ConverterService.DateToString(activityToUpdate.getStartDate()));
 						endDateField.setText(ConverterService.DateToString(activityToUpdate.getEndDate()));
 						activityID = activityToUpdate.getId();
-	
-						
+							
 					}
 
 				}
