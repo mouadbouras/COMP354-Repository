@@ -41,7 +41,7 @@ public class TestDeleteProject {
 		assertTrue(projectDao.DeleteProject(project.getId()));	
 		
 		// TODO uncomment and make it pass
-		// check if the project is actually deleted
+		// check if the project is actually deleted in the database
 		/*
 		
 		List<Project> projects = new ArrayList<Project>();

@@ -19,7 +19,7 @@ public class TestCreateActivity {
 
 	@Test
 	// testing creation of a Valid activity
-	public void createValidActivity() throws ParseException {
+	public void createValidActivity() {
 
 		System.out.println("Testing Creation of a VALID Activity");
 		Activity temp = null;
@@ -28,16 +28,16 @@ public class TestCreateActivity {
 			temp = new Activity(20, "CreateActivityTest", "2016-05-29", "2016-05-31", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
-			fail("Failed to create project");
+			fail("Failed to create activity");
 		}
 		
 		assertTrue(activityDao.InsertActivity(temp));
-		activityDao.DeleteActivity(temp.getId());
+		activityDao.DeleteActivity(20);
 	}
 
 	@Test
 	// testing creation of an Invalid activity using "null name"
-	public void createInValidNameActivity() throws ParseException {
+	public void createInValidNameActivity() {
 		System.out.println("Testing Creation of an invalid Activity : NAME");
 		Activity temp = null;
 
@@ -52,7 +52,7 @@ public class TestCreateActivity {
 
 	@Test
 	// testing creation of an Invalid activity using "null start date"
-	public void createInValidStartActivity() throws ParseException {		
+	public void createInValidStartActivity() {		
 		System.out.println("Testing Creation of an invalid Activity : START DATE");
 		Activity temp = null;
 		
@@ -67,7 +67,7 @@ public class TestCreateActivity {
 	
 	@Test
 	// testing creation of an Invalid activity using "null end date"
-	public void createInValidEndActivity() throws ParseException {		
+	public void createInValidEndActivity() {		
 		System.out.println("Testing Creation of an invalid Activity : END DATE");
 		Activity temp = null;
 		
@@ -85,7 +85,7 @@ public class TestCreateActivity {
 
 	@Test
 	// testing creation of an Invalid activity using "null ProjectID"
-	public void createInValidProjectIDActivity() throws ParseException {
+	public void createInValidProjectIDActivity() {
 
 		Activity temp = new Activity();
 		System.out.println("Testing Creation of an invalid Activity : PROJECT ID");

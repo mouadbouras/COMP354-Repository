@@ -155,7 +155,7 @@ public class ActivityDao {
 	    return;
 	}
 	
-	public void UpdateActivity(Activity activity)
+	public boolean UpdateActivity(Activity activity)
 	{
 	    Connection c = null;
 	    Statement stmt = null;
@@ -181,9 +181,9 @@ public class ActivityDao {
 	    catch ( Exception e ) 
 	    {
 	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    	System.exit(0);
+	    	return false;
 	    }	
-	    return;		
+	    return true;		
 	}
 	
 	public String[] returnDataRow(Activity activity)

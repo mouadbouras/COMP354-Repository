@@ -59,8 +59,10 @@ public class Activity {
 		return activityName;
 	}
 
-	public void setActivityName(String activityName) {
-		this.activityName = activityName;
+	public void setActivityName(String name) {
+		if (name != null && !name.isEmpty()) {
+			activityName = name;
+		} else throw new IllegalArgumentException();
 	}
 
 	public String getActivityDescription() {
@@ -75,16 +77,16 @@ public class Activity {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartDate(String start) throws ParseException {
+		startDate = ConverterService.StringToDate(start);
 	}
 
 	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEndDate(String end) throws ParseException {
+		endDate = ConverterService.StringToDate(end);
 	}
 
 	public int getProjectId() {
