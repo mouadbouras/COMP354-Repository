@@ -78,14 +78,14 @@ public class LoginController
 					if(userService.GetUser(username,password) == null){
 						
 						//  FOLLOWING LINE MUST BE UNCOMENTED BEFORE DEMO!!
-						//throw new Exception("invalid username/password");
+						throw new Exception("invalid username/password");
 						
 						//**** CODE FOR DEV ENVIRONMENT ONLY. BYPASSES LOGIN.*****
-						User user = userService.GetUser("mouad","password");
+						//User user = userService.GetUser("mouad","password");
 						
-						System.out.println("login successful");						
-						State.getStateInstance().setUser(user);	
-						MainController.userLogged();
+						//System.out.println("login successful");						
+						//State.getStateInstance().setUser(user);	
+						//MainController.userLogged();
 						//******************************************************** 
 						
 					}
