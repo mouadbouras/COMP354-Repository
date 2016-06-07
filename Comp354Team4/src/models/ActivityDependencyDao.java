@@ -60,7 +60,7 @@ public class ActivityDependencyDao
 	}
 	
 	//insert user into the database
-	public void InsertDependency(int activityId,int dependeeActivityId )
+	public boolean InsertDependency(int activityId,int dependeeActivityId )
 	{		
 	    Connection c = null;
 	    Statement stmt = null;
@@ -81,9 +81,9 @@ public class ActivityDependencyDao
 	    catch ( Exception e ) 
 	    {
 	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    	System.exit(0);
+	    	return false;
 	    }	
-	    return;
+	    return true;
 	}
 
 	

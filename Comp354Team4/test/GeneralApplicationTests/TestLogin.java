@@ -14,7 +14,7 @@ public class TestLogin {
 	//testing if user exists in DB
 	public void correctLogin(){
 		DataService userService = new DataService();	
-		String username = "mouad";
+		String username = "User";
 		String password = "password";
 		User user = userService.GetUser(username,password);
 		State.getStateInstance().setUser(user);	
@@ -40,7 +40,7 @@ public class TestLogin {
 			
 			System.out.println("Testing Login: Wrong Password with corect UserName  ");
 			DataService userService = new DataService();	
-			String username = "mouad";
+			String username = "User";
 			String password = "";
 			User user = userService.GetUser(username,password);				
 			assertNull(user);
