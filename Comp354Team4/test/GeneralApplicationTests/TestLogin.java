@@ -26,39 +26,36 @@ public class TestLogin {
 	@Test
 	public void incorrectUserNameLogin() {
 		
+		System.out.println("Testing Login: Wrong username with corect Password  ");
 		DataService userService = new DataService();	
 		String username = "";
 		String password = "password";
-		User user = userService.GetUser(username,password);
-		State.getStateInstance().setUser(user);	
-		System.out.println("Testing Login: Wrong username with corect Password  ");
-		assertNotNull(user);
+		User user = userService.GetUser(username,password);	
+		assertNull(user);
 	}
 	
 	//testing if user enters wrong "Password" and correct username
 		@Test
 		public void incorrectPasswordLogin() {
 			
+			System.out.println("Testing Login: Wrong Password with corect UserName  ");
 			DataService userService = new DataService();	
 			String username = "mouad";
 			String password = "";
-			User user = userService.GetUser(username,password);
-			State.getStateInstance().setUser(user);	
-			System.out.println("Testing Login: Wrong Password with corect UserName  ");
-			assertNotNull(user);
+			User user = userService.GetUser(username,password);				
+			assertNull(user);
 		}
 		
 		//testing if user leaves empty fields for username and password
 		@Test
 		public void emptyLogin() {
 			
+			System.out.println("Testing Login: empty username/password fields");
 			DataService userService = new DataService();	
 			String username = null;
 			String password = null;
-			User user = userService.GetUser(username,password);
-			State.getStateInstance().setUser(user);	
-			System.out.println("Testing Login: empty username/password fields");
-			assertNotNull(user);
+			User user = userService.GetUser(username,password);			
+			assertNull(user);
 		}
 
 }
