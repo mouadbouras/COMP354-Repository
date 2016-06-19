@@ -22,7 +22,7 @@ public class TestDeleteActivity {
 		Activity temp = null;
 
 		try {
-			temp = new Activity(20, "testDeleteActivity", "2016-05-29", "2016-05-31", 1);
+			temp = new Activity(20, "testDeleteActivity", 5, "2016-05-29", "2016-05-31", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed to create activity");

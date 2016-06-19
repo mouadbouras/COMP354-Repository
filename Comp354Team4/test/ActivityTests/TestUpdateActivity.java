@@ -26,7 +26,7 @@ public class TestUpdateActivity {
 		Activity activity = null;
 
 		try {
-			activity = new Activity(20, "testDeleteActivity", "2016-05-29", "2016-05-31", 1);
+			activity = new Activity(20, "testUpdateActivity", 5, "2016-05-29", "2016-05-31", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed to create activity");
@@ -42,6 +42,7 @@ public class TestUpdateActivity {
 			e.printStackTrace();
 			fail("Failed due to parse error while updating activity");
 		}
+		activity.setNormalDuration(999);
 		
 		assertTrue(activityDao.UpdateActivity(activity));
 		

@@ -25,7 +25,7 @@ public class TestCreateActivity {
 		Activity temp = null;
 
 		try {
-			temp = new Activity(20, "CreateActivityTest", "2016-05-29", "2016-05-31", 1);
+			temp = new Activity(20, "TestCreate", 5, "2016-05-29", "2016-05-31", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed to create activity");
@@ -42,7 +42,7 @@ public class TestCreateActivity {
 		Activity temp = null;
 
 		try {
-			temp = new Activity(100, null, "2016-05-29", "2016-05-31", 1);
+			temp = new Activity(100, null, 5, "2016-05-29", "2016-05-31", 1);
 			fail("Expected IllegalArgumentException while creating project");
 		} catch (Exception e) {
 			assert (e instanceof IllegalArgumentException);
@@ -57,10 +57,25 @@ public class TestCreateActivity {
 		Activity temp = null;
 		
 		try {
-			temp = new Activity(100, "test", null, "2016-05-31", 1);
+			temp = new Activity(100, "test", 5, null, "2016-05-31", 1);
 			fail("Expected ParseException while creating project");
 		} catch (Exception e) {
 			assert (e instanceof ParseException);
+		}
+
+	}
+	
+	@Test
+	// testing creation of an Invalid activity using a negative duration
+	public void createInValidDuration() {		
+		System.out.println("Testing Creation of an invalid Activity : START DATE");
+		Activity temp = null;
+		
+		try {
+			temp = new Activity(100, "test", -1, null, "2016-05-31", 1);
+			fail("Expected ParseException while creating project");
+		} catch (Exception e) {
+			assert (e instanceof IllegalArgumentException);
 		}
 
 	}
@@ -72,7 +87,7 @@ public class TestCreateActivity {
 		Activity temp = null;
 		
 		try {
-			temp = new Activity(100, "test", "2016-05-31", null, 1);
+			temp = new Activity(100, "test", 5, "2016-05-31", null, 1);
 			fail("Expected ParseException while creating project");
 		} catch (Exception e) {
 			assert (e instanceof ParseException);

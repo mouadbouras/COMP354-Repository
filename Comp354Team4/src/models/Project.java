@@ -82,8 +82,8 @@ public class Project {
 		this.managerId = managerId;
 	}	
 	
-	public boolean addActivity(int id, String name, String description, String start, String end, int projId) throws ParseException{
-		activities.add(new Activity(id, name,description, start, end, projId));
+	public boolean addActivity(int id, String name, String description, int nDuration, String start, String end, int projId) throws ParseException{
+		activities.add(new Activity(id, name, description, nDuration, start, end, projId));
 		return true; //addition was a success
 	}
 	

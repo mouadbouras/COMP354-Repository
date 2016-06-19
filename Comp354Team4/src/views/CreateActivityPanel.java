@@ -218,7 +218,7 @@ public class CreateActivityPanel extends JPanel {
 						try 
 						{
 							Project activeProject = State.getStateInstance().getProject();
-							Activity activity = new Activity(activityField.getText(), descriptionField.getText(), 
+							Activity activity = new Activity(activityField.getText(), descriptionField.getText(), 666, 
 									startDateField.getText(), endDateField.getText(), activeProject.getId());
 							
 							ActivityDao activityDao = new ActivityDao();

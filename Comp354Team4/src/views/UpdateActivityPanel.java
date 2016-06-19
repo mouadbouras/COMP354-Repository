@@ -252,7 +252,7 @@ public class UpdateActivityPanel extends JPanel {
 //			        	projectToUpdate.setStartDate(ConverterService.StringToDate(startDateField.getText()));
 //			        	projectToUpdate.setEndDate(ConverterService.StringToDate(endDateField.getText()));
 			        	
-						Activity activityToUpdate = new Activity(activityID, activityField.getText(), descriptionField.getText(), 
+						Activity activityToUpdate = new Activity(activityID, activityField.getText(), descriptionField.getText(), 5, 
 								startDateField.getText(), endDateField.getText(), 
 								State.getStateInstance().getProject().getId());
 						

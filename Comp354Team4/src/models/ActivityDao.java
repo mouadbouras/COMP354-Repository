@@ -19,12 +19,12 @@ public class ActivityDao {
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	private static String SelectActivitiesGivenProjectId = "Select * from Activity where projectId = @projectId AND isRemoved = 0";
-	private static String InsertActivities = "INSERT INTO Activity(activityName,activityDescription, startDate, endDate, projectId) VALUES ('@activityName', '@activityDescription','@startDate', '@endDate', '@projectId');";
+	private static String InsertActivities = "INSERT INTO Activity(activityName, activityDescription, normalDuration, startDate, endDate, projectId) VALUES ('@activityName', '@activityDescription', '@normalDuration', '@startDate', '@endDate', '@projectId');";
 	public static String CreateTable = "CREATE TABLE Activity (id INTEGER PRIMARY KEY, activityName varchar(50),	"
 			+ "activityDescription varchar(255), startDate DateTime, endDate DateTime, projectId INTEGER, FOREIGN KEY(projectId) REFERENCES Project(id));";
 	
 	public static String DeleteActivityGivenActivityId = "UPDATE Activity SET isRemoved = '1' WHERE id = @id";
-	public static String UpdateActivityGivenProjectId = "UPDATE Activity SET activityName = '@activityName', activityDescription = '@activityDescription', startDate = '@startDate', endDate = '@endDate' WHERE id = @id ";
+	public static String UpdateActivityGivenProjectId = "UPDATE Activity SET activityName = '@activityName', activityDescription = '@activityDescription', normalDuration = '@normalDuration', startDate = '@startDate', endDate = '@endDate' WHERE id = @id ";
 
 	
 	//map resultset from sqlite to Activity
@@ -34,7 +34,7 @@ public class ActivityDao {
 		try 
 		{
 			temp = new Activity(rs.getInt("id"), rs.getString("activityName"), rs.getString("activityDescription"),
-					rs.getString("startDate"), rs.getString("endDate"), rs.getInt("projectId"));				
+					rs.getInt("normalDuration"), rs.getString("startDate"), rs.getString("endDate"), rs.getInt("projectId"));				
 		}
 		catch (Exception e)
 		{			
@@ -50,6 +50,7 @@ public class ActivityDao {
 				"Activity Id", 
 				"Activity Name", 
 				"Description", 
+				"Duration", 
 				"Start Date", 
 				"End Date", 
 				"Project Id",
@@ -113,6 +114,7 @@ public class ActivityDao {
 			      
 			      String sql = ActivityDao.InsertActivities.replace("@activityName", activity.getActivityName()).
 			    		  						  replace("@activityDescription", activity.getActivityDescription()). 
+			    		  						  replace("@normalDuration", Integer.toString(activity.getNormalDuration())).
 									    		  replace("@startDate", ConverterService.DateToString(activity.getStartDate())). //format date to string 
 									    		  replace("@endDate", ConverterService.DateToString(activity.getEndDate())). //format date to string 
 									    		  replace("@projectId", Integer.toString(activity.getProjectId()));
@@ -167,6 +169,7 @@ public class ActivityDao {
 		      stmt = c.createStatement();		      
 		      String sql = ActivityDao.UpdateActivityGivenProjectId.replace("@activityName", activity.getActivityName()).
 					  replace("@activityDescription", activity.getActivityDescription()). 
+					  replace("@normalDuration", Integer.toString(activity.getNormalDuration())).
 		    		  replace("@startDate", ConverterService.DateToString(activity.getStartDate())). //format date to string 
 		    		  replace("@endDate", ConverterService.DateToString(activity.getEndDate())). //format date to string 
 		    		  replace("@id", Integer.toString(activity.getId()));

@@ -31,8 +31,8 @@ public class TestActivityDependency {
 		int id2 = 81;
 
 		try {
-			activity1 = new Activity(id1, "CreateActivityTest", "2016-05-29", "2016-05-31", 1);
-			activity2 = new Activity(id2, "CreateActivityTest", "2016-05-29", "2016-05-31", 1);
+			activity1 = new Activity(id1, "CreateActivityTest", 5, "2016-05-29", "2016-05-31", 1);
+			activity2 = new Activity(id2, "CreateActivityTest", 5, "2016-05-29", "2016-05-31", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed to create activity");
@@ -60,8 +60,8 @@ public class TestActivityDependency {
 		int id2 = 81;
 
 		try {
-			activity1 = new Activity(id1, "CreateActivityTest", "2016-05-29", "2016-05-31", 1);
-			activity2 = new Activity(id2, "CreateActivityTest", "2016-05-29", "2016-05-31", 1);
+			activity1 = new Activity(id1, "CreateActivityTest", 5, "2016-05-29", "2016-05-31", 1);
+			activity2 = new Activity(id2, "CreateActivityTest", 5, "2016-05-29", "2016-05-31", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed to create activity");
