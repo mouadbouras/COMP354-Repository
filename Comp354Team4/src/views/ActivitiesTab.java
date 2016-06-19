@@ -28,6 +28,9 @@ import java.util.HashMap;
 import javax.swing.JButton;
 
 public class ActivitiesTab extends JPanel {
+	private static final int ADD_DEPENDENCY = 10;
+	private static final int DELETE_ACTIVITY = 8;
+	private static final int UPDATE_ACTIVITY = 7;
 	private JTable table;
 	private JScrollPane databaseTablePane;
 	private CreateActivityPanel createActivity;
@@ -90,8 +93,7 @@ public class ActivitiesTab extends JPanel {
 		        int row = table.rowAtPoint(evt.getPoint());
 		        int col = table.columnAtPoint(evt.getPoint());
 		        
-		        //column 6 is update project
-		        if (row >= 0 && col == 6) {
+		        if (row >= 0 && col == UPDATE_ACTIVITY) {
 		        	System.out.println("Update activity with id:" + table.getModel().getValueAt(row, 0));
 		        	
 		        	updateActivity.setActiveProject(Integer.parseInt(table.getModel().getValueAt(row, 0).toString()));
@@ -101,20 +103,16 @@ public class ActivitiesTab extends JPanel {
 		        	updateActivity.setDescriptionField(description);
 		        	updateActivity.setStartDateField(table.getModel().getValueAt(row, 3).toString());
 		        	updateActivity.setEndDateField(table.getModel().getValueAt(row, 4).toString());
-		        	
-		        	
 		        }
 		        
-		        //column 7 is delete project
-		        if (row >= 0 && col == 7) {
+		        if (row >= 0 && col == DELETE_ACTIVITY) {
 		        	System.out.println("Delete activity with id:" + table.getModel().getValueAt(row, 0));
 		        	int activityId = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
 		        	new ActivityDao().DeleteActivity(activityId);
 		        	refreshTable();
 		        }
 		        
-		        //column 9 is add dependency
-		        if (row >= 0 && col == 9) {
+		        if (row >= 0 && col == ADD_DEPENDENCY) {
 		        	String [][] tmptable = ds.GetActivityTableData(currentProject.getId());
 		        	String[] activitySelection = new String[tmptable.length];
 		        	Map<String,Integer> activitySelectionIds = new HashMap<String,Integer>(); 

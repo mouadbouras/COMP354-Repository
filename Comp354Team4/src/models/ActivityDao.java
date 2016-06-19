@@ -196,6 +196,7 @@ public class ActivityDao {
 				Integer.toString(activity.getId()),
 				activity.getActivityName(), 
 				activity.getActivityDescription(), 
+				Integer.toString(activity.getNormalDuration()),
 				ConverterService.DateToString(activity.getStartDate()),
 				ConverterService.DateToString(activity.getEndDate()), 
 				Integer.toString(activity.getProjectId()),
