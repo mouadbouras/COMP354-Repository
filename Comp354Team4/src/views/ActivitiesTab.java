@@ -101,8 +101,9 @@ public class ActivitiesTab extends JPanel {
 		        	
 		        	String description = (table.getModel().getValueAt(row, 2) == null) ? "" : table.getModel().getValueAt(row, 2).toString() ;
 		        	updateActivity.setDescriptionField(description);
-		        	updateActivity.setStartDateField(table.getModel().getValueAt(row, 3).toString());
-		        	updateActivity.setEndDateField(table.getModel().getValueAt(row, 4).toString());
+		        	updateActivity.setDurationField(Integer.parseInt((table.getModel().getValueAt(row, 3)).toString()));
+		        	//updateActivity.setStartDateField(table.getModel().getValueAt(row, 3).toString());
+		        	//updateActivity.setEndDateField(table.getModel().getValueAt(row, 4).toString());
 		        }
 		        
 		        if (row >= 0 && col == DELETE_ACTIVITY) {

@@ -19,6 +19,7 @@ public class ActivityDao {
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	private static String SelectActivitiesGivenProjectId = "Select * from Activity where projectId = @projectId AND isRemoved = 0";
+	private static String SelectActivitiesGivenActivityId = "Select * from Activity where id = @activityId AND isRemoved = 0";
 	private static String InsertActivities = "INSERT INTO Activity(activityName, activityDescription, normalDuration, startDate, endDate, projectId) VALUES ('@activityName', '@activityDescription', '@normalDuration', '@startDate', '@endDate', '@projectId');";
 	public static String CreateTable = "CREATE TABLE Activity (id INTEGER PRIMARY KEY, activityName varchar(50),	"
 			+ "activityDescription varchar(255), startDate DateTime, endDate DateTime, projectId INTEGER, FOREIGN KEY(projectId) REFERENCES Project(id));";
@@ -74,6 +75,46 @@ public class ActivityDao {
 			stmt = c.createStatement();
 		    
 			String sql = ActivityDao.SelectActivitiesGivenProjectId.replace("@projectId", Integer.toString(projectId)); //prepare sql
+		    
+			ResultSet rs = stmt.executeQuery(sql);
+			while ( rs.next() ) 
+			{
+				Activity temp = null;
+				temp = ActivityDao.mapResultSetToActivity(rs);
+				activities.add(temp);
+			}
+		    
+			rs.close();
+			stmt.close();
+			c.close();		
+
+	    } 
+	    
+	    catch ( Exception e ) 
+	    {
+	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    	System.exit(0);
+	    }
+	    
+	    System.out.println("Operation done successfully");		
+		
+		return activities;			
+	}
+	
+	public static List<Activity> GetActivitiesGivenActivityId(int activityId)
+	{
+		List<Activity> activities = new ArrayList<Activity>();
+		
+	    Connection c = null;
+	    Statement stmt = null;
+	    try 
+	    {
+			Class.forName(SqliteSetup.sqliteClass);
+			c = DriverManager.getConnection(SqliteSetup.connection);
+			System.out.println("Opened database successfully");	
+			stmt = c.createStatement();
+		    
+			String sql = ActivityDao.SelectActivitiesGivenActivityId.replace("@activityId", Integer.toString(activityId)); //prepare sql
 		    
 			ResultSet rs = stmt.executeQuery(sql);
 			while ( rs.next() ) 
