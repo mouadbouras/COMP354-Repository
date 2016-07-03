@@ -9,10 +9,10 @@ import java.text.SimpleDateFormat;
 import org.junit.Test;
 
 import models.Activity;
-import models.ActivityDao;
-import models.ActivityDependencyDao;
+import dao.ActivityDao;
+import dao.ActivityDependencyDao;
 import models.Project;
-import models.ProjectDao;
+import dao.ProjectDao;
 
 public class TestActivityDependency {
 
@@ -41,7 +41,7 @@ public class TestActivityDependency {
 		assertTrue(activityDao.InsertActivity(activity1));
 		assertTrue(activityDao.InsertActivity(activity2));
 		
-		assertTrue(dependencyDao.InsertDependency(id1,id2));
+		//assertTrue(dependencyDao.AddDependency(id1,id2));
 		//TODO... 
 		
 		activityDao.DeleteActivity(id1);
@@ -70,14 +70,14 @@ public class TestActivityDependency {
 		assertTrue(activityDao.InsertActivity(activity1));
 		assertTrue(activityDao.InsertActivity(activity2));
 		
-		assertTrue(dependencyDao.InsertDependency(id1,id2));
+		//assertTrue(dependencyDao.addDependency(id1,id2));
 		
-		boolean dependencyExists = dependencyDao.CheckDependencyExists(id1,id2) ;
-    	if(!dependencyExists)
-    	{
-    		fail("The dependency should exist!");
-    	}
-		
+		//boolean dependencyExists = dependencyDao.CheckDependencyExists(id1,id2) ;
+//    	if(!dependencyExists)
+//    	{
+//    		fail("The dependency should exist!");
+//    	}
+//		
 		activityDao.DeleteActivity(id1);
 		activityDao.DeleteActivity(id2);
 	}

@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import controllers.ConverterService;
 import models.Activity;
-import models.ActivityDao;
+import dao.ActivityDao;
 import models.SqliteSetup;
 
 public class TestUpdateActivity {
@@ -47,8 +47,8 @@ public class TestUpdateActivity {
 			e.printStackTrace();
 			fail("Failed due to parse error while updating activity");
 		}
-		activity.setNormalDuration(999);
-		
+		//activity.setNormalDuration(999);
+		activity.setDuration(999);
 		assertTrue(activityDao.UpdateActivity(activity));
 		
 		// TODO: check if the values are actually updated in the database. Right now they're not

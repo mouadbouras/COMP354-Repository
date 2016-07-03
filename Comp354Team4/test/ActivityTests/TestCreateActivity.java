@@ -9,9 +9,9 @@ import java.text.SimpleDateFormat;
 import org.junit.Test;
 
 import models.Activity;
-import models.ActivityDao;
+import dao.ActivityDao;
 import models.Project;
-import models.ProjectDao;
+import dao.ProjectDao;
 
 public class TestCreateActivity {
 

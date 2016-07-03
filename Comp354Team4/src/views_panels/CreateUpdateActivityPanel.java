@@ -54,7 +54,7 @@ public class CreateUpdateActivityPanel extends JPanel {
 	//private int projectID;
 	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	private JTextField descriptionField;
-	private JTextField textField;
+	private JTextField durationField;
 	
 
 	
@@ -125,83 +125,83 @@ public class CreateUpdateActivityPanel extends JPanel {
 		
 		activityField.setText("");
 		
-		JPanel panel_10 = new JPanel();
-		GridBagConstraints gbc_panel_10 = new GridBagConstraints();
-		gbc_panel_10.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_10.fill = GridBagConstraints.BOTH;
-		gbc_panel_10.gridx = 0;
-		gbc_panel_10.gridy = 2;
-		panel_2.add(panel_10, gbc_panel_10);
-		GridBagLayout gbl_panel_10 = new GridBagLayout();
-		gbl_panel_10.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_panel_10.rowHeights = new int[]{0, 0};
-		gbl_panel_10.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_10.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		panel_10.setLayout(gbl_panel_10);
-		
-		JLabel lblStartDate = new JLabel("Start Date      ");
-		GridBagConstraints gbc_lblStartDate = new GridBagConstraints();
-		gbc_lblStartDate.insets = new Insets(0, 0, 0, 5);
-		gbc_lblStartDate.gridx = 1;
-		gbc_lblStartDate.gridy = 0;
-		panel_10.add(lblStartDate, gbc_lblStartDate);
-		// Don't know about the formatter, but there it is...
-		
-		UtilDateModel modelstart = new UtilDateModel();
-		Properties tempp1 = new Properties();
-		tempp1.put("text.today", "Today");
-		tempp1.put("text.month", "Month");
-		tempp1.put("text.year", "Year");
-		JDatePanelImpl datestartPanel = new JDatePanelImpl(modelstart, tempp1);
-		JDatePickerImpl startdatePicker = new JDatePickerImpl(datestartPanel, new DateComponentFormatter());
-		SpringLayout springstartLayout = (SpringLayout) startdatePicker.getLayout();
-		springstartLayout.putConstraint(SpringLayout.WEST, startdatePicker.getJFormattedTextField(), 0, SpringLayout.WEST, startdatePicker);
-		GridBagConstraints gbc_startdatePicker = new GridBagConstraints();
-		gbc_startdatePicker.gridx = 3;
-		gbc_startdatePicker.gridy = 0;
-		gbc_startdatePicker.anchor = GridBagConstraints.EAST;
-		panel_10.add(startdatePicker, gbc_startdatePicker);		
-		
-		JPanel panel_8 = new JPanel();
-		GridBagConstraints gbc_panel_8 = new GridBagConstraints();
-		gbc_panel_8.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_8.fill = GridBagConstraints.BOTH;
-		gbc_panel_8.gridx = 0;
-		gbc_panel_8.gridy = 3;
-		panel_2.add(panel_8, gbc_panel_8);
-		GridBagLayout gbl_panel_8 = new GridBagLayout();
-		gbl_panel_8.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_panel_8.rowHeights = new int[]{0, 0};
-		gbl_panel_8.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_8.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		panel_8.setLayout(gbl_panel_8);
-		
-		UtilDateModel modelend = new UtilDateModel();
-		Properties tempp2 = new Properties();
-		tempp2.put("text.today", "Today");
-		tempp2.put("text.month", "Month");
-		tempp2.put("text.year", "Year");
-		JDatePanelImpl enddatePanel = new JDatePanelImpl(modelend, tempp2);
-		JDatePickerImpl datePickerend = new JDatePickerImpl(enddatePanel, new DateComponentFormatter());
-		SpringLayout springLayoutend = (SpringLayout) datePickerend.getLayout();
-		springLayoutend.putConstraint(SpringLayout.WEST, datePickerend.getJFormattedTextField(), 0, SpringLayout.WEST, datePickerend);
-		GridBagConstraints gbc_datePickerend = new GridBagConstraints();
-		gbc_datePickerend.gridx = 3;
-		gbc_datePickerend.gridy = 0;
-		gbc_datePickerend.anchor = GridBagConstraints.EAST;
-		panel_8.add(datePickerend, gbc_datePickerend);
-		
-		startdatePicker.getJFormattedTextField().setText("yyyy-mm-dd");
-		datePickerend.getJFormattedTextField().setText("yyyy-mm-dd");
-		
-		JLabel lblNewLabel = new JLabel("End Date       ");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 0;
-		panel_8.add(lblNewLabel, gbc_lblNewLabel);
-		datePickerend.getJFormattedTextField().setText("yyyy-mm-dd");		
-		
+//		JPanel panel_10 = new JPanel();
+//		GridBagConstraints gbc_panel_10 = new GridBagConstraints();
+//		gbc_panel_10.insets = new Insets(0, 0, 5, 0);
+//		gbc_panel_10.fill = GridBagConstraints.BOTH;
+//		gbc_panel_10.gridx = 0;
+//		gbc_panel_10.gridy = 2;
+//		panel_2.add(panel_10, gbc_panel_10);
+//		GridBagLayout gbl_panel_10 = new GridBagLayout();
+//		gbl_panel_10.columnWidths = new int[]{0, 0, 0, 0, 0};
+//		gbl_panel_10.rowHeights = new int[]{0, 0};
+//		gbl_panel_10.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+//		gbl_panel_10.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+//		panel_10.setLayout(gbl_panel_10);
+//		
+//		JLabel lblStartDate = new JLabel("Start Date      ");
+//		GridBagConstraints gbc_lblStartDate = new GridBagConstraints();
+//		gbc_lblStartDate.insets = new Insets(0, 0, 0, 5);
+//		gbc_lblStartDate.gridx = 1;
+//		gbc_lblStartDate.gridy = 0;
+//		panel_10.add(lblStartDate, gbc_lblStartDate);
+//		// Don't know about the formatter, but there it is...
+//		
+//		UtilDateModel modelstart = new UtilDateModel();
+//		Properties tempp1 = new Properties();
+//		tempp1.put("text.today", "Today");
+//		tempp1.put("text.month", "Month");
+//		tempp1.put("text.year", "Year");
+//		JDatePanelImpl datestartPanel = new JDatePanelImpl(modelstart, tempp1);
+//		JDatePickerImpl startdatePicker = new JDatePickerImpl(datestartPanel, new DateComponentFormatter());
+//		SpringLayout springstartLayout = (SpringLayout) startdatePicker.getLayout();
+//		springstartLayout.putConstraint(SpringLayout.WEST, startdatePicker.getJFormattedTextField(), 0, SpringLayout.WEST, startdatePicker);
+//		GridBagConstraints gbc_startdatePicker = new GridBagConstraints();
+//		gbc_startdatePicker.gridx = 3;
+//		gbc_startdatePicker.gridy = 0;
+//		gbc_startdatePicker.anchor = GridBagConstraints.EAST;
+//		panel_10.add(startdatePicker, gbc_startdatePicker);		
+//		
+//		JPanel panel_8 = new JPanel();
+//		GridBagConstraints gbc_panel_8 = new GridBagConstraints();
+//		gbc_panel_8.insets = new Insets(0, 0, 5, 0);
+//		gbc_panel_8.fill = GridBagConstraints.BOTH;
+//		gbc_panel_8.gridx = 0;
+//		gbc_panel_8.gridy = 3;
+//		panel_2.add(panel_8, gbc_panel_8);
+//		GridBagLayout gbl_panel_8 = new GridBagLayout();
+//		gbl_panel_8.columnWidths = new int[]{0, 0, 0, 0, 0};
+//		gbl_panel_8.rowHeights = new int[]{0, 0};
+//		gbl_panel_8.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+//		gbl_panel_8.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+//		panel_8.setLayout(gbl_panel_8);
+//		
+//		UtilDateModel modelend = new UtilDateModel();
+//		Properties tempp2 = new Properties();
+//		tempp2.put("text.today", "Today");
+//		tempp2.put("text.month", "Month");
+//		tempp2.put("text.year", "Year");
+//		JDatePanelImpl enddatePanel = new JDatePanelImpl(modelend, tempp2);
+//		JDatePickerImpl datePickerend = new JDatePickerImpl(enddatePanel, new DateComponentFormatter());
+//		SpringLayout springLayoutend = (SpringLayout) datePickerend.getLayout();
+//		springLayoutend.putConstraint(SpringLayout.WEST, datePickerend.getJFormattedTextField(), 0, SpringLayout.WEST, datePickerend);
+//		GridBagConstraints gbc_datePickerend = new GridBagConstraints();
+//		gbc_datePickerend.gridx = 3;
+//		gbc_datePickerend.gridy = 0;
+//		gbc_datePickerend.anchor = GridBagConstraints.EAST;
+//		panel_8.add(datePickerend, gbc_datePickerend);
+//		
+//		startdatePicker.getJFormattedTextField().setText("yyyy-mm-dd");
+//		datePickerend.getJFormattedTextField().setText("yyyy-mm-dd");
+//		
+//		JLabel lblNewLabel = new JLabel("End Date       ");
+//		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+//		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
+//		gbc_lblNewLabel.gridx = 1;
+//		gbc_lblNewLabel.gridy = 0;
+//		panel_8.add(lblNewLabel, gbc_lblNewLabel);
+//		datePickerend.getJFormattedTextField().setText("yyyy-mm-dd");		
+//		
 		JPanel panel_7 = new JPanel();
 		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
 		gbc_panel_7.insets = new Insets(0, 0, 5, 0);
@@ -266,10 +266,10 @@ public class CreateUpdateActivityPanel extends JPanel {
 		panel_9.add(panel_11, gbc_panel_11);
 		panel_11.setLayout(new BorderLayout(0, 0));
 		
-		textField = new JTextField();
-		textField.setText("");
-		textField.setColumns(10);
-		panel_11.add(textField, BorderLayout.NORTH);
+		durationField = new JTextField();
+		durationField.setText("");
+		durationField.setColumns(10);
+		panel_11.add(durationField, BorderLayout.NORTH);
 		
 		JPanel panel_5 = new JPanel();
 		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
@@ -290,17 +290,19 @@ public class CreateUpdateActivityPanel extends JPanel {
 					{						
 						try 
 						{
-							Date startDate = (Date) startdatePicker.getModel().getValue();
-							Date endDate = (Date) datePickerend.getModel().getValue();
-							
-							if(endDate.before(startDate))
-				            {
-				            	JOptionPane.showMessageDialog(null, "Please select the correct date!");
-				            }
-							else{
+							//Date startDate = (Date) startdatePicker.getModel().getValue();
+							//Date endDate = (Date) datePickerend.getModel().getValue();
+							int duration = Integer.parseInt(durationField.getText());
+//							if(endDate.before(startDate))
+//				            {
+//				            	JOptionPane.showMessageDialog(null, "Please select the correct date!");
+//				            }
+//							else{
+								
+								
 								Project activeProject = StateService.getStateInstance().getProject();
 								Activity activity = new Activity(activityField.getText(), descriptionField.getText(), 
-										startDate, endDate, activeProject.getId());
+										duration , activeProject.getId());
 								
 								ActivityDao activityDao = new ActivityDao();
 								System.out.println("insert activity into project : " + activeProject.getId());
@@ -309,7 +311,7 @@ public class CreateUpdateActivityPanel extends JPanel {
 								JOptionPane.showMessageDialog(null, "The Activity was created succesfully! ");
 								
 								dialog.dispose();
-							}							
+							//}							
 						}
 						
 						catch (Exception e)
@@ -342,10 +344,13 @@ public class CreateUpdateActivityPanel extends JPanel {
 						{
 							//set up activity
 							
-							Date startDate = (Date) startdatePicker.getModel().getValue();
-							Date endDate = (Date) datePickerend.getModel().getValue();
+							//Date startDate = (Date) startdatePicker.getModel().getValue();
+							//Date endDate = (Date) datePickerend.getModel().getValue();
 							
-							Activity activityToUpdate = new Activity(activityField.getText(), descriptionField.getText(), startDate, endDate, StateService.getStateInstance().getProject().getId());
+							int duration = Integer.parseInt(durationField.getText());
+
+							
+							Activity activityToUpdate = new Activity(activityField.getText(), descriptionField.getText(), duration, StateService.getStateInstance().getProject().getId());
 							activityToUpdate.setId(activityID);
 							
 							ActivityDao activityDao = new ActivityDao();

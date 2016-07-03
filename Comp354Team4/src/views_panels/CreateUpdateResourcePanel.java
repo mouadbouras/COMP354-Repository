@@ -250,7 +250,7 @@ public class CreateUpdateResourcePanel extends JPanel {
 							else{
 								Project activeProject = StateService.getStateInstance().getProject();
 								Activity activity = new Activity(activityField.getText(), descriptionField.getText(), 
-										startDate, endDate, activeProject.getId());
+										0, activeProject.getId());
 								
 								ActivityDao activityDao = new ActivityDao();
 								System.out.println("insert activity into project : " + activeProject.getId());

@@ -9,9 +9,9 @@ import java.text.SimpleDateFormat;
 import org.junit.Test;
 
 import models.Project;
-import models.ProjectDao;
+import dao.ProjectDao;
 import models.User;
-import views.State;
+import services.StateService;
 
 public class TestCreateProject {
 

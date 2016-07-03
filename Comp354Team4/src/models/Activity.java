@@ -86,27 +86,29 @@ public class Activity {
 		
 	}	
 	
-	public Activity(String name, String description, String start, String end, int projId) throws ParseException, IllegalArgumentException{
+	public Activity(String name, String description, int givenDuration, String start, String end, int projId) throws ParseException, IllegalArgumentException{
 		if (name != null && !name.isEmpty()) {	
 			activityName = name;
 			activityDescription = description;
 			startDate = ConverterService.StringToDate(start);	
 			endDate = ConverterService.StringToDate(end);
 			projectId = projId;
+			duration = givenDuration;
 		} else throw new IllegalArgumentException();
 	}
 	
-	public Activity(String name, String description, Date start, Date end, int projId) throws ParseException, IllegalArgumentException{
+	public Activity(String name, String description, int givenDuration, Date start, Date end, int projId) throws ParseException, IllegalArgumentException{
 		if (name != null && !name.isEmpty()) {	
 			activityName = name;
 			activityDescription = description;
 			startDate = start;	
 			endDate = end;
 			projectId = projId;
+			duration = givenDuration;
 		} else throw new IllegalArgumentException();
 	}
 	
-	public Activity(int id, String name, String description, String start, String end, int projId) throws ParseException, IllegalArgumentException{
+	public Activity(int id, String name, String description, int givenDuration, String start, String end, int projId) throws ParseException, IllegalArgumentException{
 		if (name != null && !name.isEmpty()) {
 			this.id = id;	
 			activityName = name;
@@ -114,10 +116,11 @@ public class Activity {
 			startDate = ConverterService.StringToDate(start);	
 			endDate = ConverterService.StringToDate(end);
 			projectId = projId;
+			duration = givenDuration;
 		} else throw new IllegalArgumentException();
 	}
 	
-	public Activity(int id, String name, String start, String end, int projId) throws ParseException, IllegalArgumentException{
+	public Activity(int id, String name,  int givenDuration, String start, String end, int projId) throws ParseException, IllegalArgumentException{
 		if (name != null && !name.isEmpty()) {
 			this.id = id;	
 			activityName = name;
@@ -125,6 +128,26 @@ public class Activity {
 			startDate = ConverterService.StringToDate(start);	
 			endDate = ConverterService.StringToDate(end);
 			projectId = projId;
+			duration = givenDuration;
+		} else throw new IllegalArgumentException();
+	}
+
+	public Activity(int id, String name, String description,  int givenDuration, int projId) throws ParseException, IllegalArgumentException{
+		if (name != null && !name.isEmpty()) {
+			this.id = id;	
+			activityName = name;
+			activityDescription = description;
+			projectId = projId;
+			duration = givenDuration;
+		} else throw new IllegalArgumentException();
+	}
+	
+	public Activity(String name, String description,  int givenDuration, int projId) throws ParseException, IllegalArgumentException{
+		if (name != null && !name.isEmpty()) {
+			activityName = name;
+			activityDescription = description;
+			projectId = projId;
+			duration = givenDuration;
 		} else throw new IllegalArgumentException();
 	}
 	

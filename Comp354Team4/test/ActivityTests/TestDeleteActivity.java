@@ -7,8 +7,8 @@ import java.text.ParseException;
 import org.junit.Test;
 
 import models.Activity;
-import models.ActivityDao;
-import models.ProjectDao;
+import dao.ActivityDao;
+import dao.ProjectDao;
 
 public class TestDeleteActivity {
 	
