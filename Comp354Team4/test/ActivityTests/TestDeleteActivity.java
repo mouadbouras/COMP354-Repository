@@ -32,5 +32,10 @@ public class TestDeleteActivity {
 		activityDao.DeleteActivity(20);
 		
 		//TODO actually check if it's deleted in the database
+		assertTrue(activityDao.GetActivitiesGivenActivityId(20).isEmpty());
+		//DONE 
+
+
+		
 	}	
 }

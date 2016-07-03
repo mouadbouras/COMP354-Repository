@@ -95,23 +95,27 @@ public class TestCreateActivity {
 
 	}
 
-	/*
+	
 	// Can we have an id = 0? That could be tested. This test should be changed though
 
 	@Test
 	// testing creation of an Invalid activity using "null ProjectID"
 	public void createInValidProjectIDActivity() {
 
-		Activity temp = new Activity();
-		System.out.println("Testing Creation of an invalid Activity : PROJECT ID");
-		temp.setId(100);
-		temp.setActivityName("UserTest");
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		temp.setStartDate(df.parse("2016-05-29"));
-		temp.setEndDate(df.parse("2016-05-31"));
-		temp.setProjectId((Integer) null);
-		assertNotNull(temp);
+		Activity temp = null;
+		int id = -11;
+		
+		try {
+			System.out.println("Testing Creation of an invalid Activity : PROJECT ID");
+			temp = new Activity(100,"UserTest", "description", 5, "2016-05-29","2016-05-31", id);
+			fail("Expected ParseException while creating project");
 
+		}
+		 catch (Exception e) {
+			 System.out.println("Failed to create acitivity with invalid ID");
+			assert (e instanceof ParseException);
+			
+		}
 	}
-*/
+
 }

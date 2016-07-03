@@ -22,7 +22,7 @@ public class Activity {
 	private int progress;
 	
 	public Activity(int id, String name, String description, int nDuration, String start, String end, int projId) throws ParseException, IllegalArgumentException{
-		if (name != null && !name.isEmpty()) {
+		if (name != null && !name.isEmpty() && projId > 0 && projId != Integer.MIN_VALUE && projId != Integer.MAX_VALUE) {
 			this.id = id;	
 			activityName = name;
 			activityDescription = description;
