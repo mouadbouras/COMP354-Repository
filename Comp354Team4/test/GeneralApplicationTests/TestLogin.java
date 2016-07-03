@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import controllers.DataService;
 import models.User;
-import services.DataService;
-import services.StateService;
+import views.State;
 
 public class TestLogin {
 
@@ -17,7 +17,7 @@ public class TestLogin {
 		String username = "User";
 		String password = "password";
 		User user = userService.GetUser(username,password);
-		StateService.getStateInstance().setUser(user);	
+		State.getStateInstance().setUser(user);	
 		System.out.println("Testing Login: correct username and password ");
 		assertNotNull(user);
 	} 	

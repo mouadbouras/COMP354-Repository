@@ -2,16 +2,19 @@ package ActivityTests;
 
 import static org.junit.Assert.*;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
+import java.util.List;
 
 import org.junit.Test;
 
-import dao.ActivityDao;
+import controllers.ConverterService;
 import models.Activity;
+import models.ActivityDao;
 import models.SqliteSetup;
 
 public class TestUpdateActivity {
@@ -26,7 +29,7 @@ public class TestUpdateActivity {
 		Activity activity = null;
 
 		try {
-			activity = new Activity(20, "testDeleteActivity", "2016-05-29", "2016-05-31", 1);
+			activity = new Activity(21, "testUpdateActivity", "testUpdateActivityDescription" , 5, "2016-05-29", "2016-05-31", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed to create activity");
@@ -35,6 +38,8 @@ public class TestUpdateActivity {
 		assertTrue(activityDao.InsertActivity(activity));
 		
 		activity.setActivityName("testUpdatedName");
+		activity.setActivityDescription("testUpdateDescription");
+
 		try {
 			activity.setStartDate("2017-12-12");
 			activity.setEndDate("2018-12-12");
@@ -42,11 +47,23 @@ public class TestUpdateActivity {
 			e.printStackTrace();
 			fail("Failed due to parse error while updating activity");
 		}
+		activity.setNormalDuration(999);
 		
 		assertTrue(activityDao.UpdateActivity(activity));
 		
 		// TODO: check if the values are actually updated in the database. Right now they're not
-		activityDao.DeleteActivity(20);
+		Activity newActivity = activityDao.GetActivitiesGivenActivityId(21).get(0);
+
+		assertEquals(newActivity.getActivityName(), "testUpdatedName");
+		assertEquals(newActivity.getActivityDescription(), "testUpdateDescription");
+
+		try {
+		assertEquals(newActivity.getStartDate(), ConverterService.StringToDate("2017-12-12"));  
+		assertEquals(newActivity.getEndDate (), ConverterService.StringToDate("2018-12-12"));
+		}
+		catch (ParseException e) {}
+		
+		//DONE
 		
 	}	
 }
