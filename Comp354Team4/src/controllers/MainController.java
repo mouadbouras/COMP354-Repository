@@ -35,7 +35,9 @@ import models.*;
 		//frmCompProject.setBounds(100, 100, 800, 543);
 		frmCompProject.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
-		ProjectsController projects = new ProjectsController(frmCompProject);
+		//frmCompPm.getContentPane().removeAll();
+		
+		ManagerController projects = new ManagerController(frmCompProject);
 
 
 	}

@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 
 import models.*;
+import services.DataService;
+import services.StateService;
 
 public class LoginController
 {
@@ -78,23 +80,22 @@ public class LoginController
 					if(userService.GetUser(username,password) == null){
 						
 						//  FOLLOWING LINE MUST BE UNCOMENTED BEFORE DEMO!!
-						throw new Exception("invalid username/password");
+						//throw new Exception("invalid username/password");
 						
-						//**** CODE FOR DEV ENVIRONMENT ONLY. BYPASSES LOGIN.*****
-						//User user = userService.GetUser("mouad","password");
+						//CODE FOR DEV ENVIRONMENT ONLY. BYPASSES LOGIN.
+						User user = userService.GetUser("mouad","password");
 						
-						//System.out.println("login successful");						
-						//State.getStateInstance().setUser(user);	
-						//MainController.userLogged();
-						//******************************************************** 
-						
+						System.out.println("login successful");						
+						StateService.getStateInstance().setUser(user);	
+						MainController.userLogged();						
 					}
+					
 					else
 					{
 						User user = userService.GetUser(username,password);
 						
 						System.out.println("login successful");						
-						State.getStateInstance().setUser(user);					
+						StateService.getStateInstance().setUser(user);					
 						
 						MainController.userLogged();
 						

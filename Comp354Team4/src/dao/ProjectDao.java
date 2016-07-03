@@ -1,4 +1,4 @@
-package models;
+package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,6 +16,7 @@ import controllers.ConverterService;
 public class ProjectDao {
 
 	private static String SelectProjectsGivenManagerId = "SELECT * FROM Project WHERE managerId = @userId AND isRemoved = 0";
+	private static String getProjectByProjectId = "SELECT * FROM Project WHERE id = @id AND isRemoved = 0";
 	private static String InsertProjects = "INSERT INTO Project(projectName, startDate, endDate, managerId) VALUES ('@projectName', '@startDate', '@endDate', '@managerId');";
 	public static String CreateTable = "CREATE TABLE Project (id INTEGER PRIMARY KEY, projectName varchar(50),	"
 			+ "startDate DateTime, endDate DateTime, managerId INTEGER, FOREIGN KEY(managerId) REFERENCES User(id));";
@@ -26,16 +27,19 @@ public class ProjectDao {
 	private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 	public String[] GetProjectColumns() {
-		String[] columns = { "Project Id", "Project Name", "Start Date", "End Date", "Manager Id", " ", " ", " " };
+		String[] columns = { "Project Id", "Project Name", "Start Date", "End Date", "Manager Id"};
 
 		return columns;
 	}
 
 	public String[] returnDataRow(Project project) {
-		String[] temp = new String[] { Integer.toString(project.getId()), project.getProjectName(),
+		String[] temp = new String[] { 
+				Integer.toString(project.getId()), 
+				project.getProjectName(),
 				ConverterService.DateToString(project.getStartDate()),
-				ConverterService.DateToString(project.getEndDate()), Integer.toString(project.getManagerId()),
-				"View Activities", "Edit", "Delete" };
+				ConverterService.DateToString(project.getEndDate()), 
+				Integer.toString(project.getManagerId())
+				};
 		return temp;
 	}
 
@@ -78,6 +82,37 @@ public class ProjectDao {
 		return projects;
 	}
 
+	public Project getProjectByProjectId(int Id){
+		Project temp = null;
+		Connection c = null;
+		Statement stmt = null;
+		try {
+			Class.forName(SqliteSetup.sqliteClass);
+			c = DriverManager.getConnection(SqliteSetup.connection);
+			System.out.println("Opened database successfully");
+			stmt = c.createStatement();
+
+			String sql = ProjectDao.getProjectByProjectId.replace("@id", Integer.toString(Id)); // prepare
+																												// sql
+
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while (rs.next()) {
+				temp = ProjectDao.mapResultSetToProject(rs);
+			}
+
+			rs.close();
+			stmt.close();
+			c.close();
+
+		}
+
+		catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		return temp;
+	}
 	// insert project into database
 	public boolean InsertProject(Project project) {
 		Connection c = null;

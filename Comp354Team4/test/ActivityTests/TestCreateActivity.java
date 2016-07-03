@@ -8,10 +8,10 @@ import java.text.SimpleDateFormat;
 
 import org.junit.Test;
 
+import dao.ActivityDao;
+import dao.ProjectDao;
 import models.Activity;
-import models.ActivityDao;
 import models.Project;
-import models.ProjectDao;
 
 public class TestCreateActivity {
 
@@ -25,7 +25,7 @@ public class TestCreateActivity {
 		Activity temp = null;
 
 		try {
-			temp = new Activity(20, "TestCreate", 5, "2016-05-29", "2016-05-31", 1);
+			temp = new Activity(20, "CreateActivityTest", "2016-05-29", "2016-05-31", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed to create activity");
@@ -42,7 +42,7 @@ public class TestCreateActivity {
 		Activity temp = null;
 
 		try {
-			temp = new Activity(100, null, 5, "2016-05-29", "2016-05-31", 1);
+			temp = new Activity(100, null, "2016-05-29", "2016-05-31", 1);
 			fail("Expected IllegalArgumentException while creating project");
 		} catch (Exception e) {
 			assert (e instanceof IllegalArgumentException);
@@ -57,25 +57,10 @@ public class TestCreateActivity {
 		Activity temp = null;
 		
 		try {
-			temp = new Activity(100, "test", 5, null, "2016-05-31", 1);
+			temp = new Activity(100, "test", null, "2016-05-31", 1);
 			fail("Expected ParseException while creating project");
 		} catch (Exception e) {
 			assert (e instanceof ParseException);
-		}
-
-	}
-	
-	@Test
-	// testing creation of an Invalid activity using a negative duration
-	public void createInValidDuration() {		
-		System.out.println("Testing Creation of an invalid Activity : START DATE");
-		Activity temp = null;
-		
-		try {
-			temp = new Activity(100, "test", -1, null, "2016-05-31", 1);
-			fail("Expected ParseException while creating project");
-		} catch (Exception e) {
-			assert (e instanceof IllegalArgumentException);
 		}
 
 	}
@@ -87,7 +72,7 @@ public class TestCreateActivity {
 		Activity temp = null;
 		
 		try {
-			temp = new Activity(100, "test", 5, "2016-05-31", null, 1);
+			temp = new Activity(100, "test", "2016-05-31", null, 1);
 			fail("Expected ParseException while creating project");
 		} catch (Exception e) {
 			assert (e instanceof ParseException);
@@ -95,27 +80,23 @@ public class TestCreateActivity {
 
 	}
 
-	
+	/*
 	// Can we have an id = 0? That could be tested. This test should be changed though
 
 	@Test
 	// testing creation of an Invalid activity using "null ProjectID"
 	public void createInValidProjectIDActivity() {
 
-		Activity temp = null;
-		int id = -11;
-		
-		try {
-			System.out.println("Testing Creation of an invalid Activity : PROJECT ID");
-			temp = new Activity(100,"UserTest", "description", 5, "2016-05-29","2016-05-31", id);
-			fail("Expected ParseException while creating project");
+		Activity temp = new Activity();
+		System.out.println("Testing Creation of an invalid Activity : PROJECT ID");
+		temp.setId(100);
+		temp.setActivityName("UserTest");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		temp.setStartDate(df.parse("2016-05-29"));
+		temp.setEndDate(df.parse("2016-05-31"));
+		temp.setProjectId((Integer) null);
+		assertNotNull(temp);
 
-		}
-		 catch (Exception e) {
-			 System.out.println("Failed to create acitivity with invalid ID");
-			assert (e instanceof ParseException);
-			
-		}
 	}
-
+*/
 }

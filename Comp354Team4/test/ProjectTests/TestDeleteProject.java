@@ -14,14 +14,14 @@ import java.util.List;
 
 import org.junit.Test;
 
+import dao.ProjectDao;
 import models.Project;
-import models.ProjectDao;
 import models.SqliteSetup;
 
 public class TestDeleteProject {
 	
 	private ProjectDao projectDao = new ProjectDao();
-	//private static String SelectProjectsGivenProjectName = "SELECT * FROM Project WHERE projectName = @uniqueName";
+	private static String SelectProjectsGivenProjectName = "SELECT * FROM Project WHERE projectName = @name";
 
 	@Test 
 	public void deleteProject() throws ParseException{
@@ -30,7 +30,7 @@ public class TestDeleteProject {
 		Project project = null;
 
 		try {
-			project = new Project("testingDeleteProject", "2017-02-29", "2018-02-29", 1);
+			project = new Project("testDelete", "2017-02-29", "2018-02-29", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed to create project");
@@ -42,26 +42,42 @@ public class TestDeleteProject {
 		
 		// TODO uncomment and make it pass
 		// check if the project is actually deleted in the database
+		/*
 		
-		Project newProj = getProjectByName("testingDeleteProject", 1);
-		assertTrue( newProj == null );
-		// DONE
-		
-	} 
-	
-	public Project getProjectByName(String name , int managerId )
-	{
-		List<Project> projectList = projectDao.GetProjectsGivenManagerId(managerId); 
-		
-		for (int i = 0 ; i< projectList.size() ; i++)
-		{
-			if (projectList.get(i).getProjectName().equals(name))
-			{
-				return projectList.get(i);
+		List<Project> projects = new ArrayList<Project>();
+
+		Connection c = null;
+		Statement stmt = null;
+		try {
+			Class.forName(SqliteSetup.sqliteClass);
+			c = DriverManager.getConnection(SqliteSetup.connection);
+			System.out.println("Opened database successfully");
+			stmt = c.createStatement();
+
+			
+			String sql = SelectProjectsGivenProjectName.replace("@name", "'testDelete'");
+
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Project temp = null;
+				temp = ProjectDao.mapResultSetToProject(rs);
+				projects.add(temp);
 			}
+
+			rs.close();
+			stmt.close();
+			c.close();
+
 		}
-		
-		return null;
-	}
-	
+
+		catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+
+		System.out.println("Operation done successfully");
+
+		assertTrue(projects.isEmpty());
+		 */
+	} 
 }

@@ -1,16 +1,21 @@
-package models;
+package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import controllers.ConverterService;
+import models.SqliteSetup;
 import models.User;
 
 public class UserDao 
 {
 	
 	private static String SelectUserGivenUserId = "SELECT * FROM User WHERE id = @userId;";
+	private static String SelectUserGivenRole = "SELECT * FROM User WHERE role = @role;";
 	private static String SelectUserGivenUsernamePassword = "SELECT * FROM User WHERE username = '@username' and password = '@password';";
 	private static String InsertUsers = "INSERT INTO User (firstName, lastName, role, username, password) VALUES ('@firstName', '@lastName', @role, '@username', '@password');";
 	private static String CreateTable = "CREATE TABLE User(id INTEGER PRIMARY KEY, firstName CHAR(50), lastName CHAR(50), role INTEGER, username CHAR(255), password CHAR(255));";
@@ -145,5 +150,69 @@ public class UserDao
 	    	System.exit(0);
 		}
 		return temp;
+	}
+	
+	//write by Gu
+	public String[] GetPMColumns()
+	{
+		String[] columns = {
+				"ProjectMember Id", 
+				"First Name", 
+				"Last Name", 
+				"Current Activitiy",
+				};
+		
+		return columns;		
+	}
+	
+	public String[] returnDataRow(User user)
+	{		
+		String[] temp = new String[]{
+				Integer.toString(user.getId()),
+				user.getFirstName(),
+				user.getLastName(), 
+				"Edit",
+				};		
+		return temp;		
+	}
+	
+	public List<User> GetPMInfor(User user)
+	{
+		List<User> userlist = new ArrayList<User>();
+		
+	    Connection c = null;
+	    Statement stmt = null;
+	    try 
+	    {
+			Class.forName(SqliteSetup.sqliteClass);
+			c = DriverManager.getConnection(SqliteSetup.connection);
+			System.out.println("Opened database successfully");	
+			stmt = c.createStatement();
+		    
+			String sql = UserDao.SelectUserGivenRole.replace("@role", Integer.toString(user.getRole()) ); //prepare sql
+		    
+			ResultSet rs = stmt.executeQuery(sql);
+			while ( rs.next() ) 
+			{
+				User temp = null;
+				temp = UserDao.mapResultSetToUser(rs);
+				userlist.add(temp);
+			}
+		    
+			rs.close();
+			stmt.close();
+			c.close();		
+
+	    } 
+	    
+	    catch ( Exception e ) 
+	    {
+	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    	System.exit(0);
+	    }
+	    
+	    System.out.println("Operation done successfully");		
+		
+		return userlist;			
 	}
 }

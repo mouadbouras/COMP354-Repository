@@ -23,7 +23,19 @@ public class Project {
 		if (name != null && !name.isEmpty()) {
 			projectName = name;
 			startDate = ConverterService.StringToDate(start);
+			System.out.println(startDate);
 			endDate = ConverterService.StringToDate(end);
+			managerId = manaId;
+		}
+		else throw new IllegalArgumentException();
+	}
+	
+	public Project(String name, Date start, Date end, int manaId) throws ParseException, IllegalArgumentException {
+		if (name != null && !name.isEmpty()) {
+			projectName = name;
+			startDate = start;
+			System.out.println(startDate);
+			endDate = end;
 			managerId = manaId;
 		}
 		else throw new IllegalArgumentException();
@@ -82,11 +94,14 @@ public class Project {
 		this.managerId = managerId;
 	}	
 	
-	public boolean addActivity(int id, String name, String description, int nDuration, String start, String end, int projId) throws ParseException{
-		activities.add(new Activity(id, name, description, nDuration, start, end, projId));
+	public boolean addActivity(int id, String name, String description, String start, String end, int projId) throws ParseException{
+		activities.add(new Activity(id, name,description, start, end, projId));
 		return true; //addition was a success
 	}
 	
+	public List<Activity> getActivity(){
+		return this.activities;
+	}
 	public boolean deleteActivity(int index){
 		/*if(index < 0 || index > activities.size()-1){
 			return false; //deletion was a failure

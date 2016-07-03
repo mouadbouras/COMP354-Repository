@@ -16,20 +16,20 @@ import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 
 import models.*;
+import services.StateService;
 
-public class ProjectsController
+public class ManagerController
 {
 	boolean loginStatus = false;
 	
-	public ProjectsController(JFrame frmCompProject) {
+	public ManagerController(JFrame frmCompProject) {
 		
-		ProjectsView view = new ProjectsView () ;
+		ManagerView view = new ManagerView();
 		view.setLayout(new GridLayout(1,2));
-		State.getStateInstance().setProjectsView(view);
+		StateService.getStateInstance().setProjectsView(view);
 		
 		frmCompProject.getContentPane().add(view, BorderLayout.CENTER);
 		frmCompProject.setVisible(true);					
 		frmCompProject.repaint();
 	}
-
 }
