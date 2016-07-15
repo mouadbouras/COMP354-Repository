@@ -54,7 +54,11 @@ public class DataService
 	
 	public String[][] GetActivityTableData(int projectId){
 		String tempData[][] = null;
-		List<Activity> activities = this.activityDao.GetActivitiesGivenProjectId(projectId);
+		
+		Project p = this.projectDao.getProjectByProjectId(projectId);
+		
+		List<Activity> activities = new GANTTService().CalculateGanttChartActivityTimes(p);
+		
 		tempData = new String[activities.size()][];
 		for(int i = 0; i<activities.size(); ++i){
 			String [] tempRow = this.activityDao.returnDataRow(activities.get(i));
@@ -65,14 +69,15 @@ public class DataService
 	}
 	
 	//write by Gu
-	public String[] GetUserTableColumns(){
+	public String[] GetUserTableColumns()
+	{
 		return this.userDao.GetPMColumns();
 	}
 	
 	public String[][] GetUserTableData(User user){
 	
 		String tempData[][] = null;
-		List<User> users = this.userDao.GetPMInfor(user);
+		List<User> users = this.userDao.GetMembersGivenManagerId(user.getId());
 		tempData = new String[users.size()][];
 		
 		for(int i = 0; i<users.size(); ++i)

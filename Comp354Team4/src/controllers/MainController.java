@@ -29,7 +29,7 @@ import models.*;
 		LoginController login = new LoginController(frmCompProject);
 	}
 
-	public static  void userLogged()
+	public static  void userLogged(int role)
 	{
 		frmCompProject.getContentPane().removeAll();
 		//frmCompProject.setBounds(100, 100, 800, 543);
@@ -37,7 +37,14 @@ import models.*;
 		
 		//frmCompPm.getContentPane().removeAll();
 		
-		ManagerController projects = new ManagerController(frmCompProject);
+		if (role == 0)
+		{
+			ManagerController ctrl = new ManagerController(frmCompProject);
+		}
+		else if (role == 1)
+		{
+			MemberController ctrl = new MemberController(frmCompProject);
+		}
 
 
 	}

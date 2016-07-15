@@ -56,11 +56,18 @@ public class CreateUpdateActivityPanel extends JPanel {
 	private JTextField descriptionField;
 	private JTextField durationField;
 	
-
-	
 	/**
 	 * Create the panel.
 	 */
+	
+	public void SetupActivityForUpdate(Activity a)
+	{
+		activityID = a.getId();
+		durationField.setText(Integer.toString(a.getDuration()));			
+		activityField.setText(a.getActivityName());		
+		descriptionField.setText(a.getActivityDescription());
+	}
+	
 	public CreateUpdateActivityPanel(ActivitiesTab parentPanel, JDialog dialog, boolean create) {
 		this.parentPanel = parentPanel;
 		this.dialog = dialog;
@@ -125,83 +132,6 @@ public class CreateUpdateActivityPanel extends JPanel {
 		
 		activityField.setText("");
 		
-//		JPanel panel_10 = new JPanel();
-//		GridBagConstraints gbc_panel_10 = new GridBagConstraints();
-//		gbc_panel_10.insets = new Insets(0, 0, 5, 0);
-//		gbc_panel_10.fill = GridBagConstraints.BOTH;
-//		gbc_panel_10.gridx = 0;
-//		gbc_panel_10.gridy = 2;
-//		panel_2.add(panel_10, gbc_panel_10);
-//		GridBagLayout gbl_panel_10 = new GridBagLayout();
-//		gbl_panel_10.columnWidths = new int[]{0, 0, 0, 0, 0};
-//		gbl_panel_10.rowHeights = new int[]{0, 0};
-//		gbl_panel_10.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-//		gbl_panel_10.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-//		panel_10.setLayout(gbl_panel_10);
-//		
-//		JLabel lblStartDate = new JLabel("Start Date      ");
-//		GridBagConstraints gbc_lblStartDate = new GridBagConstraints();
-//		gbc_lblStartDate.insets = new Insets(0, 0, 0, 5);
-//		gbc_lblStartDate.gridx = 1;
-//		gbc_lblStartDate.gridy = 0;
-//		panel_10.add(lblStartDate, gbc_lblStartDate);
-//		// Don't know about the formatter, but there it is...
-//		
-//		UtilDateModel modelstart = new UtilDateModel();
-//		Properties tempp1 = new Properties();
-//		tempp1.put("text.today", "Today");
-//		tempp1.put("text.month", "Month");
-//		tempp1.put("text.year", "Year");
-//		JDatePanelImpl datestartPanel = new JDatePanelImpl(modelstart, tempp1);
-//		JDatePickerImpl startdatePicker = new JDatePickerImpl(datestartPanel, new DateComponentFormatter());
-//		SpringLayout springstartLayout = (SpringLayout) startdatePicker.getLayout();
-//		springstartLayout.putConstraint(SpringLayout.WEST, startdatePicker.getJFormattedTextField(), 0, SpringLayout.WEST, startdatePicker);
-//		GridBagConstraints gbc_startdatePicker = new GridBagConstraints();
-//		gbc_startdatePicker.gridx = 3;
-//		gbc_startdatePicker.gridy = 0;
-//		gbc_startdatePicker.anchor = GridBagConstraints.EAST;
-//		panel_10.add(startdatePicker, gbc_startdatePicker);		
-//		
-//		JPanel panel_8 = new JPanel();
-//		GridBagConstraints gbc_panel_8 = new GridBagConstraints();
-//		gbc_panel_8.insets = new Insets(0, 0, 5, 0);
-//		gbc_panel_8.fill = GridBagConstraints.BOTH;
-//		gbc_panel_8.gridx = 0;
-//		gbc_panel_8.gridy = 3;
-//		panel_2.add(panel_8, gbc_panel_8);
-//		GridBagLayout gbl_panel_8 = new GridBagLayout();
-//		gbl_panel_8.columnWidths = new int[]{0, 0, 0, 0, 0};
-//		gbl_panel_8.rowHeights = new int[]{0, 0};
-//		gbl_panel_8.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-//		gbl_panel_8.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-//		panel_8.setLayout(gbl_panel_8);
-//		
-//		UtilDateModel modelend = new UtilDateModel();
-//		Properties tempp2 = new Properties();
-//		tempp2.put("text.today", "Today");
-//		tempp2.put("text.month", "Month");
-//		tempp2.put("text.year", "Year");
-//		JDatePanelImpl enddatePanel = new JDatePanelImpl(modelend, tempp2);
-//		JDatePickerImpl datePickerend = new JDatePickerImpl(enddatePanel, new DateComponentFormatter());
-//		SpringLayout springLayoutend = (SpringLayout) datePickerend.getLayout();
-//		springLayoutend.putConstraint(SpringLayout.WEST, datePickerend.getJFormattedTextField(), 0, SpringLayout.WEST, datePickerend);
-//		GridBagConstraints gbc_datePickerend = new GridBagConstraints();
-//		gbc_datePickerend.gridx = 3;
-//		gbc_datePickerend.gridy = 0;
-//		gbc_datePickerend.anchor = GridBagConstraints.EAST;
-//		panel_8.add(datePickerend, gbc_datePickerend);
-//		
-//		startdatePicker.getJFormattedTextField().setText("yyyy-mm-dd");
-//		datePickerend.getJFormattedTextField().setText("yyyy-mm-dd");
-//		
-//		JLabel lblNewLabel = new JLabel("End Date       ");
-//		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-//		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
-//		gbc_lblNewLabel.gridx = 1;
-//		gbc_lblNewLabel.gridy = 0;
-//		panel_8.add(lblNewLabel, gbc_lblNewLabel);
-//		datePickerend.getJFormattedTextField().setText("yyyy-mm-dd");		
-//		
 		JPanel panel_7 = new JPanel();
 		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
 		gbc_panel_7.insets = new Insets(0, 0, 5, 0);
@@ -282,48 +212,49 @@ public class CreateUpdateActivityPanel extends JPanel {
 		JButton btnCreate = null;
 		if (create)
 		{			
-		//what happens when create button clicked
-				btnCreate = new JButton("Create");
-				btnCreate.addActionListener(new ActionListener() 
-				{
-					public void actionPerformed(ActionEvent arg0) 
-					{						
-						try 
+			btnCreate = new JButton("Create");
+			btnCreate.addActionListener(new ActionListener() 
+			{
+				public void actionPerformed(ActionEvent arg0) 
+				{						
+					try 
+					{
+						int duration = Integer.parseInt(durationField.getText());	
+						if (duration < 1)
 						{
-							//Date startDate = (Date) startdatePicker.getModel().getValue();
-							//Date endDate = (Date) datePickerend.getModel().getValue();
-							int duration = Integer.parseInt(durationField.getText());
-//							if(endDate.before(startDate))
-//				            {
-//				            	JOptionPane.showMessageDialog(null, "Please select the correct date!");
-//				            }
-//							else{
-								
-								
-								Project activeProject = StateService.getStateInstance().getProject();
-								Activity activity = new Activity(activityField.getText(), descriptionField.getText(), 
-										duration , activeProject.getId());
-								
-								ActivityDao activityDao = new ActivityDao();
-								System.out.println("insert activity into project : " + activeProject.getId());
-								activityDao.InsertActivity(activity);
-								
-								JOptionPane.showMessageDialog(null, "The Activity was created succesfully! ");
-								
-								dialog.dispose();
-							//}							
-						}
+							JOptionPane.showMessageDialog(null, "Please enter the correct number of days (more than 0)");
+							return;
+						}							
 						
-						catch (Exception e)
-						{
-							JOptionPane.showMessageDialog(null, "An error occured while creating this activity! Try again.");	
-						}		
-						finally
-						{
-							parentPanel.refreshTable();
-						}
+						Project activeProject = StateService.getStateInstance().getProject();
+						Activity activity = new Activity(activityField.getText(), descriptionField.getText(), duration , activeProject.getId());
+						
+						ActivityDao activityDao = new ActivityDao();
+						System.out.println("insert activity into project : " + activeProject.getId());
+						activityDao.InsertActivity(activity);
+						
+						JOptionPane.showMessageDialog(null, "The Activity was created succesfully! ");
+						
+						dialog.dispose();						
 					}
-				});	
+					
+					catch (NumberFormatException e)
+					{
+						JOptionPane.showMessageDialog(null, "Please enter an integer value for Duration");	
+					}
+					
+					catch (Exception e)
+					{
+						JOptionPane.showMessageDialog(null, "An error occured while creating this activity! Try again.");	
+					}
+					
+					finally
+					{
+						parentPanel.refreshTable();
+					}
+					
+				}
+			});	
 		}
 		
 		else 
@@ -336,30 +267,21 @@ public class CreateUpdateActivityPanel extends JPanel {
 				{						
 					try 
 					{
-						if(activityID == 0)
+						int duration = Integer.parseInt(durationField.getText());	
+						if (duration < 1)
 						{
 							JOptionPane.showMessageDialog(null, "You must select an Activity to update!");
 						}
-						else
-						{
-							//set up activity
-							
-							//Date startDate = (Date) startdatePicker.getModel().getValue();
-							//Date endDate = (Date) datePickerend.getModel().getValue();
-							
-							int duration = Integer.parseInt(durationField.getText());
-
-							
-							Activity activityToUpdate = new Activity(activityField.getText(), descriptionField.getText(), duration, StateService.getStateInstance().getProject().getId());
-							activityToUpdate.setId(activityID);
-							
-							ActivityDao activityDao = new ActivityDao();
-							activityDao.UpdateActivity(activityToUpdate);
-							
-							JOptionPane.showMessageDialog(null, "The Activity was updated succesfully! ");
-							
-							dialog.dispose();							
-						}
+										
+						Activity activityToUpdate = new Activity(activityField.getText(), descriptionField.getText(), duration, StateService.getStateInstance().getProject().getId());
+						activityToUpdate.setId(activityID);
+						
+						ActivityDao activityDao = new ActivityDao();
+						activityDao.UpdateActivity(activityToUpdate);
+						
+						JOptionPane.showMessageDialog(null, "The Activity was updated succesfully! ");
+						
+						dialog.dispose();							
 
 					}
 

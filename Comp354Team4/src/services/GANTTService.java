@@ -78,7 +78,7 @@ public class GANTTService {
 		
 		Calendar c = Calendar.getInstance(); 
 		c.setTime(latestEndDate); 
-		c.add(Calendar.DATE, 10);
+		c.add(Calendar.DATE, duration);
 		
 		Date endDate = c.getTime();
 		

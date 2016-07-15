@@ -13,6 +13,7 @@ import javax.swing.event.MenuKeyEvent;
 import javax.swing.event.MenuKeyListener;
 import javax.swing.table.DefaultTableModel;
 
+import models.Activity;
 import models.Project;
 import models.User;
 import services.DataService;
@@ -38,6 +39,8 @@ public class ProjectsTab extends JPanel {
 	private JScrollPane databasetable;
 	
 	private JPopupMenu popup;
+	private JPopupMenu createpopup;
+	
 	private JMenuItem viewChartMenuItem;
 	private JMenuItem newProjectMenuItem;
 	private JMenuItem updateProjectMenuItem;	
@@ -51,6 +54,7 @@ public class ProjectsTab extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	
 	public ProjectsTab() {			
 
 		this.thisPanel = this;
@@ -69,13 +73,12 @@ public class ProjectsTab extends JPanel {
 	private void SetupPopup()
 	{
 		this.popup = new JPopupMenu();
+		
 		this.viewChartMenuItem = new JMenuItem("VIEW GANTT Chart");
-		this.newProjectMenuItem = new JMenuItem("CREATE New Project");
 		this.updateProjectMenuItem = new JMenuItem("UPDATE This Project");		
 		this.deleteProjectMenuItem = new JMenuItem("DELETE This Project");
 		this.viewActivitiesMenuItem = new JMenuItem("VIEW Activities");		
 		
-		popup.add(newProjectMenuItem);		
 		popup.add(updateProjectMenuItem);	
 		popup.add(deleteProjectMenuItem);		
 		popup.add(viewActivitiesMenuItem);	
@@ -95,20 +98,6 @@ public class ProjectsTab extends JPanel {
 			}
 		});
         
-        newProjectMenuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				JDialog newProject = new JDialog();		
-				newProject.setTitle("CREATE Project");
-				JPanel createProjectPanel = new CreateUpdateProjectPanel(thisPanel, newProject, true);
-			
-				newProject.add(createProjectPanel);
-				newProject.pack();
-				newProject.setVisible(true);
-			}
-		});
-        
         updateProjectMenuItem.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) 
@@ -116,7 +105,11 @@ public class ProjectsTab extends JPanel {
 				JDialog updateProject = new JDialog();		
 				updateProject.setTitle("UPDATE Project");
 				
-				JPanel updateProjectPanel = new CreateUpdateProjectPanel(thisPanel, updateProject, false);					
+				CreateUpdateProjectPanel updateProjectPanel = new CreateUpdateProjectPanel(thisPanel, updateProject, false);	
+				
+				Project p = new Project(currentlySelectedProject);
+				updateProjectPanel.SetupProjectForUpdate(p);
+				
 				updateProject.add(updateProjectPanel);
 				updateProject.pack();
 				updateProject.setVisible(true);
@@ -145,11 +138,30 @@ public class ProjectsTab extends JPanel {
 	        	StateService.getStateInstance().getProjectsView().tabbedPane.setSelectedIndex(1); //switches tabbed panes to the activity tab pane
 			}
 		});		
+        
+		this.createpopup = new JPopupMenu();
+        
+		this.newProjectMenuItem = new JMenuItem("CREATE New Project");
+		
+		createpopup.add(newProjectMenuItem);	
+        
+        newProjectMenuItem.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				JDialog newProject = new JDialog();		
+				newProject.setTitle("CREATE Project");
+				JPanel createProjectPanel = new CreateUpdateProjectPanel(thisPanel, newProject, true);
+			
+				newProject.add(createProjectPanel);
+				newProject.pack();
+				newProject.setVisible(true);
+			}
+		});        
 	}
 	
 	private JTable JTableProject()
 	{
-
 		User temp = StateService.getStateInstance().getUser();
 		DataService ds = new DataService();
 		
@@ -169,6 +181,16 @@ public class ProjectsTab extends JPanel {
 		        }	
 		    }
 		});		
+		
+		// listener
+		table.getTableHeader().addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseClicked(java.awt.event.MouseEvent evt) 
+		    {  	  	
+		        if(SwingUtilities.isRightMouseButton(evt)){
+		        	createpopup.show(evt.getComponent(), evt.getX(), evt.getY());
+		        }	
+		    }
+		});	
 		
 		return table;		
 	}

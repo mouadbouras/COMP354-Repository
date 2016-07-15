@@ -1,7 +1,5 @@
 package models;
 
-import java.util.Stack;
-
 public class User {
 	private int id;
 	private String firstName;
@@ -9,7 +7,6 @@ public class User {
 	private int role; //let Project Manager = 0; Project Member = 1;
 	private String username;
 	private String password;
-	private Stack <Activity>activity;
 	
 	//getters and setters
 	public int getId() {

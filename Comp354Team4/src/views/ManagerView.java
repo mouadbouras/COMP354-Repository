@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 
 import services.StateService;
 import views_tabs.ActivitiesTab;
+import views_tabs.MemberActivitiesTab;
 import views_tabs.ProjectMemberTab;
 import views_tabs.ProjectsTab;
 import views_tabs.PropertiesTab;
@@ -34,7 +35,7 @@ public class ManagerView extends JPanel {
 	public JComponent activities;	
 	public JComponent resources;
 	public JComponent properties;	
-	
+	public JComponent membersView;	
 	
 	public JTabbedPane leftTabbedPane;
 	/**
@@ -54,7 +55,7 @@ public class ManagerView extends JPanel {
 	    userInformation = new UserInformationTab(); 
 
         
-        leftTabbedPane.addTab("Members", null, managedUsers, null); 
+        leftTabbedPane.addTab("Managed Members", null, managedUsers, null); 
         
         UserPM = new JSplitPane(JSplitPane.VERTICAL_SPLIT,userInformation,leftTabbedPane);
       
@@ -78,9 +79,13 @@ public class ManagerView extends JPanel {
 	    StateService.getStateInstance().setPropertyTab(new PropertiesTab());
 	    properties = StateService.getStateInstance().getPropertyTab();	    
 	    
+	    StateService.getStateInstance().memberActivitiesTab = new MemberActivitiesTab();
+	    membersView = StateService.getStateInstance().memberActivitiesTab; 
+	    
         tabbedPane.addTab("Projects", null, projects, null);		
         tabbedPane.addTab("Activities", null, activities, null);        
         tabbedPane.addTab("Resources", null, resources, null);		
         tabbedPane.addTab("Properties", null, properties, null);    
+        tabbedPane.addTab("Member Activities", null, membersView, null);    
 	}
 }

@@ -66,8 +66,8 @@ public class GanttPanel extends JPanel {
 	private JFreeChart createChart(final IntervalCategoryDataset dataset,Project temp) {
         final JFreeChart chart = ChartFactory.createGanttChart(
         	temp.getProjectName(),  // chart title
-            "Task",              // domain axis label
-            "Date",              // range axis label
+            "Activities",              // domain axis label
+            "Start To End Date Range",              // range axis label
             dataset,             // data
             true,                // include legend
             true,                // tooltips

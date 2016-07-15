@@ -57,6 +57,11 @@ public class CreateUpdateProjectPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	public void SetupProjectForUpdate(Project p)
+	{
+		activeProjectID = p.getId();
+	}
+	
 	public CreateUpdateProjectPanel(ProjectsTab parentPanel, JDialog dialog, boolean create) {
 		this.parentPanel = parentPanel;
 		this.dialog = dialog;

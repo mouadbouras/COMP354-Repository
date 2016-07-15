@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import models.Project;
 import dao.ProjectDao;
-import models.SqliteSetup;
+import dao.SqliteSetup;
 
 public class TestDeleteProject {
 	

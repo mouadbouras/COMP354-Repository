@@ -7,8 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
+import models.User;
 import services.StateService;
 import views_tabs.ActivitiesTab;
+import views_tabs.MemberActivitiesTab;
 import views_tabs.ProjectMemberTab;
 import views_tabs.ProjectsTab;
 import views_tabs.PropertiesTab;
@@ -30,11 +32,7 @@ public class MemberView extends JPanel {
 	
 	public JTabbedPane tabbedPane;
 	
-	public JComponent projects;
-	public JComponent activities;	
-	public JComponent resources;
-	public JComponent properties;	
-	
+	public JComponent memberActivitiesTab;
 	
 	public JTabbedPane leftTabbedPane;
 	/**
@@ -47,14 +45,15 @@ public class MemberView extends JPanel {
 		
         leftTabbedPane = new JTabbedPane(JTabbedPane.TOP);
         leftTabbedPane.setBackground(Color.WHITE); 		
-
+        
+		StateService.getStateInstance().memberUser = StateService.getStateInstance().user;
+		
         SetupComponentsForTabbedPane();
 	    
         managedUsers = new ProjectMemberTab();
 	    userInformation = new UserInformationTab(); 
-
         
-        leftTabbedPane.addTab("Members", null, managedUsers, null); 
+        //leftTabbedPane.addTab("Members", null, managedUsers, null); 
         
         UserPM = new JSplitPane(JSplitPane.VERTICAL_SPLIT,userInformation,leftTabbedPane);
       
@@ -66,21 +65,9 @@ public class MemberView extends JPanel {
 	
 	private void SetupComponentsForTabbedPane()
 	{
-	    StateService.getStateInstance().setProjectTab(new ProjectsTab());
-	    projects = StateService.getStateInstance().getProjectTab();
-
-	    StateService.getStateInstance().setActivityTab(new ActivitiesTab());
-	    activities = StateService.getStateInstance().getActivityTab();
-		
-	    StateService.getStateInstance().setResourceTab(new ResourcesTab());
-	    resources = StateService.getStateInstance().getResourceTab();
+	    StateService.getStateInstance().memberActivitiesTab = new MemberActivitiesTab();
+	    memberActivitiesTab = StateService.getStateInstance().memberActivitiesTab;
 	    
-	    StateService.getStateInstance().setPropertyTab(new PropertiesTab());
-	    properties = StateService.getStateInstance().getPropertyTab();	    
-	    
-        tabbedPane.addTab("Projects", null, projects, null);		
-        tabbedPane.addTab("Activities", null, activities, null);        
-        tabbedPane.addTab("Resources", null, resources, null);		
-        tabbedPane.addTab("Properties", null, properties, null);    
+        tabbedPane.addTab("Member Activities", null, memberActivitiesTab, null);	  
 	}
 }

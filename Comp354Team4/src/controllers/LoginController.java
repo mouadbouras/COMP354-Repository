@@ -83,11 +83,11 @@ public class LoginController
 						//throw new Exception("invalid username/password");
 						
 						//CODE FOR DEV ENVIRONMENT ONLY. BYPASSES LOGIN.
-						User user = userService.GetUser("mouad","password");
+						//User user = userService.GetUser("mouad","password");
 						
-						System.out.println("login successful");						
-						StateService.getStateInstance().setUser(user);	
-						MainController.userLogged();						
+						//System.out.println("login successful");						
+						//StateService.getStateInstance().setUser(user);	
+						//MainController.userLogged();						
 					}
 					
 					else
@@ -97,7 +97,7 @@ public class LoginController
 						System.out.println("login successful");						
 						StateService.getStateInstance().setUser(user);					
 						
-						MainController.userLogged();
+						MainController.userLogged(user.getRole());
 						
 
 					}					

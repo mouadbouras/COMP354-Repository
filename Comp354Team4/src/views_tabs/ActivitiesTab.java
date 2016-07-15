@@ -26,7 +26,7 @@ import models.Project;
 import models.User;
 
 import services.DataService;
-import services.DependencyService;
+import services.ActivityDependencyService;
 import services.StateService;
 
 import views_panels.CreateUpdateActivityPanel;
@@ -52,6 +52,8 @@ public class ActivitiesTab extends JPanel {
 	private CreateUpdateActivityPanel createActivity;
 		
 	private JPopupMenu popup;
+	private JPopupMenu createpopup;
+	
 	private JMenuItem newActivityMenuItem;
 	private JMenuItem updateActivityMenuItem;	
 	private JMenuItem addDependenciesMenuItem;	
@@ -83,7 +85,6 @@ public class ActivitiesTab extends JPanel {
 	private void SetupPopup()
 	{
 		this.popup = new JPopupMenu();
-		this.newActivityMenuItem = new JMenuItem("CREATE New Activity");
 		this.updateActivityMenuItem = new JMenuItem("UPDATE This Activity");		
 		this.removeActivityMenuItem = new JMenuItem("DELETE This Activity");
 		this.viewResourcesMenuItem = new JMenuItem("VIEW Resources");		
@@ -94,27 +95,13 @@ public class ActivitiesTab extends JPanel {
 		this.addResourceMenuItem=new JMenuItem("Add Recourse");
 		this.addPropertyMenuItem=new JMenuItem("Add Properties");
 		
-		popup.add(newActivityMenuItem);		
 		popup.add(updateActivityMenuItem);	
 		popup.add(removeActivityMenuItem);		
 		popup.add(viewResourcesMenuItem);
 		popup.add(viewPropertiesMenuItem);
 		popup.add(addDependenciesMenuItem);	
-		popup.add(removeDependenciesMenuItem);	
-		
-		newActivityMenuItem.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) {	      
-				JDialog newActivity = new JDialog();	
-				JPanel createActivityPanel = new CreateUpdateActivityPanel(thisPanel, newActivity, true);				
-				newActivity.setTitle("CREATE Activity");
-				newActivity.add(createActivityPanel);
-				newActivity.pack();
-				newActivity.setVisible(true);
-			}
-		});	
-		
+		popup.add(removeDependenciesMenuItem);			
+
 		updateActivityMenuItem.addActionListener(new ActionListener()
 		{
 			@Override
@@ -122,7 +109,12 @@ public class ActivitiesTab extends JPanel {
 			{	  
 				JDialog updateActivity = new JDialog();	
 				updateActivity.setTitle("UPDATE Activity");
-				JPanel updateActivitiesPanel = new CreateUpdateActivityPanel(thisPanel, updateActivity, false);
+				
+				CreateUpdateActivityPanel updateActivitiesPanel = new CreateUpdateActivityPanel(thisPanel, updateActivity, false);
+
+				Activity temp = new ActivityDao().GetActivitiesGivenActivityId(currentlySelectedActivity).get(0);
+				updateActivitiesPanel.SetupActivityForUpdate(temp);				
+				
 				updateActivity.add(updateActivitiesPanel);
 				updateActivity.pack();
 				updateActivity.setVisible(true);
@@ -136,15 +128,14 @@ public class ActivitiesTab extends JPanel {
 			{	   				
 				
 				Project currentProject = StateService.getStateInstance().getProject();
-	        	String[] activitySelection = new DependencyService().GetRemovableDependencies(currentProject.getId(), currentlySelectedActivity);   		        	
+	        	String[] activitySelection = new ActivityDependencyService().GetRemovableDependencies(currentProject.getId(), currentlySelectedActivity);   		        	
 				
 	        	new ActivityDependencyDao().DeleteActivityRemoveDependency(currentlySelectedActivity);
 	        	new ActivityDao().DeleteActivity(currentlySelectedActivity);
 	        	refreshTable();
 			}
 		});	
-		
-		
+				
 		removeDependenciesMenuItem.addActionListener(new ActionListener()
 		{
 			@Override
@@ -153,7 +144,7 @@ public class ActivitiesTab extends JPanel {
 				String []temp = null;
 				
 				Project currentProject = StateService.getStateInstance().getProject();
-	        	String[] activitySelection = new DependencyService().GetRemovableDependencies(currentProject.getId(), currentlySelectedActivity);   	
+	        	String[] activitySelection = new ActivityDependencyService().GetRemovableDependencies(currentProject.getId(), currentlySelectedActivity);   	
 	        	
 	        	if (activitySelection == null || activitySelection.length == 0)
 	        	{
@@ -191,7 +182,7 @@ public class ActivitiesTab extends JPanel {
 			public void actionPerformed(ActionEvent e) 
 			{	      
 				Project currentProject = StateService.getStateInstance().getProject();
-				String[] activitySelection = new DependencyService().GetAddableDependencies(currentProject.getId(), currentlySelectedActivity);  
+				String[] activitySelection = new ActivityDependencyService().GetAddableDependencies(currentProject.getId(), currentlySelectedActivity);  
 				
 	        	if (activitySelection == null || activitySelection.length == 0)
 	        	{
@@ -250,7 +241,27 @@ public class ActivitiesTab extends JPanel {
 	        	tab.refreshTable();
 	        	StateService.getStateInstance().getProjectsView().tabbedPane.setSelectedIndex(3); //switches tabbed panes to the activity tab pane
 			}
-		});					
+		});			
+				
+		this.createpopup = new JPopupMenu();
+		
+		this.newActivityMenuItem = new JMenuItem("CREATE New Activity");
+		
+		createpopup.add(newActivityMenuItem);	
+		
+		newActivityMenuItem.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {	      
+				JDialog newActivity = new JDialog();	
+				JPanel createActivityPanel = new CreateUpdateActivityPanel(thisPanel, newActivity, true);				
+				newActivity.setTitle("CREATE Activity");
+				newActivity.add(createActivityPanel);
+				newActivity.pack();
+				newActivity.setVisible(true);
+			}
+		});		
+		
 	}
 	
 	public void refreshTable()
@@ -279,6 +290,20 @@ public class ActivitiesTab extends JPanel {
 		        if(SwingUtilities.isRightMouseButton(evt))
 		        {
 		        	popup.show(evt.getComponent(), evt.getX(), evt.getY());
+		        }
+		    }
+		});
+		
+		table.getTableHeader().addMouseListener(new java.awt.event.MouseAdapter() {
+			
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	
+		        row = table.rowAtPoint(evt.getPoint());
+		        col = table.columnAtPoint(evt.getPoint());    	        	
+		        
+		        if(SwingUtilities.isRightMouseButton(evt))
+		        {
+		        	createpopup.show(evt.getComponent(), evt.getX(), evt.getY());
 		        }
 		    }
 		});

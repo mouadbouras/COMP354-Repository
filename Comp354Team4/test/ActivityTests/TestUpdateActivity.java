@@ -15,7 +15,7 @@ import org.junit.Test;
 import controllers.ConverterService;
 import models.Activity;
 import dao.ActivityDao;
-import models.SqliteSetup;
+import dao.SqliteSetup;
 
 public class TestUpdateActivity {
 	

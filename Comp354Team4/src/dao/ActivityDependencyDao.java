@@ -3,14 +3,13 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import models.Activity;
 import models.ActivityDependency;
-
-import models.SqliteSetup;
 
 public class ActivityDependencyDao 
 {
@@ -30,140 +29,57 @@ public class ActivityDependencyDao
 	{
 		List<ActivityDependency> dependencies = new ArrayList<ActivityDependency>();
 		
-	    Connection c = null;
-	    Statement stmt = null;
-	    ActivityDependency temp = null;
-	    try 
-	    {
-			Class.forName(SqliteSetup.sqliteClass);
-			c = DriverManager.getConnection(SqliteSetup.connection);
-			System.out.println("Opened database successfully: GetDependency");	
-			stmt = c.createStatement();
-		    
-			String sql = ActivityDependencyDao.SelectActivityDependencyForProject.replace("@projectId", Integer.toString(projectId)); //prepare sql
-			
-		    System.out.println(sql);
-		    
-			ResultSet rs = stmt.executeQuery(sql);
-			while ( rs.next() ) 
+		String sql = ActivityDependencyDao.SelectActivityDependencyForProject.replace("@projectId", Integer.toString(projectId)); //prepare sql
+		
+		ResultSet rs = SqliteSetup.GetInstance().ExecuteQuery(sql);
+		
+		try 
+		{
+			while (rs.next()) 
 			{
+			    ActivityDependency temp = null;
 				temp = mapResultSetToActivityDependency(rs);
 				dependencies.add(temp);
 			}
-		    
-			rs.close();
-			stmt.close();
-			c.close();	       
-	    } 
-	    
-	    catch ( Exception e ) 
-	    {
-	    	System.out.println("getDep");
-	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    	System.exit(0);
-	    }
-	    
-	    System.out.println("Operation done successfully");		
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		return dependencies;			
+		SqliteSetup.GetInstance().CloseQuery();
+		
+		return dependencies;		
 	}
 	
 	public void AddDependency(int activityId, int dependentId)
 	{
-	    Connection c = null;
-	    Statement stmt = null;
-	    ActivityDependency temp = null;
-	    try 
-	    {
-			Class.forName(SqliteSetup.sqliteClass);
-			c = DriverManager.getConnection(SqliteSetup.connection);
-			System.out.println("Opened database successfully: GetDependency");	
-			stmt = c.createStatement();
-		    
-			String sql = ActivityDependencyDao.InsertActivityDependency.
-					replace("@activityId", Integer.toString(activityId)).
-					replace("@dependeeActivityId", Integer.toString(dependentId));
-			
-		    System.out.println(sql);
-		    
-			stmt.executeUpdate(sql);
-			stmt.close();
-			c.close();	       
-	    } 
-	    
-	    catch ( Exception e ) 
-	    {
-	    	System.out.println("getDep");
-	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    	System.exit(0);
-	    }		
-	    System.out.println("Operation done successfully");		
+		String sql = ActivityDependencyDao.InsertActivityDependency.
+				replace("@activityId", Integer.toString(activityId)).
+				replace("@dependeeActivityId", Integer.toString(dependentId));
+		
+		SqliteSetup.GetInstance().ExecuteUpdate(sql);		
 	}
 	
 	public void RemoveDependency(int activityId, int dependentId)
 	{
-	    Connection c = null;
-	    Statement stmt = null;
-	    ActivityDependency temp = null;
-	    try 
-	    {
-			Class.forName(SqliteSetup.sqliteClass);
-			c = DriverManager.getConnection(SqliteSetup.connection);
-			System.out.println("Opened database successfully: GetDependency");	
-			stmt = c.createStatement();
-		    
-			String sql = ActivityDependencyDao.RemoveActivityDependency.
-					replace("@activityId", Integer.toString(activityId)).
-					replace("@dependeeActivityId", Integer.toString(dependentId));
-			
-		    System.out.println(sql);
-		    
-			stmt.executeUpdate(sql);
-			stmt.close();
-			c.close();	       
-	    } 
-	    
-	    catch ( Exception e ) 
-	    {
-	    	System.out.println("getDep");
-	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    	System.exit(0);
-	    }	
-	    System.out.println("Operation done successfully");		
+		String sql = ActivityDependencyDao.RemoveActivityDependency.
+				replace("@activityId", Integer.toString(activityId)).
+				replace("@dependeeActivityId", Integer.toString(dependentId));
 		
+		SqliteSetup.GetInstance().ExecuteUpdate(sql);		
+		
+		return;		
 	}
 	
 	public void DeleteActivityRemoveDependency(int activityId)
 	{
-	    Connection c = null;
-	    Statement stmt = null;
-	    ActivityDependency temp = null;
-	    try 
-	    {
-			Class.forName(SqliteSetup.sqliteClass);
-			c = DriverManager.getConnection(SqliteSetup.connection);
-			System.out.println("Opened database successfully: GetDependency");	
-			stmt = c.createStatement();
-		    
-			String sql = ActivityDependencyDao.RemoveAllActivityDependencyForActivity.
-					replace("@activityId", Integer.toString(activityId)).
-					replace("@activityId", Integer.toString(activityId));
-			
-		    System.out.println(sql);
-		    
-			stmt.executeUpdate(sql);
-			stmt.close();
-			c.close();	         
-	    } 
-	    
-	    catch ( Exception e ) 
-	    {
-	    	System.out.println("getDep");
-	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    	System.exit(0);
-	    }	
-	    System.out.println("Operation done successfully");		
+		String sql = ActivityDependencyDao.RemoveAllActivityDependencyForActivity.
+				replace("@activityId", Integer.toString(activityId)).
+				replace("@activityId", Integer.toString(activityId));
 		
+		SqliteSetup.GetInstance().ExecuteUpdate(sql);				
 	}
 		
 	//map resultset from sqlite to Activity
@@ -189,39 +105,24 @@ public class ActivityDependencyDao
 	{
 		List<ActivityDependency> dependencies = new ArrayList<ActivityDependency>();
 		
-	    Connection c = null;
-	    Statement stmt = null;
-	    try 
-	    {
-			Class.forName(SqliteSetup.sqliteClass);
-			c = DriverManager.getConnection(SqliteSetup.connection);
-			System.out.println("Opened database successfully: GetDependency");	
-			stmt = c.createStatement();
-		    
-			String sql = ActivityDependencyDao.SelectActivityDependencyForActivity.replace("@activityId", Integer.toString(activityId)); //prepare sql
-		    
-			ResultSet rs = stmt.executeQuery(sql);
+		String sql = ActivityDependencyDao.SelectActivityDependencyForActivity.replace("@activityId", Integer.toString(activityId)); //prepare sql
+		
+		ResultSet rs = SqliteSetup.GetInstance().ExecuteQuery(sql);
+		
+		try 
+		{
 			while (rs.next()) 
 			{
 				ActivityDependency temp = mapResultSetToActivityDependency(rs);
 				dependencies.add(temp);
 			}
-		    
-			rs.close();
-			stmt.close();
-			c.close();	  
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-	    } 
-	    
-	    catch ( Exception e ) 
-	    {
-	    	System.out.println("getDep");
-	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    	System.exit(0);
-	    }
-	    
-	    System.out.println("Operation done successfully");		
-		
 		return dependencies;			
 	}
 	
