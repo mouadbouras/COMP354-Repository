@@ -112,7 +112,7 @@ public class ActivitiesTab extends JPanel {
 				
 				CreateUpdateActivityPanel updateActivitiesPanel = new CreateUpdateActivityPanel(thisPanel, updateActivity, false);
 
-				Activity temp = new ActivityDao().GetActivitiesGivenActivityId(currentlySelectedActivity).get(0);
+				Activity temp = ActivityDao.getInstance().GetActivitiesGivenActivityId(currentlySelectedActivity).get(0);
 				updateActivitiesPanel.SetupActivityForUpdate(temp);				
 				
 				updateActivity.add(updateActivitiesPanel);
@@ -127,11 +127,11 @@ public class ActivitiesTab extends JPanel {
 			public void actionPerformed(ActionEvent e) 
 			{	   				
 				
-				Project currentProject = StateService.getStateInstance().getProject();
+				Project currentProject = StateService.getStateInstance().project;
 	        	String[] activitySelection = new ActivityDependencyService().GetRemovableDependencies(currentProject.getId(), currentlySelectedActivity);   		        	
 				
-	        	new ActivityDependencyDao().DeleteActivityRemoveDependency(currentlySelectedActivity);
-	        	new ActivityDao().DeleteActivity(currentlySelectedActivity);
+	        	ActivityDependencyDao.getInstance().DeleteActivityRemoveDependency(currentlySelectedActivity);	        	
+	        	ActivityDao.getInstance().DeleteActivity(currentlySelectedActivity);
 	        	refreshTable();
 			}
 		});	
@@ -143,7 +143,7 @@ public class ActivitiesTab extends JPanel {
 			{	        
 				String []temp = null;
 				
-				Project currentProject = StateService.getStateInstance().getProject();
+				Project currentProject = StateService.getStateInstance().project;
 	        	String[] activitySelection = new ActivityDependencyService().GetRemovableDependencies(currentProject.getId(), currentlySelectedActivity);   	
 	        	
 	        	if (activitySelection == null || activitySelection.length == 0)
@@ -165,7 +165,7 @@ public class ActivitiesTab extends JPanel {
 	        	{
 		        	int removedId = Integer.parseInt(s);
 		        	
-		        	new ActivityDependencyDao().RemoveDependency(currentlySelectedActivity, removedId);
+		        	ActivityDependencyDao.getInstance().RemoveDependency(currentlySelectedActivity, removedId);
 		        	
 		        	refreshTable();
 	        	}
@@ -181,7 +181,7 @@ public class ActivitiesTab extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{	      
-				Project currentProject = StateService.getStateInstance().getProject();
+				Project currentProject = StateService.getStateInstance().project;
 				String[] activitySelection = new ActivityDependencyService().GetAddableDependencies(currentProject.getId(), currentlySelectedActivity);  
 				
 	        	if (activitySelection == null || activitySelection.length == 0)
@@ -204,7 +204,7 @@ public class ActivitiesTab extends JPanel {
 	        	{
 	        		int addedId = Integer.parseInt(s);	        	
 	        		//add dependency;
-	        		new ActivityDependencyDao().AddDependency(currentlySelectedActivity, addedId);
+	        		ActivityDependencyDao.getInstance().AddDependency(currentlySelectedActivity, addedId);
 	        		
 		        	refreshTable();
 	        	}
@@ -221,11 +221,11 @@ public class ActivitiesTab extends JPanel {
 			public void actionPerformed(ActionEvent e) {	        	
 	        	Activity temp = new Activity();        	
 	        	temp.setId(currentlySelectedActivity);
-	        	StateService.getStateInstance().setActivity(temp);
+	        	StateService.getStateInstance().activity = temp;
 	        	
 	        	ResourcesTab tab = StateService.getStateInstance().resourceTab;
 	        	tab.refreshTable();
-	        	StateService.getStateInstance().getProjectsView().tabbedPane.setSelectedIndex(2); //switches tabbed panes to the activity tab pane
+	        	StateService.getStateInstance().managerView.tabbedPane.setSelectedIndex(2); //switches tabbed panes to the activity tab pane
 			}
 		});	
 		
@@ -235,11 +235,11 @@ public class ActivitiesTab extends JPanel {
 			public void actionPerformed(ActionEvent e) {	        	
 	        	Activity temp = new Activity();        	
 	        	temp.setId(currentlySelectedActivity);
-	        	StateService.getStateInstance().setActivity(temp);
+	        	StateService.getStateInstance().activity = temp;
 	        	
 	        	PropertiesTab tab = StateService.getStateInstance().propertyTab;
 	        	tab.refreshTable();
-	        	StateService.getStateInstance().getProjectsView().tabbedPane.setSelectedIndex(3); //switches tabbed panes to the activity tab pane
+	        	StateService.getStateInstance().managerView.tabbedPane.setSelectedIndex(3); //switches tabbed panes to the activity tab pane
 			}
 		});			
 				
@@ -272,10 +272,11 @@ public class ActivitiesTab extends JPanel {
 	
 	private JTable JTableActivities()
 	{
-		Project currentProject = StateService.getStateInstance().getProject();
+		Project currentProject = StateService.getStateInstance().project;
 		DataService ds = new DataService();
 		
 		table = new JTable(ds.GetActivityTableData(currentProject.getId()), ds.GetActivityTableColumns());
+		
 		table.setBackground(Color.WHITE);
 		table.setGridColor(Color.GRAY);			
 		

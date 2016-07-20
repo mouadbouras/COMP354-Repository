@@ -12,7 +12,7 @@ import dao.ProjectDao;
 
 public class TestDeleteActivity {
 	
-	private ActivityDao activityDao = new ActivityDao();
+	private ActivityDao activityDao = ActivityDao.getInstance();
 
 	@Test
 	//testing deletion of an Activity by using "activity id"

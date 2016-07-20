@@ -24,6 +24,18 @@ public class ActivityDependencyDao
 	
 	private static String RemoveAllActivityDependencyForActivity = "UPDATE ActivityDependency SET IsRemoved = 1 WHERE activityId = @activityId OR dependeeActivityId = @activityId";
 	
+	private static ActivityDependencyDao dao = null;
+	
+	private ActivityDependencyDao(){}
+	
+	public static ActivityDependencyDao getInstance()
+	{
+		if (dao == null)
+			dao = new ActivityDependencyDao();
+		
+		return dao;
+	}
+	
 	//get the list of activities on which the given activity depends
 	public List<ActivityDependency> GetDependencyIds(int projectId)
 	{
@@ -83,7 +95,7 @@ public class ActivityDependencyDao
 	}
 		
 	//map resultset from sqlite to Activity
-	public static ActivityDependency mapResultSetToActivityDependency(ResultSet rs)
+	private ActivityDependency mapResultSetToActivityDependency(ResultSet rs)
 	{
 		ActivityDependency temp = null;
 		try 

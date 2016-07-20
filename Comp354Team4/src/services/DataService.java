@@ -10,38 +10,34 @@ import models.*;
 
 public class DataService 
 {
-	private UserDao userDao = new UserDao();
-	private ProjectDao projectDao = new ProjectDao();
-	private ActivityDao activityDao = new ActivityDao();
-	
 	//get the user role, given the user id
 	public User GetUser(int userId)
 	{
-		return this.userDao.GetUserGivenUserId(userId);	
+		return UserDao.getInstance().GetUserGivenUserId(userId);	
 	}
 	
 	//get the user role, given the user id
 	public User GetUser(String username, String password)
 	{
-		return this.userDao.GetUserGivenUsernamePassword(username,password);	
+		return UserDao.getInstance().GetUserGivenUsernamePassword(username,password);	
 	}
 	
 	public String[] GetProjectTableColumns()
 	{
-		return this.projectDao.GetProjectColumns();		
+		return ProjectDao.getInstance().GetProjectColumns();		
 	}
 	
 	public String[][] GetProjectTableData(int userId)
 	{
 		String[][] tempData = null;
 		
-		List<Project> projects = this.projectDao.GetProjectsGivenManagerId(userId);
+		List<Project> projects = ProjectDao.getInstance().GetProjectsGivenManagerId(userId);
 		
 		tempData = new String[projects.size()][];
 		
 		for (int i = 0; i < projects.size(); ++i)
 		{
-			String[] tempRow = this.projectDao.returnDataRow(projects.get(i));
+			String[] tempRow = ProjectDao.getInstance().returnDataRow(projects.get(i));
 			tempData[i] = tempRow;			
 		}
 		
@@ -49,19 +45,19 @@ public class DataService
 	}
 	
 	public String[] GetActivityTableColumns(){
-		return this.activityDao.GetActivityColumns();
+		return ActivityDao.getInstance().GetActivityColumns();
 	}
 	
 	public String[][] GetActivityTableData(int projectId){
 		String tempData[][] = null;
 		
-		Project p = this.projectDao.getProjectByProjectId(projectId);
+		Project p = ProjectDao.getInstance().getProjectByProjectId(projectId);
 		
 		List<Activity> activities = new GANTTService().CalculateGanttChartActivityTimes(p);
 		
 		tempData = new String[activities.size()][];
 		for(int i = 0; i<activities.size(); ++i){
-			String [] tempRow = this.activityDao.returnDataRow(activities.get(i));
+			String [] tempRow = ActivityDao.getInstance().returnDataRow(activities.get(i));
 			tempData[i] = tempRow;
 		}
 		
@@ -71,18 +67,18 @@ public class DataService
 	//write by Gu
 	public String[] GetUserTableColumns()
 	{
-		return this.userDao.GetPMColumns();
+		return UserDao.getInstance().GetPMColumns();
 	}
 	
 	public String[][] GetUserTableData(User user){
 	
 		String tempData[][] = null;
-		List<User> users = this.userDao.GetMembersGivenManagerId(user.getId());
+		List<User> users = UserDao.getInstance().GetMembersGivenManagerId(user.getId());
 		tempData = new String[users.size()][];
 		
 		for(int i = 0; i<users.size(); ++i)
 		{
-			String [] tempRow = this.userDao.returnDataRow(users.get(i));
+			String [] tempRow = UserDao.getInstance().returnDataRow(users.get(i));
 			tempData[i] = tempRow;
 		}		
 
@@ -92,6 +88,6 @@ public class DataService
 	
 	public List<Activity> GetActivitiesGivenProjectId(int projectId)
 	{
-		return this.activityDao.GetActivitiesGivenProjectId(projectId);
+		return ActivityDao.getInstance().GetActivitiesGivenProjectId(projectId);
 	};
 }

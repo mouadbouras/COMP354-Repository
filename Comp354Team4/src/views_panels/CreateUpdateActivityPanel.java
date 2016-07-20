@@ -226,12 +226,11 @@ public class CreateUpdateActivityPanel extends JPanel {
 							return;
 						}							
 						
-						Project activeProject = StateService.getStateInstance().getProject();
+						Project activeProject = StateService.getStateInstance().project;
 						Activity activity = new Activity(activityField.getText(), descriptionField.getText(), duration , activeProject.getId());
 						
-						ActivityDao activityDao = new ActivityDao();
 						System.out.println("insert activity into project : " + activeProject.getId());
-						activityDao.InsertActivity(activity);
+						ActivityDao.getInstance().InsertActivity(activity);
 						
 						JOptionPane.showMessageDialog(null, "The Activity was created succesfully! ");
 						
@@ -273,11 +272,10 @@ public class CreateUpdateActivityPanel extends JPanel {
 							JOptionPane.showMessageDialog(null, "You must select an Activity to update!");
 						}
 										
-						Activity activityToUpdate = new Activity(activityField.getText(), descriptionField.getText(), duration, StateService.getStateInstance().getProject().getId());
+						Activity activityToUpdate = new Activity(activityField.getText(), descriptionField.getText(), duration, StateService.getStateInstance().project.getId());
 						activityToUpdate.setId(activityID);
 						
-						ActivityDao activityDao = new ActivityDao();
-						activityDao.UpdateActivity(activityToUpdate);
+						ActivityDao.getInstance().UpdateActivity(activityToUpdate);
 						
 						JOptionPane.showMessageDialog(null, "The Activity was updated succesfully! ");
 						

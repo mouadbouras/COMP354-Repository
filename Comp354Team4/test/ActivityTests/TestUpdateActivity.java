@@ -19,7 +19,7 @@ import dao.SqliteSetup;
 
 public class TestUpdateActivity {
 	
-	private ActivityDao activityDao = new ActivityDao();
+	private ActivityDao activityDao = ActivityDao.getInstance();
 
 	@Test
 	//testing update of an existing activity by using the "activity id"

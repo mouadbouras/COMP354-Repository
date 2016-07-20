@@ -15,7 +15,7 @@ import dao.ProjectDao;
 
 public class TestCreateActivity {
 
-	private ActivityDao activityDao = new ActivityDao();
+	private ActivityDao activityDao = ActivityDao.getInstance();
 
 	@Test
 	// testing creation of a Valid activity

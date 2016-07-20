@@ -17,7 +17,7 @@ public class TestLogin {
 		String username = "User";
 		String password = "password";
 		User user = userService.GetUser(username,password);
-		StateService.getStateInstance().setUser(user);	
+		StateService.getStateInstance().user = user;
 		System.out.println("Testing Login: correct username and password ");
 		assertNotNull(user);
 	} 	

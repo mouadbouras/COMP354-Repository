@@ -55,10 +55,8 @@ public class PropertiesTab extends JPanel {
 
 	private int row, col, currentlySelectedProperty;
 	
-	private PropertiesTab thisPanel;
-	
-	private PropertyDao propertyDao = new PropertyDao();
-	
+	private PropertiesTab thisPanel;	
+
 	/**
 	 * Create the panel.
 	 */
@@ -92,7 +90,7 @@ public class PropertiesTab extends JPanel {
 			public void actionPerformed(ActionEvent e) 
 			{				
 				//REMOVE
-				propertyDao.DeleteProperty(currentlySelectedProperty);
+				PropertyDao.getInstance().DeleteProperty(currentlySelectedProperty);
 				refreshTable();
 			}
 		});
@@ -105,7 +103,7 @@ public class PropertiesTab extends JPanel {
 				updateProperty.setTitle("Update Property");
 				CreateUpdatePropertyPanel updatePropertiesPanel = new CreateUpdatePropertyPanel(thisPanel, updateProperty, false);
 				
-				Property p = new PropertyDao().GetPropertyGivenPropertyId(currentlySelectedProperty);
+				Property p = PropertyDao.getInstance().GetPropertyGivenPropertyId(currentlySelectedProperty);
 				
 				updatePropertiesPanel.SetupPropertiesForUpdate(p);
 			
@@ -140,7 +138,7 @@ public class PropertiesTab extends JPanel {
 	
 	private JTable JTableProject()
 	{
-		Activity currentActivity = StateService.getStateInstance().getActivity();
+		Activity currentActivity = StateService.getStateInstance().activity;
 		
 		if (currentActivity == null) 
 			return null;

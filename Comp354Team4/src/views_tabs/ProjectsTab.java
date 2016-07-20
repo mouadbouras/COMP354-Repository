@@ -33,6 +33,7 @@ import javax.swing.JSplitPane;
 import org.jfree.ui.RefineryUtilities;
 
 import dao.ProjectDao;
+import dao.PropertyDao;
 
 public class ProjectsTab extends JPanel {
 	private JTable table;
@@ -87,7 +88,7 @@ public class ProjectsTab extends JPanel {
         viewChartMenuItem.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-	        	Project temp = new ProjectDao().getProjectByProjectId(currentlySelectedProject);
+	        	Project temp = ProjectDao.getInstance().getProjectByProjectId(currentlySelectedProject);
 	        	System.out.println(currentlySelectedProject);	 
 	        	JPanel ganttPanel = new GanttPanel("Gantt Chart",temp);
 	        	
@@ -120,7 +121,7 @@ public class ProjectsTab extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 	        	int projectId = currentlySelectedProject;
-	        	new ProjectDao().DeleteProject(projectId);
+	        	ProjectDao.getInstance().DeleteProject(projectId);
 	        	refreshTable();
 			}
 		});
@@ -131,11 +132,11 @@ public class ProjectsTab extends JPanel {
 	        	//get data for activities;
 	        	int projectId = currentlySelectedProject;
 	        	Project temp = new Project(projectId);        	
-	        	StateService.getStateInstance().setProject(temp);
+	        	StateService.getStateInstance().project = temp;
 	        	
 	        	ActivitiesTab tab = StateService.getStateInstance().activityTab;
 	        	tab.refreshTable();
-	        	StateService.getStateInstance().getProjectsView().tabbedPane.setSelectedIndex(1); //switches tabbed panes to the activity tab pane
+	        	StateService.getStateInstance().managerView.tabbedPane.setSelectedIndex(1); //switches tabbed panes to the activity tab pane
 			}
 		});		
         
@@ -162,7 +163,7 @@ public class ProjectsTab extends JPanel {
 	
 	private JTable JTableProject()
 	{
-		User temp = StateService.getStateInstance().getUser();
+		User temp = StateService.getStateInstance().user;
 		DataService ds = new DataService();
 		
 		table = new JTable(ds.GetProjectTableData(temp.getId()), ds.GetProjectTableColumns());

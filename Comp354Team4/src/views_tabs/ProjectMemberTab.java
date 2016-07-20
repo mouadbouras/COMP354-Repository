@@ -62,14 +62,14 @@ public class ProjectMemberTab extends JPanel{
 				
 	        	MemberActivitiesTab tab = StateService.getStateInstance().memberActivitiesTab;
 	        	tab.refreshTable();
-	        	StateService.getStateInstance().getProjectsView().tabbedPane.setSelectedIndex(4); //switches tabbed panes to the activity tab pane
+	        	StateService.getStateInstance().managerView.tabbedPane.setSelectedIndex(4); //switches tabbed panes to the activity tab pane
 			}
 		});
 		
 	}
 	
 	private JTable JTableProject(){
-		User temp = StateService.getStateInstance().getUser();
+		User temp = StateService.getStateInstance().user;
 		DataService ds = new DataService();
 		table = new JTable(ds.GetUserTableData(temp), ds.GetUserTableColumns());
 	

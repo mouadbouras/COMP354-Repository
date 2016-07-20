@@ -26,6 +26,18 @@ public class ProjectDao {
 
 	private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
+	private static ProjectDao dao = null;
+	
+	private ProjectDao(){}
+	
+	public static ProjectDao getInstance()
+	{
+		if (dao == null)
+			dao = new ProjectDao();
+		
+		return dao;
+	}
+	
 	public String[] GetProjectColumns() 
 	{
 		String[] columns = { "Project Id", "Project Name", "Start Date", "End Date", "Manager Id"};

@@ -21,6 +21,18 @@ public class ResourceDao {
 	private static String UpdateResource = "";
 	private static String RemoveResource = "UPDATE Resource SET isRemoved = '1' WHERE id = @id;";
 	
+	private static ResourceDao dao = null;
+	
+	private ResourceDao(){}
+	
+	public static ResourceDao getInstance()
+	{
+		if (dao == null)
+			dao = new ResourceDao();
+		
+		return dao;
+	}
+	
 	public String[] GetResourceColumns() 
 	{
 		String[] columns =  {"Id", "Member Id", "Member First Name", "Member Last Name" ,"Activity Id"};

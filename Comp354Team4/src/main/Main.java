@@ -1,4 +1,4 @@
-package views;
+package main;
 //importing java libraries
 import javax.swing.*;
 import java.awt.*;

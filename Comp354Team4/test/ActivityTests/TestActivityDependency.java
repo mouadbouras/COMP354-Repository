@@ -16,8 +16,8 @@ import dao.ProjectDao;
 
 public class TestActivityDependency {
 
-	private ActivityDao activityDao = new ActivityDao();
-	private ActivityDependencyDao dependencyDao = new ActivityDependencyDao();
+	private ActivityDao activityDao = ActivityDao.getInstance();
+	private ActivityDependencyDao dependencyDao = ActivityDependencyDao.getInstance();
 
 	@Test
 	// testing creation of a Valid activity

@@ -10,7 +10,19 @@ import models.MemberActivityInfo;
 public class MemberActivityInfoDao 
 {
 	private static String SelectMemberActivityGivenUserId = "SELECT U.id, U.firstName as firstName, U.lastName as lastName,  P.id as projectId, P.projectName, A.id as activityId, A.activityName FROM User AS U INNER JOIN Resource AS R ON R.userId = U.id INNER JOIN Activity AS A ON A.id = R.activityId INNER JOIN Project AS P ON P.id = A.projectId WHERE U.id = @userId AND U.role = '1' AND A.isRemoved = '0' AND R.isRemoved = '0' AND P.isRemoved = '0';";
+	
+	private static MemberActivityInfoDao dao = null;
+	
+	private MemberActivityInfoDao(){}
+	
+	public static MemberActivityInfoDao getInstance()
+	{
+		if (dao == null)
+			dao = new MemberActivityInfoDao();
 		
+		return dao;
+	}
+	
 	public List<MemberActivityInfo> GetMemberActivityGivenUserId(int userId)
 	{
 		List<MemberActivityInfo> memberActivities = new ArrayList<MemberActivityInfo>();

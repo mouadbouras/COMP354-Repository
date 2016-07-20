@@ -27,7 +27,7 @@ public class UserInformationTab extends JPanel{
 	public UserInformationTab() 
 	{	
 		
-		User temp = StateService.getStateInstance().getUser();
+		User temp = StateService.getStateInstance().user;
 		
 		setLayout(new BorderLayout());
 		nameTab = new JTextArea(2, 2);

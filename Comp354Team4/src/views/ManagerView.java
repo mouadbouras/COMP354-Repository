@@ -67,17 +67,17 @@ public class ManagerView extends JPanel {
 	
 	private void SetupComponentsForTabbedPane()
 	{
-	    StateService.getStateInstance().setProjectTab(new ProjectsTab());
-	    projects = StateService.getStateInstance().getProjectTab();
+	    StateService.getStateInstance().projectTab = new ProjectsTab();
+	    projects = StateService.getStateInstance().projectTab;
 
-	    StateService.getStateInstance().setActivityTab(new ActivitiesTab());
-	    activities = StateService.getStateInstance().getActivityTab();
+	    StateService.getStateInstance().activityTab = new ActivitiesTab();
+	    activities = StateService.getStateInstance().activityTab;
 		
-	    StateService.getStateInstance().setResourceTab(new ResourcesTab());
-	    resources = StateService.getStateInstance().getResourceTab();
+	    StateService.getStateInstance().resourceTab = new ResourcesTab();
+	    resources = StateService.getStateInstance().resourceTab;
 	    
-	    StateService.getStateInstance().setPropertyTab(new PropertiesTab());
-	    properties = StateService.getStateInstance().getPropertyTab();	    
+	    StateService.getStateInstance().propertyTab = new PropertiesTab();
+	    properties = StateService.getStateInstance().propertyTab; 
 	    
 	    StateService.getStateInstance().memberActivitiesTab = new MemberActivitiesTab();
 	    membersView = StateService.getStateInstance().memberActivitiesTab; 

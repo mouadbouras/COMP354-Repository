@@ -35,9 +35,9 @@ public class ActivityDependencyService
 	public String[] GetAddableDependencies(int projectId, int activityId)
 	{
 		//get the activities of a project		
-		List<Activity> activities = new ActivityDao().GetActivitiesGivenProjectId(projectId);
+		List<Activity> activities = ActivityDao.getInstance().GetActivitiesGivenProjectId(projectId);
 		//get the dependencies of the activities of that project
-		List<ActivityDependency> dependencies = new ActivityDependencyDao().GetDependencyIds(projectId);
+		List<ActivityDependency> dependencies = ActivityDependencyDao.getInstance().GetDependencyIds(projectId);
 		
 		//init a list of all dependencies that can be added without creating a cycle in the graph
 		List<String> addables = new ArrayList<String>();
@@ -94,7 +94,7 @@ public class ActivityDependencyService
 	
 	public String[] GetRemovableDependencies(int projectId, int activityId)
 	{
-		List<ActivityDependency> dependencies = new ActivityDependencyDao().GetDependencyIdsForActivity(activityId);	
+		List<ActivityDependency> dependencies = ActivityDependencyDao.getInstance().GetDependencyIdsForActivity(activityId);	
 		
 		List<String> removableDependencies = new ArrayList<String>();
 		

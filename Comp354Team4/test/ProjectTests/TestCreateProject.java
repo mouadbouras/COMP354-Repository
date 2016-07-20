@@ -15,7 +15,7 @@ import services.StateService;
 
 public class TestCreateProject {
 
-	private ProjectDao projectDao = new ProjectDao();
+	private ProjectDao projectDao = ProjectDao.getInstance();
 
 	@Test
 	// testing if manager is able to create a VALID project

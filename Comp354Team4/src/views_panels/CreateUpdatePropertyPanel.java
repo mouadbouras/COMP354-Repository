@@ -225,7 +225,7 @@ public class CreateUpdatePropertyPanel extends JPanel {
 						property.propertyDescription = propertyDescriptionField.getText();
 						property.propertyText = propertyTextField.getText();
 						
-						new PropertyDao().InsertProperty(property);
+						PropertyDao.getInstance().InsertProperty(property);
 						
 						JOptionPane.showMessageDialog(null, "The Property was created succesfully! ");
 						
@@ -261,7 +261,7 @@ public class CreateUpdatePropertyPanel extends JPanel {
 						property.propertyDescription = propertyDescriptionField.getText();
 						property.propertyText = propertyTextField.getText();
 						
-						new PropertyDao().UpdateProperty(property);
+						PropertyDao.getInstance().UpdateProperty(property);
 						
 						JOptionPane.showMessageDialog(null, "The Property was updated succesfully! ");
 						

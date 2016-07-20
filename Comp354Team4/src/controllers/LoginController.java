@@ -95,7 +95,7 @@ public class LoginController
 						User user = userService.GetUser(username,password);
 						
 						System.out.println("login successful");						
-						StateService.getStateInstance().setUser(user);					
+						StateService.getStateInstance().user = user;					
 						
 						MainController.userLogged(user.getRole());
 						

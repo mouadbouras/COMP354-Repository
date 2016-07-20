@@ -14,6 +14,18 @@ public class PropertyDao {
 	private static String UpdateProperty = "UPDATE Property SET propertyName = '@propertyName', propertyDescription = '@propertyDescription', propertyText = '@propertyText' WHERE id = @id";
 	private static String RemoveProperty = "UPDATE Property SET isRemoved = '1' WHERE id = @id";
 	
+	private static PropertyDao dao = null;
+	
+	private PropertyDao(){}
+	
+	public static PropertyDao getInstance()
+	{
+		if (dao == null)
+			dao = new PropertyDao();
+		
+		return dao;
+	}
+	
 	public String[] GetPropertyColumns() 
 	{
 		String[] columns = {"Id","ActivityId","Property Name","Property Description","Property Text"};

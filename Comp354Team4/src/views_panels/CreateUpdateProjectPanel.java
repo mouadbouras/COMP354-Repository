@@ -227,11 +227,9 @@ public class CreateUpdateProjectPanel extends JPanel {
 			            }
 			            else{
 				            Project project = new Project(projectField.getText(), startDate, 
-				            		endDate, StateService.getStateInstance().getUser().getId());					
+				            		endDate, StateService.getStateInstance().user.getId());			
 							
-							ProjectDao projectDao = new ProjectDao();
-							
-							if (projectDao.InsertProject(project)) {					
+							if (ProjectDao.getInstance().InsertProject(project)) {					
 								
 								JOptionPane.showMessageDialog(null, "The project was created succesfully!");
 								
@@ -279,11 +277,10 @@ public class CreateUpdateProjectPanel extends JPanel {
 							
 							System.out.println(activeProjectID);
 				        	Project projectToUpdate = new Project(projectField.getText(),
-				        			startDate, endDate, StateService.getStateInstance().getUser().getId());
+				        			startDate, endDate, StateService.getStateInstance().user.getId());
 				        	projectToUpdate.setId(activeProjectID);
 				        	
-							ProjectDao projectDao = new ProjectDao();
-							projectDao.UpdateProject(projectToUpdate);
+				        	ProjectDao.getInstance().UpdateProject(projectToUpdate);
 							
 							JOptionPane.showMessageDialog(null, "The Project was updated succesfully! ");
 							

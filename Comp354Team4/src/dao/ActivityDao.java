@@ -24,6 +24,18 @@ public class ActivityDao {
 	private static String DeleteActivityGivenActivityId = "UPDATE Activity SET isRemoved = '1' WHERE id = @id;";
 	private static String UpdateActivityGivenProjectId = "UPDATE Activity SET activityName = '@activityName', activityDescription = '@activityDescription', startDate = '1000-01-01', endDate = '1000-01-01', duration = '@duration' WHERE id = @id ";
 	
+	private static ActivityDao dao = null;
+	
+	private ActivityDao(){}
+	
+	public static ActivityDao getInstance()
+	{
+		if (dao == null)
+			dao = new ActivityDao();
+		
+		return dao;
+	}
+	
 	//map resultset from sqlite to Activity
 	public static Activity mapResultSetToActivity(ResultSet rs)
 	{
@@ -82,7 +94,7 @@ public class ActivityDao {
 		return activities;		
 	}
 	
-	public static List<Activity> GetActivitiesGivenActivityId(int activityId)
+	public List<Activity> GetActivitiesGivenActivityId(int activityId)
 	{
 		List<Activity> activities = new ArrayList<Activity>();
 		
@@ -144,7 +156,7 @@ public class ActivityDao {
 	
 	public String[] returnDataRow(Activity activity)
 	{		
-		String dependency = (new ActivityDependencyDao()).GetDependencyIdString(activity.getId());
+		String dependency = ActivityDependencyDao.getInstance().GetDependencyIdString(activity.getId());
 		
 		String[] temp = new String[]{
 				Integer.toString(activity.getId()),

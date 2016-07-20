@@ -25,7 +25,7 @@ public class PMActivityTab extends JPanel{
 
 	private JTable JTableProject(){
 		
-		User temp = StateService.getStateInstance().getUser();
+		User temp = StateService.getStateInstance().user;
 		DataService ds = new DataService();
 		return table;	
 	}

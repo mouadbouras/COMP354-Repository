@@ -26,7 +26,7 @@ public class ManagerController
 		
 		ManagerView view = new ManagerView();
 		view.setLayout(new GridLayout(1,2));
-		StateService.getStateInstance().setProjectsView(view);
+		StateService.getStateInstance().managerView = view;
 		
 		frmCompProject.getContentPane().add(view, BorderLayout.CENTER);
 		frmCompProject.setVisible(true);					

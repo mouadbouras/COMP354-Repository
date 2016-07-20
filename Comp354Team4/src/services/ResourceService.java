@@ -23,10 +23,10 @@ public class ResourceService {
 		HashMap<Integer, Resource> addableResources = new HashMap<Integer, Resource>();
 		
 		//get all resources available for this project manager user;
-		List<User> addableUsers = new UserDao().GetMembersGivenManagerId(managerId);
+		List<User> addableUsers = UserDao.getInstance().GetMembersGivenManagerId(managerId);
 		
 		//get all resources for this activity
-		List<Resource> alreadyAddedUsers = new ResourceDao().GetResourcesByActivityId(activityId);		
+		List<Resource> alreadyAddedUsers = ResourceDao.getInstance().GetResourcesByActivityId(activityId);		
 
 		for (User u : addableUsers)
 		{

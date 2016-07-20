@@ -19,8 +19,7 @@ import dao.SqliteSetup;
 
 public class TestUpdateProject {
 
-	private ProjectDao projectDao = new ProjectDao();
-
+	private ProjectDao projectDao = ProjectDao.getInstance();
 	@Test
 	public void updateProject() throws ParseException {
 		System.out.println("Testing Updating of a Project");

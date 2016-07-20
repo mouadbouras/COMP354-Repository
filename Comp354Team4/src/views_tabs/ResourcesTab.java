@@ -77,7 +77,7 @@ public class ResourcesTab extends JPanel
 			public void actionPerformed(ActionEvent e) 
 			{
 				//just remove;
-				new ResourceDao().DeleteResource(currentlySelectedResource);
+				ResourceDao.getInstance().DeleteResource(currentlySelectedResource);
 				refreshTable();
 			}
 		});
@@ -122,7 +122,7 @@ public class ResourcesTab extends JPanel
 	        		temp.activityId = currentActivity.getId();
 	        		temp.memberId = memberId;       	
 		        	
-		        	new ResourceDao().InsertResources(temp);
+	        		ResourceDao.getInstance().InsertResources(temp);
 		        	
 		        	refreshTable();
 	        	}
@@ -139,7 +139,7 @@ public class ResourcesTab extends JPanel
 	
 	private JTable JTableProject()
 	{
-		Activity currentActivity = StateService.getStateInstance().getActivity();
+		Activity currentActivity = StateService.getStateInstance().activity;
 		
 		if (currentActivity == null) 
 			return null;

@@ -20,7 +20,7 @@ import dao.SqliteSetup;
 
 public class TestDeleteProject {
 	
-	private ProjectDao projectDao = new ProjectDao();
+	private ProjectDao projectDao = ProjectDao.getInstance();
 	//private static String SelectProjectsGivenProjectName = "SELECT * FROM Project WHERE projectName = @uniqueName";
 
 	@Test 

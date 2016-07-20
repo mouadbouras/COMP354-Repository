@@ -21,8 +21,8 @@ public class GANTTService {
 	
 	public List<Activity> CalculateGanttChartActivityTimes(Project p)
 	{
-		this.activities = new ActivityDao().GetActivitiesGivenProjectId(p.getId());
-		this.dependencies = new ActivityDependencyDao().GetDependencyIds(p.getId());
+		this.activities = ActivityDao.getInstance().GetActivitiesGivenProjectId(p.getId());
+		this.dependencies = ActivityDependencyDao.getInstance().GetDependencyIds(p.getId());
 		this.projectStartDate = p.getStartDate();
 		this.ganttHash = new HashMap<Integer, Activity>();
 		

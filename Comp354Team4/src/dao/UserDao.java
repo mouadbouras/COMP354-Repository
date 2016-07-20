@@ -19,7 +19,19 @@ public class UserDao
 	private static String SelectUserGivenUsernamePassword = "SELECT * FROM User WHERE username = '@username' and password = '@password';";
 	private static String InsertUsers = "INSERT INTO User (firstName, lastName, role, username, password) VALUES ('@firstName', '@lastName', @role, '@username', '@password');";
 	private static String SelectMembersGivenManagerId = "SELECT * FROM User AS U INNER JOIN WhoManagesWho AS W ON U.id = W.memberId WHERE managerId = @managerId";
+	
+	private static UserDao dao = null;
+	
+	private UserDao(){}
+	
+	public static UserDao getInstance()
+	{
+		if (dao == null)
+			dao = new UserDao();
 		
+		return dao;
+	}
+	
 	//get user given the userid primary key
 	public User GetUserGivenUserId(int userId)
 	{

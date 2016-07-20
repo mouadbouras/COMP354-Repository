@@ -12,7 +12,6 @@ public class Project {
 	private Date startDate;
 	private Date endDate;
 	private int managerId;
-	private int activityCount;
 	private List<Activity> activities;
 	
 	public Project(int projId) {
