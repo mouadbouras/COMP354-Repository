@@ -12,9 +12,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-import dao.ActivityDependencyDao;
-import dao.ProjectDao;
-import dao.ResourceDao;
+import daos.ActivityDependencyDao;
+import daos.ProjectDao;
+import daos.ResourceDao;
+import factories.ResourcesTabEventFactory;
 import models.Activity;
 import models.Project;
 import models.Resource;
@@ -44,7 +45,7 @@ public class ResourcesTab extends JPanel
 	
 	private ResourcesTab thisPanel;
 	
-	int row,col, currentlySelectedResource;
+	public int row,col, currentlySelectedResource;
 	
 	/**
 	 * Create the panel.
@@ -68,73 +69,15 @@ public class ResourcesTab extends JPanel
 	{
 		this.popup = new JPopupMenu();
 		
-		this.removeResourceMenuItem = new JMenuItem("REMOVE This Resource");
+		this.removeResourceMenuItem = ResourcesTabEventFactory.removeResourceMenuItem(thisPanel);
 		
 		popup.add(removeResourceMenuItem);		
-		
-		removeResourceMenuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				//just remove;
-				ResourceDao.getInstance().DeleteResource(currentlySelectedResource);
-				refreshTable();
-			}
-		});
         
 		this.createpopup = new JPopupMenu();
 		
-		this.newResourceMenuItem = new JMenuItem("CREATE New Resource");
+		this.newResourceMenuItem = ResourcesTabEventFactory.newResourceMenuItem(thisPanel);
 		
-		createpopup.add(newResourceMenuItem);		
-		
-		newResourceMenuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				Activity currentActivity = StateService.getStateInstance().activity;
-				User currentManager = StateService.getStateInstance().user;
-				
-	        	String[] resourceSelection = new ResourceService().getAddableResources(currentManager.getId(), currentActivity.getId());	
-	        	
-	        	if (resourceSelection == null || resourceSelection.length == 0)
-	        	{
-					JOptionPane.showMessageDialog(null, "No Members Managed By You Can Be Added!");	   
-					return;
-	        	}
-	        	
-	        	String s = (String)JOptionPane.showInputDialog(
-	        	                    null,
-	        	                    "Add Resource",
-	        	                    "Resource Box",
-	        	                    JOptionPane.PLAIN_MESSAGE,
-	        	                    null,
-	        	                    resourceSelection,
-	        	                    "Select Member To Add to Activity");
-	        	
-	        	
-
-	        	try 
-	        	{
-	        		String memberSelected = s.substring((int)(s.indexOf("{") + 1), s.indexOf("}"));
-	        		int memberId = Integer.parseInt(memberSelected);
-	        		Resource temp = new Resource();
-	        		temp.activityId = currentActivity.getId();
-	        		temp.memberId = memberId;       	
-		        	
-	        		ResourceDao.getInstance().InsertResources(temp);
-		        	
-		        	refreshTable();
-	        	}
-	        	catch (Exception ex)
-	        	{
-	        		//closed
-	        		System.out.println("THIS FAILED");
-	        	}
-
-			}
-		});
-        
+		createpopup.add(newResourceMenuItem);		       
 	}
 	
 	private JTable JTableProject()

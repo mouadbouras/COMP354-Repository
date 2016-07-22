@@ -15,11 +15,11 @@ import javax.swing.table.DefaultTableModel;
 
 import org.jfree.ui.RefineryUtilities;
 
-import dao.ActivityDao;
-import dao.ActivityDependencyDao;
-import dao.ProjectDao;
-import dao.ResourceDao;
-
+import daos.ActivityDao;
+import daos.ActivityDependencyDao;
+import daos.ProjectDao;
+import daos.ResourceDao;
+import factories.ActivitiesTabEventFactory;
 import models.Activity;
 import models.ActivityDependency;
 import models.Project;
@@ -65,8 +65,8 @@ public class ActivitiesTab extends JPanel {
 	private JMenuItem addResourceMenuItem;
 	private JMenuItem addPropertyMenuItem;	
 	
-	int currentlySelectedActivity;
-	int row, col;
+	public int currentlySelectedActivity;
+	public int row, col;
 	private ActivitiesTab thisPanel;
 	/**
 	 * Create the panel.
@@ -85,183 +85,25 @@ public class ActivitiesTab extends JPanel {
 	private void SetupPopup()
 	{
 		this.popup = new JPopupMenu();
-		this.updateActivityMenuItem = new JMenuItem("UPDATE This Activity");		
-		this.removeActivityMenuItem = new JMenuItem("DELETE This Activity");
-		this.viewResourcesMenuItem = new JMenuItem("VIEW Resources");		
-		this.viewPropertiesMenuItem = new JMenuItem("VIEW Properties");		
-		this.addDependenciesMenuItem = new JMenuItem("ADD Dependencies");	
-		this.removeDependenciesMenuItem = new JMenuItem("REMOVE Dependencies");	
-		
-		this.addResourceMenuItem=new JMenuItem("Add Recourse");
-		this.addPropertyMenuItem=new JMenuItem("Add Properties");
+		this.updateActivityMenuItem = ActivitiesTabEventFactory.updateActivityMenuItem(thisPanel);	
+		this.removeActivityMenuItem = ActivitiesTabEventFactory.removeActivityMenuItem(thisPanel);
+		this.viewResourcesMenuItem = ActivitiesTabEventFactory.viewResourcesMenuItem(thisPanel);
+		this.viewPropertiesMenuItem = ActivitiesTabEventFactory.viewPropertiesMenuItem(thisPanel);	
+		this.addDependenciesMenuItem = ActivitiesTabEventFactory.addDependenciesMenuItem(thisPanel);
+		this.removeDependenciesMenuItem = ActivitiesTabEventFactory.removeDependenciesMenuItem(thisPanel);	
 		
 		popup.add(updateActivityMenuItem);	
 		popup.add(removeActivityMenuItem);		
 		popup.add(viewResourcesMenuItem);
 		popup.add(viewPropertiesMenuItem);
 		popup.add(addDependenciesMenuItem);	
-		popup.add(removeDependenciesMenuItem);			
-
-		updateActivityMenuItem.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{	  
-				JDialog updateActivity = new JDialog();	
-				updateActivity.setTitle("UPDATE Activity");
-				
-				CreateUpdateActivityPanel updateActivitiesPanel = new CreateUpdateActivityPanel(thisPanel, updateActivity, false);
-
-				Activity temp = ActivityDao.getInstance().GetActivitiesGivenActivityId(currentlySelectedActivity).get(0);
-				updateActivitiesPanel.SetupActivityForUpdate(temp);				
-				
-				updateActivity.add(updateActivitiesPanel);
-				updateActivity.pack();
-				updateActivity.setVisible(true);
-			}
-		});	
+		popup.add(removeDependenciesMenuItem);		
 		
-		removeActivityMenuItem.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{	   				
-				
-				Project currentProject = StateService.getStateInstance().project;
-	        	String[] activitySelection = new ActivityDependencyService().GetRemovableDependencies(currentProject.getId(), currentlySelectedActivity);   		        	
-				
-	        	ActivityDependencyDao.getInstance().DeleteActivityRemoveDependency(currentlySelectedActivity);	        	
-	        	ActivityDao.getInstance().DeleteActivity(currentlySelectedActivity);
-	        	refreshTable();
-			}
-		});	
-				
-		removeDependenciesMenuItem.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{	        
-				String []temp = null;
-				
-				Project currentProject = StateService.getStateInstance().project;
-	        	String[] activitySelection = new ActivityDependencyService().GetRemovableDependencies(currentProject.getId(), currentlySelectedActivity);   	
-	        	
-	        	if (activitySelection == null || activitySelection.length == 0)
-	        	{
-					JOptionPane.showMessageDialog(null, "No Dependencies Available To REMOVE");	   
-					return;
-	        	}
-	        	
-	        	String s = (String)JOptionPane.showInputDialog(
-	        	                    null,
-	        	                    "Delete Dependency",
-	        	                    "Dependency Box",
-	        	                    JOptionPane.PLAIN_MESSAGE,
-	        	                    null,
-	        	                    activitySelection,
-	        	                    "Select Activity");
-
-	        	try 
-	        	{
-		        	int removedId = Integer.parseInt(s);
-		        	
-		        	ActivityDependencyDao.getInstance().RemoveDependency(currentlySelectedActivity, removedId);
-		        	
-		        	refreshTable();
-	        	}
-	        	catch (Exception ex)
-	        	{
-	        		//closed
-	        	}
-			}
-		});		
-		
-		addDependenciesMenuItem.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{	      
-				Project currentProject = StateService.getStateInstance().project;
-				String[] activitySelection = new ActivityDependencyService().GetAddableDependencies(currentProject.getId(), currentlySelectedActivity);  
-				
-	        	if (activitySelection == null || activitySelection.length == 0)
-	        	{
-					JOptionPane.showMessageDialog(null, "No Dependencies Available To ADD");	 
-					return;
-	        	}
-	        	
-				//calculate this
-	        	String s = (String)JOptionPane.showInputDialog(
-	        	                    null,
-	        	                    "ADD Dependency",
-	        	                    "Dependency Box",
-	        	                    JOptionPane.PLAIN_MESSAGE,
-	        	                    null,
-	        	                    activitySelection,
-	        	                    "Select Activity");	
-	        	
-	        	try 
-	        	{
-	        		int addedId = Integer.parseInt(s);	        	
-	        		//add dependency;
-	        		ActivityDependencyDao.getInstance().AddDependency(currentlySelectedActivity, addedId);
-	        		
-		        	refreshTable();
-	        	}
-	        	catch (Exception ex)
-	        	{
-
-	        	}
-			}
-		});			
-	
-		viewResourcesMenuItem.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) {	        	
-	        	Activity temp = new Activity();        	
-	        	temp.setId(currentlySelectedActivity);
-	        	StateService.getStateInstance().activity = temp;
-	        	
-	        	ResourcesTab tab = StateService.getStateInstance().resourceTab;
-	        	tab.refreshTable();
-	        	StateService.getStateInstance().managerView.tabbedPane.setSelectedIndex(2); //switches tabbed panes to the activity tab pane
-			}
-		});	
-		
-		viewPropertiesMenuItem.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) {	        	
-	        	Activity temp = new Activity();        	
-	        	temp.setId(currentlySelectedActivity);
-	        	StateService.getStateInstance().activity = temp;
-	        	
-	        	PropertiesTab tab = StateService.getStateInstance().propertyTab;
-	        	tab.refreshTable();
-	        	StateService.getStateInstance().managerView.tabbedPane.setSelectedIndex(3); //switches tabbed panes to the activity tab pane
-			}
-		});			
-				
 		this.createpopup = new JPopupMenu();
 		
-		this.newActivityMenuItem = new JMenuItem("CREATE New Activity");
+		this.newActivityMenuItem = ActivitiesTabEventFactory.newActivityMenuItem(thisPanel);
 		
-		createpopup.add(newActivityMenuItem);	
-		
-		newActivityMenuItem.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) {	      
-				JDialog newActivity = new JDialog();	
-				JPanel createActivityPanel = new CreateUpdateActivityPanel(thisPanel, newActivity, true);				
-				newActivity.setTitle("CREATE Activity");
-				newActivity.add(createActivityPanel);
-				newActivity.pack();
-				newActivity.setVisible(true);
-			}
-		});		
-		
+		createpopup.add(newActivityMenuItem);				
 	}
 	
 	public void refreshTable()

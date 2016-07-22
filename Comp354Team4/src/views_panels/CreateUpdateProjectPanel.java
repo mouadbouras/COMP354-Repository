@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import models.Project;
 import models.User;
+import services.ConverterService;
 import services.DataService;
 import services.StateService;
 import views_tabs.ProjectsTab;
@@ -40,8 +41,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import controllers.ConverterService;
-import dao.ProjectDao;
+import daos.ProjectDao;
 
 import javax.swing.SpringLayout;
 

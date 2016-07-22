@@ -18,6 +18,7 @@ import javax.swing.SpringLayout;
 import models.Activity;
 import models.Project;
 import models.User;
+import services.ConverterService;
 import services.DataService;
 import services.StateService;
 import views_tabs.ActivitiesTab;
@@ -34,9 +35,8 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import controllers.ConverterService;
-import dao.ActivityDao;
-import dao.ProjectDao;
+import daos.ActivityDao;
+import daos.ProjectDao;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

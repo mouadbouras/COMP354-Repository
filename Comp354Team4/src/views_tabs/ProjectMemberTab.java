@@ -14,7 +14,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-import dao.ProjectDao;
+import daos.ProjectDao;
 import models.Project;
 import models.User;
 import services.DataService;
@@ -64,8 +64,7 @@ public class ProjectMemberTab extends JPanel{
 	        	tab.refreshTable();
 	        	StateService.getStateInstance().managerView.tabbedPane.setSelectedIndex(4); //switches tabbed panes to the activity tab pane
 			}
-		});
-		
+		});		
 	}
 	
 	private JTable JTableProject(){

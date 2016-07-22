@@ -8,8 +8,8 @@ import java.text.SimpleDateFormat;
 
 import org.junit.Test;
 
+import daos.ProjectDao;
 import models.Project;
-import dao.ProjectDao;
 import models.User;
 import services.StateService;
 

@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import dao.ActivityDao;
-import dao.ActivityDependencyDao;
-import dao.ResourceDao;
-import dao.UserDao;
+import daos.ActivityDao;
+import daos.ActivityDependencyDao;
+import daos.ResourceDao;
+import daos.UserDao;
 import models.Activity;
 import models.ActivityDependency;
 import models.Project;

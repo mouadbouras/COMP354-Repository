@@ -3,7 +3,7 @@ package models;
 import java.text.ParseException;
 import java.util.Date;
 
-import controllers.ConverterService;
+import services.ConverterService;
 
 public class Activity {
 	

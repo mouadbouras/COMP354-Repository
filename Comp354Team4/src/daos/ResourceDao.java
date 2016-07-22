@@ -1,4 +1,4 @@
-package dao;
+package daos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import models.*;
-import controllers.ConverterService;
+import services.ConverterService;
 
 public class ResourceDao {
 

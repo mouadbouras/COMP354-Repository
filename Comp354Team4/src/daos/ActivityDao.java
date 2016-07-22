@@ -1,4 +1,4 @@
-package dao;
+package daos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import models.Activity;
 import models.Project;
-import controllers.ConverterService;
+import services.ConverterService;
 
 public class ActivityDao {
 

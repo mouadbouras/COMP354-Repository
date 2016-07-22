@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import org.junit.Test;
 
-import dao.SqliteSetup;
+import daos.SqliteSetup;
 
 public class TestDatabaseConnection {
 	

@@ -8,10 +8,10 @@ import java.text.SimpleDateFormat;
 
 import org.junit.Test;
 
+import daos.ActivityDao;
+import daos.ProjectDao;
 import models.Activity;
-import dao.ActivityDao;
 import models.Project;
-import dao.ProjectDao;
 
 public class TestCreateActivity {
 

@@ -12,9 +12,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-import dao.ActivityDependencyDao;
-import dao.ProjectDao;
-import dao.ResourceDao;
+import daos.ActivityDependencyDao;
+import daos.ProjectDao;
+import daos.ResourceDao;
 import models.Activity;
 import models.Project;
 import models.Resource;

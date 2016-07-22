@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import dao.ActivityDao;
-import dao.ActivityDependencyDao;
+import daos.ActivityDao;
+import daos.ActivityDependencyDao;
 import models.Activity;
 import models.ActivityDependency;
 

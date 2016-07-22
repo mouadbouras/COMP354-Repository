@@ -37,9 +37,9 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import dao.ActivityDao;
-import dao.ProjectDao;
-import dao.PropertyDao;
+import daos.ActivityDao;
+import daos.ProjectDao;
+import daos.PropertyDao;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

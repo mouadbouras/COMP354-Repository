@@ -2,9 +2,9 @@ package services;
 
 import java.util.List;
 
-import dao.ActivityDao;
-import dao.ProjectDao;
-import dao.UserDao;
+import daos.ActivityDao;
+import daos.ProjectDao;
+import daos.UserDao;
 import models.*;
 import models.*;
 

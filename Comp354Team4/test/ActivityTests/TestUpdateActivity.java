@@ -12,10 +12,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import controllers.ConverterService;
+import daos.ActivityDao;
+import daos.SqliteSetup;
 import models.Activity;
-import dao.ActivityDao;
-import dao.SqliteSetup;
+import services.ConverterService;
 
 public class TestUpdateActivity {
 	

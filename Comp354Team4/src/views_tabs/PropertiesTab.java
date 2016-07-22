@@ -38,9 +38,10 @@ import javax.swing.JSplitPane;
 
 import org.jfree.ui.RefineryUtilities;
 
-import dao.ProjectDao;
-import dao.PropertyDao;
-import dao.ResourceDao;
+import daos.ProjectDao;
+import daos.PropertyDao;
+import daos.ResourceDao;
+import factories.PropertiesTabEventFactory;
 
 public class PropertiesTab extends JPanel {
 	private JTable table;
@@ -53,7 +54,7 @@ public class PropertiesTab extends JPanel {
 	private JMenuItem updatePropertyMenuItem;
 	private JMenuItem deletePropertyMenuItem;	
 
-	private int row, col, currentlySelectedProperty;
+	public int row, col, currentlySelectedProperty;
 	
 	private PropertiesTab thisPanel;	
 
@@ -79,61 +80,17 @@ public class PropertiesTab extends JPanel {
 	{
 		this.popup = new JPopupMenu();
 		
-		this.deletePropertyMenuItem = new JMenuItem("REMOVE This Property");
-		this.updatePropertyMenuItem = new JMenuItem("UPDATE This Property");
+		this.deletePropertyMenuItem = PropertiesTabEventFactory.deletePropertyMenuItem(thisPanel);
+		this.updatePropertyMenuItem = PropertiesTabEventFactory.updatePropertyMenuItem(thisPanel);
 		
 		popup.add(deletePropertyMenuItem);		
 		popup.add(updatePropertyMenuItem);		
-		
-		deletePropertyMenuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{				
-				//REMOVE
-				PropertyDao.getInstance().DeleteProperty(currentlySelectedProperty);
-				refreshTable();
-			}
-		});
-		
-		updatePropertyMenuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				JDialog updateProperty = new JDialog();		
-				updateProperty.setTitle("Update Property");
-				CreateUpdatePropertyPanel updatePropertiesPanel = new CreateUpdatePropertyPanel(thisPanel, updateProperty, false);
-				
-				Property p = PropertyDao.getInstance().GetPropertyGivenPropertyId(currentlySelectedProperty);
-				
-				updatePropertiesPanel.SetupPropertiesForUpdate(p);
-			
-				updateProperty.add(updatePropertiesPanel);
-				updateProperty.pack();
-				updateProperty.setVisible(true);	
-			}
-		});
-		
-        
+		        
 		this.createpopup = new JPopupMenu();
 		
-		this.newPropertyMenuItem = new JMenuItem("CREATE New Property");
+		this.newPropertyMenuItem = PropertiesTabEventFactory.newPropertyMenuItem(thisPanel);
 		
 		createpopup.add(newPropertyMenuItem);		
-		
-		newPropertyMenuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				JDialog newProperty = new JDialog();		
-				newProperty.setTitle("CREATE Property");
-				JPanel createPropertiesPanel = new CreateUpdatePropertyPanel(thisPanel, newProperty, true);
-			
-				newProperty.add(createPropertiesPanel);
-				newProperty.pack();
-				newProperty.setVisible(true);			
-				
-			}
-		});
 	}
 	
 	private JTable JTableProject()

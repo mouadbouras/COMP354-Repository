@@ -13,9 +13,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import daos.ProjectDao;
+import daos.SqliteSetup;
 import models.Project;
-import dao.ProjectDao;
-import dao.SqliteSetup;
 
 public class TestUpdateProject {
 

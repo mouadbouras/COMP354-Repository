@@ -32,8 +32,9 @@ import javax.swing.JSplitPane;
 
 import org.jfree.ui.RefineryUtilities;
 
-import dao.ProjectDao;
-import dao.PropertyDao;
+import daos.ProjectDao;
+import daos.PropertyDao;
+import factories.ProjectsTabEventFactory;
 
 public class ProjectsTab extends JPanel {
 	private JTable table;
@@ -75,90 +76,22 @@ public class ProjectsTab extends JPanel {
 	{
 		this.popup = new JPopupMenu();
 		
-		this.viewChartMenuItem = new JMenuItem("VIEW GANTT Chart");
-		this.updateProjectMenuItem = new JMenuItem("UPDATE This Project");		
-		this.deleteProjectMenuItem = new JMenuItem("DELETE This Project");
-		this.viewActivitiesMenuItem = new JMenuItem("VIEW Activities");		
+		this.viewChartMenuItem = ProjectsTabEventFactory.viewChartMenuItem(thisPanel);
+		this.updateProjectMenuItem = ProjectsTabEventFactory.updateProjectMenuItem(thisPanel);
+		this.deleteProjectMenuItem = ProjectsTabEventFactory.deleteProjectMenuItem(thisPanel);
+		this.viewActivitiesMenuItem = ProjectsTabEventFactory.viewActivitiesMenuItem(thisPanel);
 		
-		popup.add(updateProjectMenuItem);	
-		popup.add(deleteProjectMenuItem);		
-		popup.add(viewActivitiesMenuItem);	
-		popup.add(viewChartMenuItem);		
-		
-        viewChartMenuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-	        	Project temp = ProjectDao.getInstance().getProjectByProjectId(currentlySelectedProject);
-	        	System.out.println(currentlySelectedProject);	 
-	        	JPanel ganttPanel = new GanttPanel("Gantt Chart",temp);
-	        	
-				JDialog ganttGraph = new JDialog();				
-				ganttGraph.add(ganttPanel);
-				ganttGraph.pack();
-				ganttGraph.setVisible(true);
-			}
-		});
-        
-        updateProjectMenuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				JDialog updateProject = new JDialog();		
-				updateProject.setTitle("UPDATE Project");
-				
-				CreateUpdateProjectPanel updateProjectPanel = new CreateUpdateProjectPanel(thisPanel, updateProject, false);	
-				
-				Project p = new Project(currentlySelectedProject);
-				updateProjectPanel.SetupProjectForUpdate(p);
-				
-				updateProject.add(updateProjectPanel);
-				updateProject.pack();
-				updateProject.setVisible(true);
-			}
-		});
-        
-        deleteProjectMenuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-	        	int projectId = currentlySelectedProject;
-	        	ProjectDao.getInstance().DeleteProject(projectId);
-	        	refreshTable();
-			}
-		});
-        
-        viewActivitiesMenuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {	        	
-	        	//get data for activities;
-	        	int projectId = currentlySelectedProject;
-	        	Project temp = new Project(projectId);        	
-	        	StateService.getStateInstance().project = temp;
-	        	
-	        	ActivitiesTab tab = StateService.getStateInstance().activityTab;
-	        	tab.refreshTable();
-	        	StateService.getStateInstance().managerView.tabbedPane.setSelectedIndex(1); //switches tabbed panes to the activity tab pane
-			}
-		});		
+		this.popup.add(updateProjectMenuItem);	
+		this.popup.add(deleteProjectMenuItem);		
+		this.popup.add(viewActivitiesMenuItem);	
+		this.popup.add(viewChartMenuItem);		
         
 		this.createpopup = new JPopupMenu();
         
-		this.newProjectMenuItem = new JMenuItem("CREATE New Project");
+		this.newProjectMenuItem = ProjectsTabEventFactory.newProjectMenuItem(thisPanel);
 		
-		createpopup.add(newProjectMenuItem);	
-        
-        newProjectMenuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				JDialog newProject = new JDialog();		
-				newProject.setTitle("CREATE Project");
-				JPanel createProjectPanel = new CreateUpdateProjectPanel(thisPanel, newProject, true);
-			
-				newProject.add(createProjectPanel);
-				newProject.pack();
-				newProject.setVisible(true);
-			}
-		});        
+		this.createpopup.add(newProjectMenuItem);	
+
 	}
 	
 	private JTable JTableProject()

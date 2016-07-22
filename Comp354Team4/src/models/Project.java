@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-import controllers.ConverterService;
+import services.ConverterService;
 
 public class Project {
 	private int id;
