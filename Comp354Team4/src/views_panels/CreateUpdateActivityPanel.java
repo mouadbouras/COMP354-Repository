@@ -181,7 +181,7 @@ public class CreateUpdateActivityPanel extends JPanel {
 		gbl_panel_9.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		panel_9.setLayout(gbl_panel_9);
 		
-		JLabel lblDuration = new JLabel("Duration        ");
+		JLabel lblDuration = new JLabel("Duration (days) ");
 		GridBagConstraints gbc_lblDuration = new GridBagConstraints();
 		gbc_lblDuration.insets = new Insets(0, 0, 0, 5);
 		gbc_lblDuration.gridx = 1;
@@ -239,7 +239,7 @@ public class CreateUpdateActivityPanel extends JPanel {
 					
 					catch (NumberFormatException e)
 					{
-						JOptionPane.showMessageDialog(null, "Please enter an integer value for Duration");	
+						JOptionPane.showMessageDialog(null, "Please enter an integer value for Duration (days)");	
 					}
 					
 					catch (Exception e)

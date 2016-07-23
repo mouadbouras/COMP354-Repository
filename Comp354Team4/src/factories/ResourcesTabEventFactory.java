@@ -38,7 +38,7 @@ public class ResourcesTabEventFactory
 	
 	public static JMenuItem newResourceMenuItem(ResourcesTab thisPanel)
 	{
-		JMenuItem newResourceMenuItem = new JMenuItem("CREATE New Resource");
+		JMenuItem newResourceMenuItem = new JMenuItem("ADD New Resource");
 		
 		newResourceMenuItem.addActionListener(new ActionListener(){
 			@Override
