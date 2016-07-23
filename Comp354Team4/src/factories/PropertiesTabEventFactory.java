@@ -60,7 +60,7 @@ public class PropertiesTabEventFactory
 	
 	public static JMenuItem newPropertyMenuItem(PropertiesTab thisPanel)
 	{
-		JMenuItem newPropertyMenuItem = new JMenuItem("");
+		JMenuItem newPropertyMenuItem = new JMenuItem("CREATE New Property");
 		
 		newPropertyMenuItem.addActionListener(new ActionListener(){
 			@Override

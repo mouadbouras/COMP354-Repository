@@ -47,7 +47,7 @@ public class LoginController
 			@Override
 			public void focusGained(FocusEvent e) {
 				view.txtPassword.setEchoChar(new JPasswordField().getEchoChar());
-				view.errorLabel.setText("");
+			 	view.errorLabel.setText("");
 
 				if(new String (view.txtPassword.getPassword()).trim().equals("Enter Password")){
 					view.txtPassword.setText("");
@@ -87,7 +87,9 @@ public class LoginController
 						
 						//System.out.println("login successful");						
 						//StateService.getStateInstance().setUser(user);	
-						//MainController.userLogged();						
+						//MainController.userLogged();	
+						view.errorLabel.setText("Invalid Username and/or Password");
+						setLoginStatus(false);
 					}
 					
 					else
@@ -107,7 +109,6 @@ public class LoginController
 					System.out.println(e.getMessage());
 					view.errorLabel.setText("Invalid Username and/or Password");
 					setLoginStatus(false);
-
 				}
 				//use this to do login;				
 			}

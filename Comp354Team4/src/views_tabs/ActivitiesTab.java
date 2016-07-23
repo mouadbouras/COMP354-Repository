@@ -35,6 +35,7 @@ import views_panels.GanttPanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -109,6 +110,12 @@ public class ActivitiesTab extends JPanel {
 	public void refreshTable()
 	{		
 		table = JTableActivities();
+		table.getTableHeader().setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.getTableHeader().setPreferredSize(new Dimension(100,30));
+		table.setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.setDefaultEditor(Object.class, null);
+		table.setRowHeight(table.getRowHeight()+12);
+		table.setShowHorizontalLines(true);
 		databaseTablePane.setViewportView(table);
 	}
 	
@@ -121,6 +128,13 @@ public class ActivitiesTab extends JPanel {
 		
 		table.setBackground(Color.WHITE);
 		table.setGridColor(Color.GRAY);			
+		
+		table.getTableHeader().setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.getTableHeader().setPreferredSize(new Dimension(100,30));
+		table.setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.setDefaultEditor(Object.class, null);
+		table.setRowHeight(table.getRowHeight()+12);
+		table.setShowHorizontalLines(true);
 		
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
 			

@@ -27,6 +27,8 @@ import views_panels.CreateUpdateProjectPanel;
 import views_panels.GanttPanel;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -66,7 +68,16 @@ public class MemberActivitiesTab extends JPanel
 		TableDataService tds = new TableDataService();
 		
 		table = new JTable(tds.GetMemberActivitiesTableData(memberId), tds.GetMemberActivitiesTableColumns());
-				
+
+		
+		table.getTableHeader().setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.getTableHeader().setPreferredSize(new Dimension(100,30));
+		table.setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.setDefaultEditor(Object.class, null);
+		table.setRowHeight(table.getRowHeight()+12);
+		table.setShowHorizontalLines(true);
+	
+		
 		table.setBackground(Color.WHITE);
 		table.setGridColor(Color.GRAY);		
 		

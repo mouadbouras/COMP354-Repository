@@ -68,6 +68,6 @@ public class MemberView extends JPanel {
 	    StateService.getStateInstance().memberActivitiesTab = new MemberActivitiesTab();
 	    memberActivitiesTab = StateService.getStateInstance().memberActivitiesTab;
 	    
-        tabbedPane.addTab("Member Activities", null, memberActivitiesTab, null);	  
+        tabbedPane.addTab("<html><body><table width='120'>Member Activities</table></body></html>", null, memberActivitiesTab, null);	  
 	}
 }

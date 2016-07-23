@@ -28,6 +28,8 @@ import views_panels.CreateUpdateProjectPanel;
 import views_panels.GanttPanel;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -90,9 +92,17 @@ public class ResourcesTab extends JPanel
 		TableDataService tds = new TableDataService();
 		
 		table = new JTable(tds.GetResourceTableData(currentActivity.getId()), tds.GetResourceTableColumns());
-				
+		
 		table.setBackground(Color.WHITE);
 		table.setGridColor(Color.GRAY);			
+		
+		table.getTableHeader().setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.getTableHeader().setPreferredSize(new Dimension(100,30));
+		table.setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.setDefaultEditor(Object.class, null);
+		table.setRowHeight(table.getRowHeight()+12);
+		table.setShowHorizontalLines(true);
+			
 		
 		table.addMouseListener(new java.awt.event.MouseAdapter() 
 		{			

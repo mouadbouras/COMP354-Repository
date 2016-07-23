@@ -9,6 +9,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.border.MatteBorder;
 import javax.swing.event.MenuKeyEvent;
 import javax.swing.event.MenuKeyListener;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +25,7 @@ import views_panels.GanttPanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -69,6 +72,14 @@ public class ProjectsTab extends JPanel {
 		SetupPopup();	
 		
 		table = this.JTableProject();
+
+		table.getTableHeader().setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.getTableHeader().setPreferredSize(new Dimension(100,30));
+		table.setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.setDefaultEditor(Object.class, null);
+		table.setRowHeight(table.getRowHeight()+12);
+		table.setShowHorizontalLines(true);
+
 		databasetable.setViewportView(table);	
 	}
 	
@@ -131,6 +142,12 @@ public class ProjectsTab extends JPanel {
 	
 	public void refreshTable(){
 		table = JTableProject();
+		table.getTableHeader().setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.getTableHeader().setPreferredSize(new Dimension(100,30));
+		table.setFont(new Font("Helvetica", Font.PLAIN , 15));
+		table.setDefaultEditor(Object.class, null);
+		table.setRowHeight(table.getRowHeight()+12);
+		table.setShowHorizontalLines(true);
 		databasetable.setViewportView(table);
 	}
 }

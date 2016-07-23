@@ -55,7 +55,7 @@ public class ManagerView extends JPanel {
 	    userInformation = new UserInformationTab(); 
 
         
-        leftTabbedPane.addTab("Managed Members", null, managedUsers, null); 
+        leftTabbedPane.addTab("<html><body><table width='160'>Managed Members</table></body></html>", null, managedUsers, null); 
         
         UserPM = new JSplitPane(JSplitPane.VERTICAL_SPLIT,userInformation,leftTabbedPane);
       
@@ -82,10 +82,11 @@ public class ManagerView extends JPanel {
 	    StateService.getStateInstance().memberActivitiesTab = new MemberActivitiesTab();
 	    membersView = StateService.getStateInstance().memberActivitiesTab; 
 	    
-        tabbedPane.addTab("Projects", null, projects, null);		
-        tabbedPane.addTab("Activities", null, activities, null);        
-        tabbedPane.addTab("Resources", null, resources, null);		
-        tabbedPane.addTab("Properties", null, properties, null);    
-        tabbedPane.addTab("Member Activities", null, membersView, null);    
+        tabbedPane.addTab("<html><body><table width='120'>Projects</table></body></html>", null, projects, null);		
+        tabbedPane.addTab("<html><body><table width='120'>Activities</table></body></html>", null, activities, null);        
+        tabbedPane.addTab("<html><body><table width='120'>Resources</table></body></html>", null, resources, null);		
+        tabbedPane.addTab("<html><body><table width='120'>Properties</table></body></html>", null, properties, null);    
+        tabbedPane.addTab("<html><body><table width='120'>Member Activities</table></body></html>", null, membersView, null);
+       // tp.addTab("<html><body><table width='150'>Name</table></body></html>",Componentobject)
 	}
 }
