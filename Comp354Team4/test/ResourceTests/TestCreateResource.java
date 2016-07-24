@@ -52,8 +52,8 @@ public class TestCreateResource {
 		System.out.println("Testing Creation of an INVALID Resource");
 		Resource resource = new Resource();
 		
-		resource.activityId = 96; //invalid member Id
-		resource.memberId = -1;
+		resource.activityId = 96; 
+		resource.memberId = -1; //invalid member Id
 		
 		assertFalse(resourceDao.InsertResources(resource));
 	}
