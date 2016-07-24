@@ -8,10 +8,12 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import models.*;
+import daos.ActivityDao;
 import services.ConverterService;
 
 public class ResourceDao {
@@ -75,7 +77,12 @@ public class ResourceDao {
 	}	
 
 	public boolean InsertResources(Resource resource)
-	{
+	{				
+		if (resource.activityId < 1 || resource.memberId < 1)
+		{
+			return false;
+		}		
+		
 		String sql = InsertResource.
 				replace("@activityId", Integer.toString(resource.activityId)).
 				replace("@memberId", Integer.toString(resource.memberId));
