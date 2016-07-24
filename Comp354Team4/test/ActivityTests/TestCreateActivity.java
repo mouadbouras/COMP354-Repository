@@ -103,7 +103,7 @@ public class TestCreateActivity {
 	public void createInValidProjectIDActivity() {
 
 		Activity temp = null;
-		int id = -11;
+		int id = -10;
 		
 		try {
 			System.out.println("Testing Creation of an invalid Activity : PROJECT ID");

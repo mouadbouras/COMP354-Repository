@@ -57,13 +57,17 @@ public class UserDao
 	}
 	
 	//insert user into the database
-	public void InsertUser(User user)
+	public boolean InsertUser(User user)
 	{	
 	    String sql = UserDao.InsertUsers.replace("@firstName", user.getFirstName()).
 	    		  replace("@lastName", user.getLastName()).
-	    		  replace("@role", Integer.toString(user.getRole()));
+	    		  replace("@role", Integer.toString(user.getRole())).
+	    		  replace("@username", user.getUsername()).
+	    		  replace("@password", user.getPassword());
 	      
 		SqliteSetup.GetInstance().ExecuteUpdate(sql);
+	      return true;
+
 	}
 
 	//get user given the userid primary key

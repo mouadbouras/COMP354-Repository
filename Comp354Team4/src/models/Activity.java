@@ -98,7 +98,7 @@ public class Activity {
 	}
 	
 	public Activity(String name, String description, int givenDuration, Date start, Date end, int projId) throws ParseException, IllegalArgumentException{
-		if (name != null && !name.isEmpty()) {	
+		if (name != null && !name.isEmpty() && projId >= 0) {	
 			activityName = name;
 			activityDescription = description;
 			startDate = start;	
@@ -109,7 +109,7 @@ public class Activity {
 	}
 	
 	public Activity(int id, String name, String description, int givenDuration, String start, String end, int projId) throws ParseException, IllegalArgumentException{
-		if (name != null && !name.isEmpty()) {
+		if (name != null && !name.isEmpty() && projId >= 0) {
 			this.id = id;	
 			activityName = name;
 			activityDescription = description;
@@ -121,7 +121,7 @@ public class Activity {
 	}
 	
 	public Activity(int id, String name,  int givenDuration, String start, String end, int projId) throws ParseException, IllegalArgumentException{
-		if (name != null && !name.isEmpty()) {
+		if (name != null && !name.isEmpty() && projId >= 0) {
 			this.id = id;	
 			activityName = name;
 			activityDescription = "";
@@ -133,7 +133,7 @@ public class Activity {
 	}
 
 	public Activity(int id, String name, String description,  int givenDuration, int projId) throws ParseException, IllegalArgumentException{
-		if (name != null && !name.isEmpty()) {
+		if (name != null && !name.isEmpty() && projId >= 0) {
 			this.id = id;	
 			activityName = name;
 			activityDescription = description;
@@ -143,7 +143,7 @@ public class Activity {
 	}
 	
 	public Activity(String name, String description,  int givenDuration, int projId) throws ParseException, IllegalArgumentException{
-		if (name != null && !name.isEmpty()) {
+		if (name != null && !name.isEmpty() && projId >= 0) {
 			activityName = name;
 			activityDescription = description;
 			projectId = projId;

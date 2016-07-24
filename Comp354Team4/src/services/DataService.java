@@ -19,6 +19,11 @@ public class DataService
 	//get the user role, given the user id
 	public User GetUser(String username, String password)
 	{
+		if (username == null || password == null)
+		{
+			return null; 
+		}
+		
 		return UserDao.getInstance().GetUserGivenUsernamePassword(username,password);	
 	}
 	

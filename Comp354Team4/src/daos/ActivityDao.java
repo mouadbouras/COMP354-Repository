@@ -20,9 +20,10 @@ public class ActivityDao {
 	
 	private static String SelectActivitiesGivenProjectId = "Select * from Activity where projectId = @projectId AND isRemoved = 0";
 	private static String InsertActivities = "INSERT INTO Activity(activityName,activityDescription, duration,startDate, endDate, projectId) VALUES ('@activityName', '@activityDescription', '@duration','1000-01-01', '1000-10-10', '@projectId');";
-	private static String SelectActivitiesGivenActivityId = "Select * from Activity where id = @activityId AND isRemoved = 0";	
+	private static String SelectActivitiesGivenActivityId = "Select * from Activity where id = @activityId ";
+	private static String SelectNotDeletedActivitiesGivenActivityId = "Select * from Activity where id = @activityId AND isRemoved = 0";
 	private static String DeleteActivityGivenActivityId = "UPDATE Activity SET isRemoved = '1' WHERE id = @id;";
-	private static String UpdateActivityGivenProjectId = "UPDATE Activity SET activityName = '@activityName', activityDescription = '@activityDescription', startDate = '1000-01-01', endDate = '1000-01-01', duration = '@duration' WHERE id = @id ";
+	private static String UpdateActivityGivenProjectId = "UPDATE Activity SET activityName = '@activityName', activityDescription = '@activityDescription',  duration = '@duration' WHERE id = @id ";
 	
 	private static ActivityDao dao = null;
 	
@@ -94,6 +95,31 @@ public class ActivityDao {
 		return activities;		
 	}
 	
+	public List<Activity> GetAvailableActivitiesGivenActivityId(int activityId)
+	{
+		List<Activity> activities = new ArrayList<Activity>();
+		
+		String sql = ActivityDao.SelectNotDeletedActivitiesGivenActivityId.replace("@activityId", Integer.toString(activityId)); //prepare sql
+		
+		ResultSet rs = SqliteSetup.GetInstance().ExecuteQuery(sql);
+		
+		try {
+			while ( rs.next() ) 
+			{
+				Activity temp = null;
+				temp = ActivityDao.mapResultSetToActivity(rs);
+				activities.add(temp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		SqliteSetup.GetInstance().CloseQuery();
+		
+		return activities;				
+	}
+	
 	public List<Activity> GetActivitiesGivenActivityId(int activityId)
 	{
 		List<Activity> activities = new ArrayList<Activity>();
@@ -118,6 +144,7 @@ public class ActivityDao {
 		
 		return activities;				
 	}	
+	
 	
 	//insert project into database
 	public boolean InsertActivity(Activity activity)

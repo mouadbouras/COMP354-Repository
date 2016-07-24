@@ -40,13 +40,7 @@ public class TestUpdateActivity {
 		activity.setActivityName("testUpdatedName");
 		activity.setActivityDescription("testUpdateDescription");
 
-		try {
-			activity.setStartDate("2017-12-12");
-			activity.setEndDate("2018-12-12");
-		} catch (ParseException e) {
-			e.printStackTrace();
-			fail("Failed due to parse error while updating activity");
-		}
+
 		//activity.setNormalDuration(999);
 		activity.setDuration(999);
 		assertTrue(activityDao.UpdateActivity(activity));
@@ -56,12 +50,13 @@ public class TestUpdateActivity {
 
 		assertEquals(newActivity.getActivityName(), "testUpdatedName");
 		assertEquals(newActivity.getActivityDescription(), "testUpdateDescription");
+		assertEquals(newActivity.getDuration(), 999);
 
-		try {
-		assertEquals(newActivity.getStartDate(), ConverterService.StringToDate("2017-12-12"));  
-		assertEquals(newActivity.getEndDate (), ConverterService.StringToDate("2018-12-12"));
-		}
-		catch (ParseException e) {}
+//		try {
+//		assertEquals(newActivity.getStartDate(), ConverterService.StringToDate("2017-12-12"));  
+//		assertEquals(newActivity.getEndDate (), ConverterService.StringToDate("2018-12-12"));
+//		}
+//		catch (ParseException e) {}
 		
 		//DONE
 		

@@ -28,9 +28,10 @@ public class TestDeleteProject {
 		System.out.println("Testing Deletion of a Project");
 		
 		Project project = null;
-
+		String toDeleteName  = "testingDeleteProject" + System.currentTimeMillis();
+		System.out.println(toDeleteName);
 		try {
-			project = new Project("testingDeleteProject", "2017-02-29", "2018-02-29", 1);
+			project = new Project(toDeleteName, "2017-02-29", "2018-02-29", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Failed to create project");
@@ -38,12 +39,11 @@ public class TestDeleteProject {
 
 		assertTrue(projectDao.InsertProject(project));
 		
-		assertTrue(projectDao.DeleteProject(project.getId()));	
 		
-		// TODO uncomment and make it pass
-		// check if the project is actually deleted in the database
+		Project newProj = getProjectByName(toDeleteName, 1);
+		assertTrue(projectDao.DeleteProject(newProj.getId()));		
 		
-		Project newProj = getProjectByName("testingDeleteProject", 1);
+		newProj = getProjectByName(toDeleteName, 1);
 		assertTrue( newProj == null );
 		// DONE
 		
@@ -57,6 +57,7 @@ public class TestDeleteProject {
 		{
 			if (projectList.get(i).getProjectName().equals(name))
 			{
+				System.out.println("found " + projectList.get(i).getProjectName());
 				return projectList.get(i);
 			}
 		}

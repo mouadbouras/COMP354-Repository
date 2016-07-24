@@ -67,6 +67,9 @@ public class PropertyDao {
 
 	public boolean InsertProperty(Property property)
 	{		
+		if (property.id < 0 || property.activityId < 0 || property.propertyName == null || property.propertyDescription == null || property.propertyText == null){
+			return false;
+		}
 		String sql = PropertyDao.InsertProperty.
 				replace("@activityId", Integer.toString(property.activityId)).
 				replace("@propertyName", property.propertyName).
@@ -89,6 +92,9 @@ public class PropertyDao {
 
 	public boolean UpdateProperty(Property property) 
 	{
+		if (property.id < 0 || property.activityId < 0 || property.propertyName == null || property.propertyDescription == null || property.propertyText == null){
+			return false;
+		}
 		String sql = PropertyDao.UpdateProperty.
 				replace("@id", Integer.toString(property.id)).
 				replace("@propertyName", property.propertyName).
